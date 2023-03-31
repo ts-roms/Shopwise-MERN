@@ -13,12 +13,11 @@ const initialState = {
 export default function Signup() {
   const [formData, setFormData] = useState(initialState);
 
-  const defaultProfile = "https://i.ibb.co/kK2JV13/Png-Item-1503945.png";
-
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value, type, files } = event.target;
 
     if (type === "file" && files) {
+      console.log(files);
       setFormData((prevFormData) => ({
         ...prevFormData,
         [name]: files?.[0] || null,
