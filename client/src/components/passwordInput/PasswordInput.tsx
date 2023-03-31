@@ -41,9 +41,9 @@ export default function PasswordInput({
         onClick={handleClick}
       >
         {isShow ? (
-          <AiOutlineEyeInvisible size={20} />
+          <AiOutlineEyeInvisible color="orange" size={20} />
         ) : (
-          <AiOutlineEye size={20} />
+          <AiOutlineEye color="orange" size={20} />
         )}
       </div>
     </div>

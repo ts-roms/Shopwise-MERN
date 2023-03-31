@@ -1,26 +1,33 @@
 import { useState, ChangeEvent } from "react";
 import PasswordInput from "../passwordInput/PasswordInput";
+import style from "../../styles/style";
+import { Link } from "react-router-dom";
 
 const initialState = {
   email: "",
   password: "",
+  isRemeber: false,
 };
 
 export default function Login() {
   const [formData, setFormData] = useState(initialState);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData((prevForm) => ({
       ...prevForm,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   }
 
   console.log(formData);
 
+  function handleSubmit() {
+    console.log("submitted");
+  }
+
   return (
-    <div className="px-8 py-12 w-full max-w-md mx-auto bg-white shadow">
+    <div className="px-8 py-12 w-full max-w-md mx-auto bg-white shadow-md">
       <h2 className="text-center text-2xl font-extrabold text-gray-900">
         Log in to your account
       </h2>
@@ -48,12 +55,48 @@ export default function Login() {
             value={formData.password}
             onChange={handleChange}
           />
+          <div className={`${style.flex_normal} justify-between`}>
+            <div className={`${style.flex_normal}`}>
+              <input
+                type="checkbox"
+                name="isRemeber"
+                id="remeberme"
+                checked={formData.isRemeber}
+                onChange={handleChange}
+                className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
+              />
+              <label
+                htmlFor="remeberme"
+                className="ml-2 block text-sm text-gray-900"
+              >
+                Remeber me
+              </label>
+            </div>
+            <div className="text-sm">
+              <Link
+                to="/forgetpassword"
+                className="font-medium text-orange-600 transition-all hover:text-orange-500 focus:text-orange-500"
+              >
+                Forgot your password?
+              </Link>
+            </div>
+          </div>
           <button
-            className="w-full bg-orange-500 text-white py-2 rounded"
+            className="w-full group bg-orange-600 text-white py-2 rounded hover:bg-orange-500 focus:bg-orange-500 transition-all"
             type="submit"
+            onClick={handleSubmit}
           >
             Login
           </button>
+          <div className={`${style.flex_normal}`}>
+            <h4>Not have any account?</h4>
+            <Link
+              to="/signup"
+              className="font-medium text-orange-600 transition-all hover:text-orange-500 focus:text-orange-500 ml-2"
+            >
+              Signup
+            </Link>
+          </div>
         </form>
       </div>
     </div>

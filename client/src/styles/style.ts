@@ -16,7 +16,7 @@ const style = {
   cart_button_text: "text-white text-base front-semibold",
   input: "w-full border p-1 rounded-md",
   activeStatus: "w-2.5 h-2.5 rounded-full absolute top-0 right-1 bg-[#40d132]",
-  flex_normal: "flex, items-center",
+  flex_normal: "flex items-center",
 };
 
 export default style;
