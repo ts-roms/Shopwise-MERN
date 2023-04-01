@@ -1,10 +1,12 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
+import axios from "axios";
 import PasswordInput from "../passwordInput/PasswordInput";
 import style from "../../styles/style";
+import { server } from "../../server";
 import { Link } from "react-router-dom";
 
 const initialState = {
-  profilePicture: null as File | null,
+  file: null as File | null,
   fullname: "",
   email: "",
   password: "",
@@ -43,8 +45,24 @@ export default function Signup() {
 
   console.log(formData);
 
-  function handleSubmit() {
-    console.log("submitted");
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const { file, fullname, email, password } = formData;
+
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
+
+    const newFrom = new FormData();
+
+    newFrom.append("name", fullname);
+    newFrom.append("email", email);
+    newFrom.append("password", password);
+    if (file) {
+      newFrom.append("file", file);
+    }
+
+    const res = await axios.post(`${server}/users`, newFrom, config);
+    console.log(res);
   }
 
   return (
@@ -53,14 +71,14 @@ export default function Signup() {
         Register as a new user
       </h2>
       <div className="mt-10">
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div className={`${style.flex_normal} justify-center flex-col`}>
             <input
               type="file"
               accept="image/*"
               onChange={handleChange}
-              name="profilePicture"
-              id="profilePicture"
+              name="file"
+              id="file"
               hidden
             />
             <img
@@ -70,7 +88,7 @@ export default function Signup() {
               alt="Profile Preview"
             />
             <label
-              htmlFor="profilePicture"
+              htmlFor="file"
               className="text-blue-600 mt-2  cursor-pointer hover:text-blue-500 focus::text-blue-500"
             >
               Edit profile picture
@@ -117,7 +135,6 @@ export default function Signup() {
           <button
             className="w-full group bg-orange-600 text-white py-2 rounded hover:bg-orange-500 focus:bg-orange-500 transition-all"
             type="submit"
-            onClick={handleSubmit}
           >
             Submit
           </button>
