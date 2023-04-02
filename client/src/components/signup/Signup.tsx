@@ -3,7 +3,7 @@ import axios from "axios";
 import PasswordInput from "../passwordInput/PasswordInput";
 import style from "../../styles/style";
 import { server } from "../../server";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const initialState = {
   file: null as File | null,
@@ -12,14 +12,19 @@ const initialState = {
   password: "",
 };
 
+interface CustomResponse {
+  success: boolean;
+  message: string;
+}
+
 export default function Signup() {
   const [formData, setFormData] = useState(initialState);
+  const navigate = useNavigate();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value, type, files } = event.target;
 
     if (type === "file" && files) {
-      console.log(files);
       setFormData((prevFormData) => ({
         ...prevFormData,
         [name]: files?.[0] || null,
@@ -43,8 +48,6 @@ export default function Signup() {
     }
   }
 
-  console.log(formData);
-
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -61,8 +64,13 @@ export default function Signup() {
       newFrom.append("file", file);
     }
 
-    const res = await axios.post(`${server}/users`, newFrom, config);
-    console.log(res);
+    const res = await axios.post<CustomResponse>(
+      `${server}/users`,
+      newFrom,
+      config
+    );
+
+    alert(res.data.message);
   }
 
   return (

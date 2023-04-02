@@ -20,8 +20,6 @@ export default function Login() {
     }));
   }
 
-  console.log(formData);
-
   function handleSubmit() {
     console.log("submitted");
   }
