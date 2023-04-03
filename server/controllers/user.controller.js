@@ -73,8 +73,6 @@ exports.activation = async (req, res, next) => {
   try {
     const { activation_token } = req.body;
 
-    // const newUser = jwt.verify(activationToken, process.env.ACTIVATION_SECRET);
-
     const decodedUser = decodeActivationToken(activation_token);
 
     if (!decodedUser) {
@@ -95,8 +93,6 @@ exports.activation = async (req, res, next) => {
       password,
       avatar,
     });
-
-    console.log(newUser);
 
     sendToken(newUser, 201, res);
   } catch (error) {
@@ -127,7 +123,16 @@ exports.loginUser = async (req, res, next) => {
 
     sendToken(user, 200, res);
   } catch (error) {
-    return next(new ErrorHandler("Failed to login user", 500));
+    if (error.name === "ValidationError") {
+      // Mongoose validation error
+      const errorMessage = Object.values(error.errors)
+        .map((err) => err.message)
+        .join(", ");
+      return next(new ErrorHandler(errorMessage, 400));
+    } else {
+      console.error(error);
+      return next(new ErrorHandler("Failed to login user", 500));
+    }
   }
 };
 
