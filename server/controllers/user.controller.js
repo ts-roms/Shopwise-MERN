@@ -3,7 +3,10 @@ const fs = require("fs");
 const User = require("../models/user.model");
 const ErrorHandler = require("../utils/errorHandler");
 const jwt = require("jsonwebtoken");
-const { createActivationToken } = require("../helper/helper");
+const {
+  createActivationToken,
+  decodeActivationToken,
+} = require("../helper/helper");
 const { sendMail } = require("../utils/sendMail");
 const { sendToken } = require("../utils/jwtToken");
 
@@ -39,7 +42,9 @@ exports.createUser = async (req, res, next) => {
       avatar: fileUrl,
     };
 
-    const activationToken = createActivationToken(user);
+    const expirationTime = new Date(Date.now() + 600000);
+
+    const activationToken = createActivationToken(user, expirationTime);
 
     const activationUrl = `http://localhost:5173/activation/${activationToken}`;
 
@@ -66,24 +71,34 @@ exports.createUser = async (req, res, next) => {
 
 exports.activation = async (req, res, next) => {
   try {
-    const { activationToken } = req.body;
+    const { activation_token } = req.body;
 
-    const newUser = jwt.verify(activationToken, process.env.ACTIVATION_SECRET);
+    // const newUser = jwt.verify(activationToken, process.env.ACTIVATION_SECRET);
 
-    if (!newUser) {
+    const decodedUser = decodeActivationToken(activation_token);
+
+    if (!decodedUser) {
       return next(new ErrorHandler("Invalid user activation token", 400));
     }
 
-    const { name, email, password, avatar } = newUser;
+    const { name, email, password, avatar } = decodedUser;
 
-    const user = await User.create({
+    const user = await User.findOne({ email });
+
+    if (user) {
+      return next(new ErrorHandler("User already exist", 400));
+    }
+
+    const newUser = await User.create({
       name,
       email,
       password,
       avatar,
     });
 
-    sendToken(user, 201, res);
+    console.log(newUser);
+
+    sendToken(newUser, 201, res);
   } catch (error) {
     console.log(error);
     return next(new ErrorHandler("Failed to create user", 500));
