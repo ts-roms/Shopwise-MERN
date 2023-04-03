@@ -104,3 +104,45 @@ exports.activation = async (req, res, next) => {
     return next(new ErrorHandler("Failed to create user", 500));
   }
 };
+
+exports.loginUser = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return next(new ErrorHandler("Please provide all the fields", 400));
+    }
+
+    const user = await User.findOne({ email }).select("+password");
+
+    if (!user) {
+      return next(new ErrorHandler("User doesn't exist", 404));
+    }
+
+    const isPasswordValid = await user.comparePassword(password);
+
+    if (!isPasswordValid) {
+      return next(new ErrorHandler("Wrong Password", 400));
+    }
+
+    sendToken(user, 200, res);
+  } catch (error) {
+    return next(new ErrorHandler("Failed to login user", 500));
+  }
+};
+
+exports.getUser = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return next(new ErrorHandler("User does't exist", 404));
+    }
+
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};

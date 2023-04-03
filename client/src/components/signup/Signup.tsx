@@ -4,6 +4,7 @@ import PasswordInput from "../passwordInput/PasswordInput";
 import style from "../../styles/style";
 import { server } from "../../server";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const initialState = {
   file: null as File | null,
@@ -53,8 +54,6 @@ export default function Signup() {
 
     const { file, fullname, email, password } = formData;
 
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
-
     const newFrom = new FormData();
 
     newFrom.append("name", fullname);
@@ -64,13 +63,21 @@ export default function Signup() {
       newFrom.append("file", file);
     }
 
-    const res = await axios.post<CustomResponse>(
-      `${server}/users`,
-      newFrom,
-      config
-    );
-
-    alert(res.data.message);
+    try {
+      const config = { headers: { "Content-Type": "multipart/form-data" } };
+      const res = await axios.post<CustomResponse>(
+        `${server}/users/signup`,
+        newFrom,
+        config
+      );
+      toast(res.data.message);
+      setFormData(initialState);
+    } catch (error: any) {
+      console.error(error);
+      if (error.response) {
+        toast.error(error.response.data.message);
+      }
+    }
   }
 
   return (
@@ -88,6 +95,7 @@ export default function Signup() {
               name="file"
               id="file"
               hidden
+              required
             />
             <img
               id="img-preview"

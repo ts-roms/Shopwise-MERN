@@ -1,7 +1,10 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import PasswordInput from "../passwordInput/PasswordInput";
 import style from "../../styles/style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { server } from "../../server";
+import { toast } from "react-toastify";
 
 const initialState = {
   email: "",
@@ -12,6 +15,8 @@ const initialState = {
 export default function Login() {
   const [formData, setFormData] = useState(initialState);
 
+  const navigate = useNavigate();
+
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value, type, checked } = e.target;
     setFormData((prevForm) => ({
@@ -20,8 +25,34 @@ export default function Login() {
     }));
   }
 
-  function handleSubmit() {
-    console.log("submitted");
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    try {
+      const res = await axios
+        .post(
+          `${server}/users/login`,
+          {
+            email: formData.email,
+            password: formData.password,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => toast.success(res.data.message))
+        .catch((error) => {
+          console.log(error);
+          if (error.response) {
+            toast.error(error.response.data.message);
+          }
+        });
+
+      toast.success("Login Success!");
+      console.log(res);
+      navigate("/");
+    } catch (error: any) {
+      console.log(error);
+      if (error.response) toast.error(error.response.data.message);
+    }
   }
 
   return (
@@ -30,7 +61,7 @@ export default function Login() {
         Log in to your account
       </h2>
       <div className="mt-14">
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email" className="sr-only">
               Email
@@ -82,7 +113,6 @@ export default function Login() {
           <button
             className="w-full group bg-orange-600 text-white py-2 rounded hover:bg-orange-500 focus:bg-orange-500 transition-all"
             type="submit"
-            onClick={handleSubmit}
           >
             Login
           </button>
