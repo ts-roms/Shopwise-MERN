@@ -6,14 +6,14 @@ module.exports = {
       Roboto: ["Roboto", "sans-serif"],
       Roboto: ["Poppins", "serif"],
     },
-
+    colors: {
+      orange: "#ff7d1a",
+    },
     extend: {
       screens: {
-        "1000px": "1050px",
-        "1100px": "1110px",
-        "800px": "800px",
-        "1300px": "1300px",
-        "400px": "400px",
+        extraSmall: "280px",
+        mobile: "375px",
+        desktop: "1140px",
       },
     },
   },

@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import store from "./redux/store";
 import { loadUser } from "./redux/actions/userActions";
+import ProductPage from "./pages/ProductPage";
 
 function App() {
   useEffect(() => {
@@ -24,6 +25,7 @@ function App() {
           path="/activation/:activation_token"
           element={<ActivationPage />}
         />
+        <Route path="/products/:product_slug" element={<ProductPage />} />
         <Route path="*" element={<h1>Wront route</h1>} />
       </Routes>
       <ToastContainer

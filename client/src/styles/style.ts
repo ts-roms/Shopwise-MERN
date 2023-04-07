@@ -14,7 +14,8 @@ const style = {
   cart_button:
     "px-5 h-10 rounded-2xl bg-[#f63b60] flex items-center justify-center cursor-pointer",
   cart_button_text: "text-white text-base front-semibold",
-  input: "w-full border p-1 rounded-md",
+  input:
+    "border-2 p-1 rounded-md focus:outline-2 outline-blue-500/50 ring-inset",
   activeStatus: "w-2.5 h-2.5 rounded-full absolute top-0 right-1 bg-[#40d132]",
   flex_normal: "flex items-center",
 };
