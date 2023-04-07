@@ -1,18 +1,23 @@
 import { Link } from "react-router-dom";
-import { useState, FormEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import logo from "../../assets/logo.png";
 import style from "../../styles/style";
 import { AiOutlineSearch } from "react-icons/ai";
-// @ts-ingnore
 import productData from "../../constant/product.json";
+
+type Product = {
+  id: number;
+  name: string;
+  image_Url: { public_id: string; url: string }[];
+};
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchedProduct, setSearchedProduct] = useState([]);
+  const [searchedProduct, setSearchedProduct] = useState<Product[]>([]);
 
   console.log(productData);
 
-  function handleChange(e: FormEvent<HTMLFormElement>) {
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     setSearchQuery(e.target.value);
 
@@ -50,7 +55,7 @@ export default function Header() {
                 {searchedProduct.map((product) => {
                   const productSlug = product.name.replace(/\s+/g, "-");
                   return (
-                    <Link to={`/products/${productSlug}`}>
+                    <Link to={`/products/${productSlug}`} key={product.id}>
                       <div className={`${style.flex_normal} py-3 w-full`}>
                         <img
                           className="w-11 h-10 mr-8"

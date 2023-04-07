@@ -29,26 +29,19 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      const res = await axios
-        .post(
-          `${server}/users/login`,
-          {
-            email: formData.email,
-            password: formData.password,
-          },
-          { withCredentials: true }
-        )
-        .then((res) => toast.success(res.data.message))
-        .catch((error) => {
-          console.log(error);
-          if (error.response) {
-            toast.error(error.response.data.message);
-          }
-        });
-
-      toast.success("Login Success!");
+      const res = await axios.post(
+        `${server}/users/login`,
+        {
+          email: formData.email,
+          password: formData.password,
+        },
+        { withCredentials: true }
+      );
       console.log(res);
-      navigate("/");
+      if (res.status) {
+        toast.success("Login Success!");
+        navigate("/");
+      }
     } catch (error: any) {
       console.log(error);
       if (error.response) toast.error(error.response.data.message);
