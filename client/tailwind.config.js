@@ -7,13 +7,7 @@ module.exports = {
       Roboto: ["Poppins", "serif"],
     },
 
-    extend: {
-      screens: {
-        extraSmall: "280px",
-        mobile: "375px",
-        desktop: "1140px",
-      },
-    },
+    extend: {},
   },
   plugins: [],
 };
