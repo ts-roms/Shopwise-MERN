@@ -43,12 +43,13 @@ export default function Header() {
               type="text"
               placeholder="Seach Product"
               value={searchQuery}
-              className={`${style.input} border-orange h-11 px-2 w-full`}
+              className={`${style.input} border-[#ff7d1a] h-11 px-2 w-full`}
               onChange={handleChange}
             />
             <AiOutlineSearch
               className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
               size={25}
+              color="orange"
             />
             {searchedProduct && searchedProduct.length !== 0 ? (
               <div className="absolute min-h-30vh bg-slate-50 shadow-sm z-90 p-4">

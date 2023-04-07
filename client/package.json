@@ -9,6 +9,11 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
+  "prettier": {
+    "ignore":[
+      "./tailwind.config.js"
+    ]
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
     "@types/react-redux": "^7.1.25",

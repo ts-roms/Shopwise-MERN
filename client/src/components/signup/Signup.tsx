@@ -81,7 +81,7 @@ export default function Signup() {
   }
 
   return (
-    <div className="px-8 py-12 w-full max-w-md mx-auto bg-white shadow-md">
+    <div className="px-8 py-12 w-full max-w-md mx-auto bg-white shadow-lg">
       <h2 className="text-center text-2xl font-extrabold text-gray-900">
         Register as a new user
       </h2>
@@ -149,7 +149,7 @@ export default function Signup() {
           />
 
           <button
-            className="w-full group bg-orange-600 text-white py-2 rounded hover:bg-orange-500 focus:bg-orange-500 transition-all"
+            className="w-full group bg-[#ff7d1a] text-white py-2 rounded hover:bg-orange-500 focus:bg-orange-500 transition-all"
             type="submit"
           >
             Submit
@@ -158,7 +158,7 @@ export default function Signup() {
             <h4>Already have an account ?</h4>
             <Link
               to="/login"
-              className="font-medium text-orange-600 transition-all hover:text-orange-500 focus:text-orange-500 ml-2"
+              className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 focus:text-orange-500 ml-2"
             >
               Login
             </Link>
