@@ -50,7 +50,7 @@ export default function Header() {
   return (
     <>
       <div
-        className={`${style.flex_normal} ${style.section} px-11 py-7  justify-between`}
+        className={`${style.flex_normal} ${style.section} py-7  justify-between`}
       >
         <div>
           <Link to="/" className={`${style.flex_normal}`}>
@@ -109,7 +109,7 @@ export default function Header() {
       </div>
 
       <div className="sticky top-0 shadow-sm z-10 transition-all hidden lg:flex items-center justify-between h-[70px] w-full bg-[#ff7d1a]">
-        <div className={`px-11 ${style.section}`}>
+        <div className={` ${style.section}`}>
           <div className={`relative ${style.flex_normal} justify-between `}>
             <Dropdown />
             <Navbar />
