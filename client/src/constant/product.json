@@ -23,8 +23,8 @@
         },
         "ratings": 4.2
       },
-      "price": 1099,
-      "discount_price": 1049,
+      "price": 12999999,
+      "discount_price": 11999999,
       "rating": 4,
       "total_sell": 35,
       "stock": 10
@@ -53,7 +53,8 @@
         },
         "ratings": 4.2
       },
-      "discount_price": 1099,
+      "price": 7999999,
+      "discount_price": 7596999,
       "rating": 5,
       "total_sell": 80,
       "stock": 10
@@ -82,8 +83,8 @@
         },
         "ratings": 4.2
       },
-      "price": 1099,
-      "discount_price": 1049,
+      "price": 12999999,
+      "discount_price": 12149999,
       "rating": 4,
       "total_sell": 75,
       "stock": 10
@@ -113,8 +114,8 @@
         "ratings": 4.2,
         "category": "Others"
       },
-      "price": 100,
-      "discount_price": 79,
+      "price": 189999,
+      "discount_price": 149999,
       "rating": 4,
       "total_sell": 12,
       "stock": 10
@@ -143,8 +144,8 @@
         },
         "ratings": 4.2
       },
-      "price": 120,
-      "discount_price": 89,
+      "price": 199999,
+      "discount_price": 169999,
       "rating": 5,
       "total_sell": 49,
       "stock": 10
@@ -172,8 +173,8 @@
         },
         "ratings": 4.2
       },
-      "price": 300,
-      "discount_price": 239,
+      "price": 449999,
+      "discount_price": 418999,
       "rating": 4.5,
       "reviews": [
         {
@@ -210,8 +211,8 @@
         },
         "ratings": 4.2
       },
-      "price": 100,
-      "discount_price": 79,
+      "price": 159999,
+      "discount_price": 139999,
       "rating": 4,
       "total_sell": 62,
       "stock": 10
@@ -239,8 +240,8 @@
         },
         "ratings": 4.2
       },
-      "price": 300,
-      "discount_price": 239,
+      "price": 399999,
+      "discount_price": 349999,
       "rating": 4.5,
       "reviews": [
         {
@@ -277,7 +278,8 @@
         },
         "ratings": 4.2
       },
-      "discount_price": 1099,
+      "price": 4999999,
+      "discount_price": 3599999,
       "rating": 5,
       "total_sell": 20,
       "stock": 10
@@ -306,8 +308,8 @@
         },
         "ratings": 4.2
       },
-      "price": 300,
-      "discount_price": 239,
+      "price": 2199999,
+      "discount_price": 1899999,
       "rating": 4.5,
       "reviews": [
         {

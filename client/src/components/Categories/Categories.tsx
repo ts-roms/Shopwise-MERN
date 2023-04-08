@@ -14,10 +14,8 @@ export default function Categories() {
   return (
     <section>
       <div className={`${style.section}`}>
-        <h1 className="text-2xl font-bold my-8">
-          Shop on Different Categories:
-        </h1>
-        <div className="grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-5 xl:grid-cols-5 xl:gap-8">
+        <h1 className={`${style.heading}`}>Shop on Different Categories:</h1>
+        <div className="grid grid-cols-1 mt-8 gap-2 md:grid-cols-2 lg:grid-cols-4 lg:gap-5 xl:grid-cols-5 xl:gap-8">
           {categoriesData &&
             categoriesData?.map((category) => (
               <div
