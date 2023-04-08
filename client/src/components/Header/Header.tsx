@@ -6,6 +6,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
 import productData from "../../constant/product.json";
 import Dropdown from "../Dropdown/Dropdown";
+import Navbar from "../Navbar/Navbar";
 
 type Product = {
   id: number;
@@ -102,6 +103,7 @@ export default function Header() {
         <div className={`px-11 ${style.section}`}>
           <div className={`relative ${style.flex_normal} justify-between `}>
             <Dropdown />
+            <Navbar />
           </div>
         </div>
       </div>
