@@ -22,7 +22,6 @@ export default function Product({ product }: IProps) {
   } = product;
 
   const productSlug = product.name.replace(/\s+/g, "-");
-  console.log(product);
 
   return (
     <>
@@ -57,7 +56,7 @@ export default function Product({ product }: IProps) {
                   {formattedPrice(price)}
                 </span>
               </div>
-              <AiOutlineHeart title="Add to wishlist" size={18} />
+              <AiOutlineHeart title="Add to wishlist" size={19} />
             </div>
             <button className="flex items-center justify-center rounded-md bg-[#ff7d1a] text-white text-center w-full h-9">
               <AiOutlineShoppingCart

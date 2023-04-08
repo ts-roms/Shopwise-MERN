@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, ChangeEvent, useEffect, useRef } from "react";
 import logo from "../../assets/logo.png";
 import style from "../../styles/style";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -19,6 +19,7 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchedProduct, setSearchedProduct] = useState<Product[]>([]);
   const [active, setActive] = useState(false);
+  const ref = useRef<HTMLInputElement>(null);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
@@ -31,13 +32,20 @@ export default function Header() {
     setSearchedProduct(filteredProduct);
   }
 
-  // window.addEventListener("scroll", () => {
-  //   if (window.screenY > 70) {
-  //     setActive((prev) => !prev);
-  //   } else {
-  //     setActive((prev) => !prev);
-  //   }
-  // });
+  console.log(searchedProduct);
+
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setSearchedProduct([]);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
 
   return (
     <>
@@ -59,24 +67,29 @@ export default function Header() {
                 value={searchQuery}
                 className={`${style.input} border-[#ff7d1a] h-11 px-2 w-full`}
                 onChange={handleChange}
+                ref={ref}
               />
               <AiOutlineSearch
                 className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
                 size={25}
                 color="orange"
               />
-              {searchedProduct && searchedProduct.length !== 0 ? (
-                <div className="absolute min-h-30vh bg-slate-50 shadow-sm z-50 p-4">
-                  {searchedProduct.map((product) => {
+              {searchedProduct.length !== 0 ? (
+                <div className="absolute bg-slate-50 shadow-sm z-50 max-h-[60vh] overflow-scroll mt-4 rounded-md py-2">
+                  {searchedProduct.map((product, idx) => {
                     const productSlug = product.name.replace(/\s+/g, "-");
                     return (
-                      <Link to={`/products/${productSlug}`} key={product.id}>
-                        <div className={`${style.flex_normal} py-3 w-full`}>
-                          <img
-                            className="w-11 h-10 mr-8"
-                            src={product.image_Url[0].url}
-                          />
-                          <h1>{product.name}</h1>
+                      <Link to={`/products/${productSlug}`} key={idx}>
+                        <div
+                          className={`w-full cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white`}
+                        >
+                          <div className={`px-6 py-2 ${style.flex_normal}`}>
+                            <img
+                              className="w-11 h-10 mr-8"
+                              src={product.image_Url[0].url}
+                            />
+                            <h1>{product.name}</h1>
+                          </div>
                         </div>
                       </Link>
                     );

@@ -11,11 +11,11 @@ export default function Stars({ stars }: StarsProps) {
     return (
       <span key={index}>
         {stars >= index + 1 ? (
-          <FaStar />
+          <FaStar title="Ratings" />
         ) : stars >= number ? (
-          <FaStarHalfAlt />
+          <FaStarHalfAlt title="Ratings" />
         ) : (
-          <FiStar />
+          <FiStar title="Ratings" />
         )}
       </span>
     );

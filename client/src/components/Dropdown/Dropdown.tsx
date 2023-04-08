@@ -1,6 +1,6 @@
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoIosArrowDown } from "react-icons/io";
-import { useState } from "react";
+import { useState, useEffect, useRef, MouseEvent } from "react";
 import style from "../../styles/style";
 import categories from "../../constant/categories.json";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,7 @@ export interface Category {
 export default function Dropdown() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const ref = useRef<HTMLDivElement>(null);
 
   function handleClick(e: any) {
     setIsDropdownOpen((prev) => !prev);
@@ -26,8 +27,21 @@ export default function Dropdown() {
     window.location.reload();
   }
 
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
+
   return (
-    <div>
+    <div onClick={handleClick} ref={ref}>
       <div className="relative h-[60px] w-[270px] hidden lg:block">
         <BiMenuAltLeft
           size={30}
@@ -41,12 +55,11 @@ export default function Dropdown() {
         <IoIosArrowDown
           size={20}
           className="absolute top-1/2 -translate-y-1/2 right-2"
-          onClick={handleClick}
           color={isDropdownOpen ? "orange" : "black"}
         />
 
         {isDropdownOpen ? (
-          <div className="w-full bg-[#fff] absolute rounded-b-md shadow-sm z-30">
+          <div className="w-full bg-[#fff] absolute rounded-b-md shadow-sm z-30 max-h-[60vh] overflow-scroll">
             {categories &&
               categories.map((category) => (
                 <div
