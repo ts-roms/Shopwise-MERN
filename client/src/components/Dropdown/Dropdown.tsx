@@ -5,7 +5,7 @@ import style from "../../styles/style";
 import categories from "../../constant/categories.json";
 import { useNavigate } from "react-router-dom";
 
-interface Category {
+export interface Category {
   id: number;
   subTitle: string;
   title: string;

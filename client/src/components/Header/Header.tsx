@@ -7,6 +7,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import productData from "../../constant/product.json";
 import Dropdown from "../Dropdown/Dropdown";
 import Navbar from "../Navbar/Navbar";
+import UserNavigation from "../UserNavigation/UserNavigation";
 
 type Product = {
   id: number;
@@ -30,17 +31,16 @@ export default function Header() {
     setSearchedProduct(filteredProduct);
   }
 
-  window.addEventListener("scroll", () => {
-    console.log(window.screenY);
-    if (window.screenY > 70) {
-      setActive((prev) => !prev);
-    } else {
-      setActive((prev) => !prev);
-    }
-  });
+  // window.addEventListener("scroll", () => {
+  //   if (window.screenY > 70) {
+  //     setActive((prev) => !prev);
+  //   } else {
+  //     setActive((prev) => !prev);
+  //   }
+  // });
 
   return (
-    <section>
+    <>
       <div
         className={`${style.flex_normal} ${style.section} px-11 py-7  justify-between`}
       >
@@ -66,7 +66,7 @@ export default function Header() {
                 color="orange"
               />
               {searchedProduct && searchedProduct.length !== 0 ? (
-                <div className="absolute min-h-30vh bg-slate-50 shadow-sm z-90 p-4">
+                <div className="absolute min-h-30vh bg-slate-50 shadow-sm z-50 p-4">
                   {searchedProduct.map((product) => {
                     const productSlug = product.name.replace(/\s+/g, "-");
                     return (
@@ -95,18 +95,15 @@ export default function Header() {
         </div>
       </div>
 
-      <div
-        className={`${
-          active ? "fixed top-0 left-0 shadow-sm z-10" : ""
-        } transition-all hidden lg:flex items-center justify-between h-[70px] w-full bg-[#ff7d1a]`}
-      >
+      <div className="sticky top-0 shadow-sm z-10 transition-all hidden lg:flex items-center justify-between h-[70px] w-full bg-[#ff7d1a]">
         <div className={`px-11 ${style.section}`}>
           <div className={`relative ${style.flex_normal} justify-between `}>
             <Dropdown />
             <Navbar />
+            <UserNavigation />
           </div>
         </div>
       </div>
-    </section>
+    </>
   );
 }
