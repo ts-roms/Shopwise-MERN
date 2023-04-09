@@ -47,3 +47,27 @@ export interface IComponentProp {
 export interface IStarsProps {
   stars: number;
 }
+
+export interface IUser {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  avatar: string;
+}
+
+export interface IUserState {
+  isAuthenticate: boolean;
+  isLoading?: boolean;
+  error?: null | string;
+  user: IUser;
+}
+
+export interface IAppState {
+  user: IUserState;
+}
+
+export interface IQuestion {
+  question: string;
+  answer: string;
+}

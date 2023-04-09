@@ -10,7 +10,7 @@ export const loadUser = () => async (dispatch: Dispatch<Action>) => {
       withCredentials: true,
     });
 
-    dispatch({ type: "LoadUserSuccess", payload: data });
+    dispatch({ type: "LoadUserSuccess", payload: data.user });
   } catch (error: any) {
     dispatch({
       type: "LoadUserFail",

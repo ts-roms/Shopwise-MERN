@@ -8,6 +8,8 @@ import productData from "../../constant/product.json";
 import Dropdown from "../Dropdown/Dropdown";
 import Navbar from "../Navbar/Navbar";
 import UserNavigation from "../UserNavigation/UserNavigation";
+import { useSelector } from "react-redux";
+import { IAppState } from "../../Interface";
 
 type Product = {
   id: number;
@@ -18,8 +20,11 @@ type Product = {
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchedProduct, setSearchedProduct] = useState<Product[]>([]);
-  const [active, setActive] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
+
+  const { isAuthenticate, user } = useSelector(
+    (state: IAppState) => state.user
+  );
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
@@ -111,7 +116,7 @@ export default function Header() {
           <div className={`relative ${style.flex_normal} justify-between `}>
             <Dropdown />
             <Navbar />
-            <UserNavigation />
+            <UserNavigation isAuthenticate={isAuthenticate} user={user} />
           </div>
         </div>
       </div>

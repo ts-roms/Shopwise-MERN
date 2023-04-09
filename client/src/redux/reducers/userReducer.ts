@@ -1,7 +1,7 @@
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-  isAuthenticated: false,
+  isAuthenticate: false,
   isLoading: false,
   error: null,
   user: null,
@@ -12,14 +12,14 @@ export const userReducer = createReducer(initialState, {
     state.isLoading = true;
   },
   LoadUserSuccess: (state, action) => {
-    state.isAuthenticated = true;
+    state.isAuthenticate = true;
     state.isLoading = false;
     state.user = action.payload;
   },
   LoadUserFail: (state, action) => {
     (state.isLoading = false),
       (state.error = action.payload),
-      (state.isAuthenticated = false);
+      (state.isAuthenticate = false);
   },
   ClearErrors: (state) => {
     state.error = null;

@@ -1,8 +1,11 @@
 import style from "../../styles/style";
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
+import { Link } from "react-router-dom";
+import { host } from "../../server";
+import { IUserState } from "../../Interface";
 
-export default function UserNavigation() {
+export default function UserNavigation({ isAuthenticate, user }: IUserState) {
   return (
     <div className={`${style.flex_normal} gap-6`}>
       <div className="relative cursor-pointer ">
@@ -26,11 +29,24 @@ export default function UserNavigation() {
         </span>
       </div>
       <div className="relative cursor-pointer">
-        <BiUserCircle
-          color="white"
-          size={30}
-          className="hover:fill-gray-900 transition-all"
-        />
+        {isAuthenticate ? (
+          <Link to="/profile">
+            <img
+              className="h-7 w-7 rounded-full"
+              src={`${host}/${user?.avatar}`}
+              alt={user?.name}
+            />
+          </Link>
+        ) : (
+          <Link to="/login">
+            <BiUserCircle
+              color="white"
+              size={30}
+              title="Login to account"
+              className="hover:fill-gray-900 transition-all"
+            />
+          </Link>
+        )}
       </div>
     </div>
   );
