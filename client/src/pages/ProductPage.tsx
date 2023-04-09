@@ -6,6 +6,7 @@ export default function ProductPage() {
   return (
     <div>
       <h1>{product_slug}</h1>
+      ds
     </div>
   );
 }

@@ -2,27 +2,7 @@ import { useState, useEffect } from "react";
 import productsData from "../../constant/product.json";
 import style from "../../styles/style";
 import Product from "../Product/Product";
-
-export interface IProduct {
-  id: number;
-  category?: string;
-  name: string;
-  description: string;
-  price: number;
-  image_Url: { public_id: string; url: string }[];
-  shop: {
-    name: string;
-    shop_avatar: {
-      public_id: string;
-      url: string;
-    };
-    ratings: number;
-  };
-  reviews?: { user: {}; comment: string; rating: number }[];
-  rating: number;
-  total_sell: number;
-  discount_price: number;
-}
+import { IProduct } from "../../Interface";
 
 export default function BeastDeals() {
   const [products, setProducts] = useState<IProduct[]>([]);

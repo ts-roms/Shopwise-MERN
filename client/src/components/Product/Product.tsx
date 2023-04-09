@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { formattedPrice } from "../../helper/formatPrice";
 import style from "../../styles/style";
 import Stars from "../Stars/Stars";
-import { IProduct } from "../BestDeals/BeastDeals";
-
+import { IProduct } from "../../Interface";
 export interface IProps {
   product: IProduct;
 }

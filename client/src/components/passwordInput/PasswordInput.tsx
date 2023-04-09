@@ -1,19 +1,13 @@
 import { useState, ChangeEvent } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-
-interface PasswordInputProps {
-  placeholder: string;
-  value: string;
-  name: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}
+import { IPasswordInputProps } from "../../Interface";
 
 export default function PasswordInput({
   placeholder,
   value,
   onChange,
   name,
-}: PasswordInputProps) {
+}: IPasswordInputProps) {
   const [isShow, setIsShow] = useState(false);
 
   function handleClick() {

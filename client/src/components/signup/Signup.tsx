@@ -3,8 +3,9 @@ import axios from "axios";
 import PasswordInput from "../passwordInput/PasswordInput";
 import style from "../../styles/style";
 import { server } from "../../server";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ICustomResponse } from "../../Interface";
 
 const initialState = {
   file: null as File | null,
@@ -13,14 +14,8 @@ const initialState = {
   password: "",
 };
 
-interface CustomResponse {
-  success: boolean;
-  message: string;
-}
-
 export default function Signup() {
   const [formData, setFormData] = useState(initialState);
-  const navigate = useNavigate();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value, type, files } = event.target;
@@ -65,7 +60,7 @@ export default function Signup() {
 
     try {
       const config = { headers: { "Content-Type": "multipart/form-data" } };
-      const res = await axios.post<CustomResponse>(
+      const res = await axios.post<ICustomResponse>(
         `${server}/users/signup`,
         newFrom,
         config
