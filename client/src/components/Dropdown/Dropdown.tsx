@@ -61,11 +61,11 @@ export default function Dropdown() {
         {isDropdownOpen ? (
           <div className="w-full bg-[#fff] absolute rounded-b-md shadow-sm z-30 max-h-[60vh] overflow-scroll">
             {categories &&
-              categories.map((category) => (
+              categories.map((category, idx) => (
                 <div
                   className={`${style.flex_normal} cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white`}
                   onClick={() => handleSubmit(category)}
-                  key={category.id}
+                  key={idx}
                 >
                   <div className={`${style.flex_normal} py-1.5 px-2.5`}>
                     <img

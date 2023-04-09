@@ -32,8 +32,6 @@ export default function Header() {
     setSearchedProduct(filteredProduct);
   }
 
-  console.log(searchedProduct);
-
   useEffect(() => {
     function handleClickOutside(event: any) {
       if (ref.current && !ref.current.contains(event.target as Node)) {

@@ -27,7 +27,7 @@ export default function Countdown() {
     if (difference > 0) {
       timeLeft = { days, hours, minutes, seconds };
     } else {
-      null;
+      timeLeft = { hours: "00", minutes: "00", seconds: "00" };
     }
 
     return timeLeft;

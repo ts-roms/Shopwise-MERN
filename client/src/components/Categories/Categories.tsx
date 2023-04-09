@@ -17,8 +17,9 @@ export default function Categories() {
         <h1 className={`${style.heading}`}>Shop on Different Categories:</h1>
         <div className="grid grid-cols-1 mt-8 gap-2 md:grid-cols-2 lg:grid-cols-4 lg:gap-5 xl:grid-cols-5 xl:gap-8">
           {categoriesData &&
-            categoriesData?.map((category) => (
+            categoriesData?.map((category, idx) => (
               <div
+                key={idx}
                 onClick={() => handleSubmit(category)}
                 className={`bg-white rounded-md ${style.flex_normal} flex-col shadow p-4 cursor-pointer hover:scale-105 transition-all duration-300`}
               >

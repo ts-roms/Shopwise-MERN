@@ -42,8 +42,8 @@ export default function BeastDeals() {
         </h1>
         {products && (
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 mt-8">
-            {products?.map((product) => (
-              <Product product={product} />
+            {products?.map((product, idx) => (
+              <Product key={idx} product={product} />
             ))}
           </div>
         )}

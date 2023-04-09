@@ -4,7 +4,7 @@ import Countdown from "../CountDown/Countdown";
 
 export default function EventCard() {
   return (
-    <div className="w-full rounded-lg flex p-3">
+    <div className="w-full rounded-lg flex p-6">
       <div className="w-full lg:w-1/2 mx-auto">
         <img src="https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg" alt="" />
       </div>
