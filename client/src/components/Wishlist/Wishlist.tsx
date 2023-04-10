@@ -1,15 +1,16 @@
 import { RxCross1 } from "react-icons/rx";
 import { BiShoppingBag } from "react-icons/bi";
+import { BsCartPlus, BsBagHeart } from "react-icons/bs";
 import style from "../../styles/style";
-import CartItem from "../CartItem/CartItem";
 import { Link } from "react-router-dom";
+import { formattedPrice } from "../../helper/formatPrice";
 
 interface IProps {
-  toggleCart: () => void;
-  isCartOpen: boolean;
+  toggleWishlist: () => void;
+  isWishlistOpen: boolean;
 }
 
-export default function Cart({ toggleCart, isCartOpen }: IProps) {
+export default function Wishlist({ isWishlistOpen, toggleWishlist }: IProps) {
   const cartData = [
     {
       name: "dsfsfsfsd",
@@ -71,7 +72,7 @@ export default function Cart({ toggleCart, isCartOpen }: IProps) {
   return (
     <div
       className={`fixed top-0 left-0 right-0 w-full h-screen z-10 duration-500 ease-in-out ${
-        isCartOpen ? "translate-x-0" : "translate-x-full"
+        isWishlistOpen ? "translate-x-0" : "translate-x-full"
       }`}
       style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
     >
@@ -81,34 +82,62 @@ export default function Cart({ toggleCart, isCartOpen }: IProps) {
             title="Close"
             size={30}
             className="cursor-pointer"
-            onClick={toggleCart}
+            onClick={toggleWishlist}
           />
         </div>
         <div className={`${style.flex_normal} gap-2 py-8 border-b`}>
-          <BiShoppingBag size={30} title="Cart" />
+          <BsBagHeart size={30} title="Cart" />
           <h4 className="text-xl font-bold">3 items</h4>
         </div>
         <div
-          className="overflow-scroll h-[65vh]"
+          className="overflow-scroll h-[70vh]"
           style={{
             background:
               "linear-gradient(to top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 1) 90%, rgba(255, 255, 255, 0) 100%)",
           }}
         >
           {cartData.length === 0 ? (
-            <div>No item in cart</div>
+            <div>No item in wishlist</div>
           ) : (
-            cartData?.map((item, idx) => <CartItem key={idx} item={item} />)
+            cartData?.map((item, idx) => <ItemCard key={idx} item={item} />)
           )}
-        </div>
-        <div className="mt-6 w-full self-end">
-          <Link to="/checkout">
-            <button className="rounded-lg px-10 bg-[#ff7d1a] text-white text-center w-full h-10">
-              Checkout
-            </button>
-          </Link>
         </div>
       </div>
     </div>
   );
 }
+
+const ItemCard = ({
+  item,
+}: {
+  item: { name: string; price: number; description: string };
+}) => {
+  const { name, price } = item;
+  return (
+    <div
+      className={`${style.flex_normal} w-full border-b px-6 py-4 justify-between`}
+    >
+      <div>
+        <RxCross1 className="cursor-pointer" size={10} />
+      </div>
+      <img
+        src="http://source.unsplash.com/400x400?clothes"
+        className="w-12 rounded-md h-12"
+        loading="lazy"
+        alt=""
+      />
+      <div>
+        <h4 className="text-lg font-medium">{name}</h4>
+        <h4 className="text-sm text-gray-500">{formattedPrice(price)}</h4>
+      </div>
+      <div>
+        <BsCartPlus
+          size={20}
+          className="cursor-pointer"
+          color="#ff7d1a"
+          title="Add to Cart"
+        />
+      </div>
+    </div>
+  );
+};

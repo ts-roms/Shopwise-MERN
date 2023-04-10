@@ -10,6 +10,8 @@ import Navbar from "../Navbar/Navbar";
 import UserNavigation from "../UserNavigation/UserNavigation";
 import { useSelector } from "react-redux";
 import { IAppState } from "../../Interface";
+import Cart from "../Cart/Cart";
+import Wishlist from "../Wishlist/Wishlist";
 
 type Product = {
   id: number;
@@ -22,14 +24,12 @@ export default function Header() {
   const [searchedProduct, setSearchedProduct] = useState<Product[]>([]);
   const ref = useRef<HTMLInputElement>(null);
 
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState<boolean>(false);
 
-  const { isAuthenticate, user } = useSelector(
-    (state: IAppState) => state.user
-  );
+  const userState = useSelector((state: IAppState) => state.user);
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+  function handleChange(e: ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     setSearchQuery(e.target.value);
 
@@ -38,6 +38,14 @@ export default function Header() {
     );
 
     setSearchedProduct(filteredProduct);
+  }
+
+  function toggleCart(): void {
+    setIsCartOpen((prev: boolean) => !prev);
+  }
+
+  function toggleWishlist(): void {
+    setIsWishlistOpen((prev: boolean) => !prev);
   }
 
   useEffect(() => {
@@ -114,16 +122,26 @@ export default function Header() {
           </Link>
         </div>
       </div>
-
       <div className="sticky top-0 shadow-sm z-10 transition-all hidden lg:flex items-center justify-between h-[70px] w-full bg-[#ff7d1a]">
         <div className={` ${style.section}`}>
           <div className={`relative ${style.flex_normal} justify-between `}>
             <Dropdown />
             <Navbar />
-            <UserNavigation isAuthenticate={isAuthenticate} user={user} />
+            <UserNavigation
+              userState={userState}
+              toggleCart={toggleCart}
+              toggleWishlist={toggleWishlist}
+            />
           </div>
         </div>
       </div>
+      {/* cart model */}
+      <Cart toggleCart={toggleCart} isCartOpen={isCartOpen} />
+      {/* wishlist model */}
+      <Wishlist
+        toggleWishlist={toggleWishlist}
+        isWishlistOpen={isWishlistOpen}
+      />
     </>
   );
 }

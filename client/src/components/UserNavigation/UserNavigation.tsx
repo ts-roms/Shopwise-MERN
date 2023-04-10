@@ -5,7 +5,18 @@ import { Link } from "react-router-dom";
 import { host } from "../../server";
 import { IUserState } from "../../Interface";
 
-export default function UserNavigation({ isAuthenticate, user }: IUserState) {
+interface IProps {
+  userState: IUserState;
+  toggleCart: () => void;
+  toggleWishlist: () => void;
+}
+
+export default function UserNavigation({
+  userState,
+  toggleCart,
+  toggleWishlist,
+}: IProps) {
+  const { user, isAuthenticate } = userState;
   return (
     <div className={`${style.flex_normal} gap-6`}>
       <div className="relative cursor-pointer ">
@@ -13,6 +24,7 @@ export default function UserNavigation({ isAuthenticate, user }: IUserState) {
           color="white"
           size={30}
           className="hover:fill-gray-800 transition-all"
+          onClick={toggleWishlist}
         />
         <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
           0
@@ -23,6 +35,7 @@ export default function UserNavigation({ isAuthenticate, user }: IUserState) {
           color="white"
           className="hover:fill-gray-800 transition-all"
           size={30}
+          onClick={toggleCart}
         />
         <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
           0

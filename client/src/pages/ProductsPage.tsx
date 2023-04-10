@@ -11,7 +11,6 @@ export default function ProductsPage() {
   const [searchParams] = useSearchParams();
 
   const categoryData = searchParams.get("category");
-  console.log(searchParams);
 
   useEffect(() => {
     if (categoryData === null) {
