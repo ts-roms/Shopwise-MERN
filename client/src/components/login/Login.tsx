@@ -37,10 +37,10 @@ export default function Login() {
         },
         { withCredentials: true }
       );
-      console.log(res);
       if (res.status) {
         toast.success("Login Success!");
         navigate("/");
+        window.location.reload(true);
       }
     } catch (error: any) {
       console.log(error);

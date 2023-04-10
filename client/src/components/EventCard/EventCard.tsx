@@ -6,7 +6,11 @@ export default function EventCard() {
   return (
     <div className="w-full bg-white rounded-lg flex p-6">
       <div className="w-full lg:w-1/2 mx-auto">
-        <img src="https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg" alt="" />
+        <img
+          src="https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg"
+          loading="lazy"
+          alt=""
+        />
       </div>
       <div className="w-full lg:w-1/2 flex flex-col justify-center space-y-4">
         <h4 className={`${style.productTitle}`}>Iphone 14 Pro Max 8/256gb</h4>

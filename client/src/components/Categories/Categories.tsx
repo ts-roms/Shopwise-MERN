@@ -1,12 +1,13 @@
 import style from "../../styles/style";
 import categoriesData from "../../constant/categories.json";
 import { useNavigate } from "react-router-dom";
-import { Category } from "../Dropdown/Dropdown";
+// import { Category } from "../Dropdown/Dropdown";
+import { ICategory } from "../../Interface";
 
 export default function Categories() {
   const navigate = useNavigate();
 
-  function handleSubmit(category: Category) {
+  function handleSubmit(category: ICategory) {
     navigate(`products?category=${category.title}`);
     window.location.reload();
   }
@@ -26,6 +27,7 @@ export default function Categories() {
                 <div className="h-32 overflow-hidden">
                   <img
                     className="w-full h-full object-cover"
+                    loading="lazy"
                     src={category.image_Url}
                     alt={category.title}
                   />

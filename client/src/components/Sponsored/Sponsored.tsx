@@ -16,7 +16,12 @@ export default function Sponsored() {
         <div className="flex justify-center md:justify-between flex-wrap gap-5 w-full items-center">
           {sponsors?.map((sponsor, idx) => (
             <div key={idx}>
-              <img src={sponsor} className="w-40 object-contain" alt="" />
+              <img
+                loading="lazy"
+                src={sponsor}
+                className="w-40 object-contain"
+                alt=""
+              />
             </div>
           ))}
         </div>

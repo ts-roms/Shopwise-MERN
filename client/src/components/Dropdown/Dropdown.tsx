@@ -65,6 +65,7 @@ export default function Dropdown() {
                     <img
                       src={category.image_Url}
                       className="h-7 w-7 object-contain mr-2.5 select-none"
+                      loading="lazy"
                       alt={category.title}
                     />
                     <p className="m-3 select-none text-sm">{category.title}</p>

@@ -29,7 +29,7 @@ export default function Product({ product }: IProps) {
           <div className="h-40 overflow-hidden rounded-lg transition-all duration-300 hover:-translate-y-[18%] md:hover:-translate-y-1/4 hover:shadow-img">
             <img
               src={image_Url[0].url}
-              alt=""
+              loading="lazy"
               className="object-contain h-full w-full"
             />
           </div>

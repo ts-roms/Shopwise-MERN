@@ -22,6 +22,9 @@ export default function Header() {
   const [searchedProduct, setSearchedProduct] = useState<Product[]>([]);
   const ref = useRef<HTMLInputElement>(null);
 
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+
   const { isAuthenticate, user } = useSelector(
     (state: IAppState) => state.user
   );
@@ -89,6 +92,7 @@ export default function Header() {
                           <div className={`px-6 py-2 ${style.flex_normal}`}>
                             <img
                               className="w-11 h-10 mr-8"
+                              loading="lazy"
                               src={product.image_Url[0].url}
                             />
                             <h1>{product.name}</h1>

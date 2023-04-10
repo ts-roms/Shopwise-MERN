@@ -16,6 +16,7 @@ import EventsPage from "./pages/EventsPage";
 import FAQ from "./pages/FAQPage";
 import { useSelector } from "react-redux";
 import { IAppState } from "./Interface";
+import Loader from "./components/Loader/Loader";
 
 function App() {
   const { isLoading } = useSelector((state: IAppState) => state.user);
@@ -27,7 +28,7 @@ function App() {
   return (
     <>
       {isLoading ? (
-        <h1>Loading</h1>
+        <Loader />
       ) : (
         <BrowserRouter basename="/">
           <Routes>
