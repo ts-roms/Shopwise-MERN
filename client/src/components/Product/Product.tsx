@@ -24,7 +24,7 @@ export default function Product({ product }: IProps) {
 
   return (
     <>
-      <Link to={`products/${productSlug}`}>
+      <Link to={`/products/${productSlug}`}>
         <div className="border p-4 bg-white relative overflow-visible shadow-lg rounded-md">
           <div className="h-40 overflow-hidden rounded-lg transition-all duration-300 hover:-translate-y-[18%] md:hover:-translate-y-1/4 hover:shadow-img">
             <img
@@ -57,7 +57,7 @@ export default function Product({ product }: IProps) {
               </div>
               <AiOutlineHeart title="Add to wishlist" size={19} />
             </div>
-            <button className="flex items-center justify-center rounded-md bg-[#ff7d1a] text-white text-center w-full h-9">
+            <button className={`${style.cart_button}`}>
               <AiOutlineShoppingCart
                 title="Add to cart"
                 className="h-4 w-4"

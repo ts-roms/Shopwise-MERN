@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ActivationPage from "./pages/ActivationPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -20,14 +20,19 @@ import Loader from "./components/Loader/Loader";
 
 function App() {
   const { isLoading } = useSelector((state: IAppState) => state.user);
+  const [isUserLoaded, setIsUserLoaded] = useState(false);
+
+  // the loadUser() action in the useEffect hook, but it is being executed asynchronously,
+  // which means that the component will render without waiting for the isLoading flag
+  // to be set to false after the user information is loaded.
 
   useEffect(() => {
-    store.dispatch(loadUser());
+    store.dispatch(loadUser()).then(() => setIsUserLoaded(true));
   }, []);
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || !isUserLoaded ? (
         <Loader />
       ) : (
         <BrowserRouter basename="/">
@@ -55,6 +60,14 @@ function App() {
               }
             />
             <Route
+              path="/products/:product_slug"
+              element={
+                <Layout>
+                  <ProductPage />
+                </Layout>
+              }
+            />
+            <Route
               path="/best-selling"
               element={
                 <Layout>
@@ -78,7 +91,6 @@ function App() {
                 </Layout>
               }
             />
-            {/* <Route path="/products/:product_slug" element={<ProductPage />} /> */}
             <Route path="*" element={<h1>Wront route</h1>} />
           </Routes>
           <ToastContainer

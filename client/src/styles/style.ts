@@ -3,15 +3,17 @@ const style = {
   heading: "text-2xl text-center md:text-start font-semibold front-Roboto pb-5",
   section: "w-11/12 mx-auto py-10",
   productTitle: "text-[25px] font-semibold font-Roboto text-[#333]",
-  productDiscountPrice: "font-bold text-lg text-[#333] font-Roboto",
-  price: "font-medium text-base text-[#d55b45] pl-3 mt-[-4px] line-through",
-  shop_name: "pt-3 text-sm text-blue-400 pb-3",
+  productDiscountPrice:
+    "font-bold text-lg text-[#333] font-Roboto text-[#FB0000]",
+  price:
+    "font-medium text-base text-[#d55b45] pl-3 mt-[-4px] line-through text-gray-400",
+  shop_name: "text-sm text-blue-400",
   active_indicator:
     "absolute bottom-[-27%] left-0 h-[-3px] w-full bg-[crimson]",
   button:
     "w-40 bg-black p-2.5  flex items-center justify-center rounded-xl cursor-pointer",
   cart_button:
-    "px-5 h-10 rounded-2xl bg-[#f63b60] flex items-center justify-center cursor-pointer",
+    "flex items-center justify-center rounded-md bg-[#ff7d1a] text-white text-center w-full h-9",
   cart_button_text: "text-white text-base front-semibold",
   input:
     "border-2 p-1 rounded-md focus:outline-2 outline-blue-500/50 ring-inset",

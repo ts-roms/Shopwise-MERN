@@ -25,7 +25,7 @@ export default function ProductsPage() {
       setProducts(sorted);
     }
     window.scrollTo(0, 0);
-  }, []);
+  }, [categoryData]);
 
   return (
     <section className="min-h-screen flex">
