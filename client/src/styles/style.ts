@@ -8,10 +8,9 @@ const style = {
   price:
     "font-medium text-base text-[#d55b45] pl-3 mt-[-4px] line-through text-gray-400",
   shop_name: "text-sm text-blue-400",
-  active_indicator:
-    "absolute bottom-[-27%] left-0 h-[-3px] w-full bg-[crimson]",
+
   button:
-    "w-40 bg-black p-2.5  flex items-center justify-center rounded-xl cursor-pointer",
+    "w-40 bg-black py-2 px-2.5 text-white flex items-center justify-center rounded-xl cursor-pointer",
   cart_button:
     "flex items-center justify-center rounded-md bg-[#ff7d1a] text-white text-center w-full h-9",
   cart_button_text: "text-white text-base front-semibold",

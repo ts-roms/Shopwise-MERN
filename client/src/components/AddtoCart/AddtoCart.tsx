@@ -48,7 +48,7 @@ export default function AddtoCart({ product }: { product: IProduct }) {
         </button>
       </div>
       <button className={`${style.cart_button}`}>
-        <AiOutlineShoppingCart />
+        <AiOutlineShoppingCart title="Add to Cart" />
         <span className="ml-2">Add to cart</span>
       </button>
     </div>

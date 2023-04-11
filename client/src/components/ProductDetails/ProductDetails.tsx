@@ -10,8 +10,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
 
   const { image_Url, name, discount_price, price, description, shop } = product;
 
-  console.log(image_Url);
-
+  window.scrollTo(0, 0);
   return (
     <div className="w-full py-5">
       <div className="block w-full lg:flex">
@@ -50,7 +49,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
 
             <div className={`${style.flex_normal} justify-between`}>
               <AddtoCart product={product} />
-              <AiOutlineHeart size={30} />
+              <AiOutlineHeart title="Add to Wishlist" size={30} />
             </div>
             <div className={`${style.flex_normal} gap-8`}>
               <div className={`${style.flex_normal} gap-3`}>
@@ -68,7 +67,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
                 className={`${style.button} text-white bg-blue-500 hover:bg-blue-600 transition-all focus:bg-blue-600`}
               >
                 Send Message
-                <AiOutlineMessage className="ml-1.5" />
+                <AiOutlineMessage title="Send Message" className="ml-1.5" />
               </button>
             </div>
           </div>
