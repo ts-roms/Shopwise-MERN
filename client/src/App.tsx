@@ -17,9 +17,10 @@ import FAQ from "./pages/FAQPage";
 import { useSelector } from "react-redux";
 import { IAppState } from "./Interface";
 import Loader from "./components/Loader/Loader";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
-  const { isLoading } = useSelector((state: IAppState) => state.user);
+  const { isLoading, error } = useSelector((state: IAppState) => state.user);
   const [isUserLoaded, setIsUserLoaded] = useState(false);
 
   // the loadUser() action in the useEffect hook, but it is being executed asynchronously,
@@ -29,6 +30,14 @@ function App() {
   useEffect(() => {
     store.dispatch(loadUser()).then(() => setIsUserLoaded(true));
   }, []);
+
+  if (error) {
+    return <h1>Error {error}</h1>;
+  }
+
+  if (!isLoading && !isUserLoaded) {
+    return <h1>Error: Server not responding</h1>;
+  }
 
   return (
     <>
@@ -91,11 +100,19 @@ function App() {
                 </Layout>
               }
             />
-            <Route path="*" element={<h1>Wront route</h1>} />
+            <Route
+              path="/profile"
+              element={
+                <Layout>
+                  <ProfilePage />
+                </Layout>
+              }
+            />
+            <Route path="*" element={<h1>Wrong route</h1>} />
           </Routes>
           <ToastContainer
             position="bottom-center"
-            autoClose={5000}
+            autoClose={4000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
