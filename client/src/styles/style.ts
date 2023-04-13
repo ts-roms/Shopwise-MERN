@@ -10,7 +10,7 @@ const style = {
   shop_name: "text-sm text-blue-400",
 
   button:
-    "w-40 bg-black py-2 px-2.5 text-white flex items-center justify-center rounded-xl cursor-pointer",
+    "w-40 bg-black py-2 px-2.5 flex items-center justify-center rounded-xl cursor-pointer",
   cart_button:
     "flex items-center justify-center rounded-md bg-[#ff7d1a] text-white text-center w-full h-9",
   cart_button_text: "text-white text-base front-semibold",
