@@ -10,6 +10,7 @@ export default function LoginPage() {
 
   const { isAuthenticate } = useSelector((state: IAppState) => state.user);
 
+  console.log(isAuthenticate);
   useEffect(() => {
     if (isAuthenticate) {
       toast.info("You are allready logged in");

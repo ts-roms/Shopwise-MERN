@@ -53,8 +53,8 @@ export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
 
       console.log(res);
       toast.success(res.data.message);
-      navigate("/login");
-      // window.location.reload();
+      window.location.reload();
+      navigate("/");
     } catch (error) {
       console.log(error);
       toast.error("Error occured!");

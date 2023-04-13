@@ -18,9 +18,12 @@ import { useSelector } from "react-redux";
 import { IAppState } from "./Interface";
 import Loader from "./components/Loader/Loader";
 import ProfilePage from "./pages/ProfilePage";
+import ProtectedRoute from "./Protectedroute";
 
 function App() {
-  const { isLoading, error } = useSelector((state: IAppState) => state.user);
+  const { isLoading, error, isAuthenticate } = useSelector(
+    (state: IAppState) => state.user
+  );
   const [isUserLoaded, setIsUserLoaded] = useState(false);
 
   // the loadUser() action in the useEffect hook, but it is being executed asynchronously,
@@ -104,9 +107,11 @@ function App() {
             <Route
               path="/profile"
               element={
-                <Layout>
-                  <ProfilePage />
-                </Layout>
+                <ProtectedRoute isAuthenticate={isAuthenticate}>
+                  <Layout>
+                    <ProfilePage />
+                  </Layout>
+                </ProtectedRoute>
               }
             />
             <Route path="*" element={<h1>Wrong route</h1>} />
