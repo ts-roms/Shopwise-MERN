@@ -4,6 +4,7 @@ const {
   activation,
   loginUser,
   getUser,
+  logOutUser,
 } = require("../controllers/user.controller");
 const upload = require("../upload");
 const catchAsyncError = require("../middleware/catchAsyncError");
@@ -16,5 +17,7 @@ router.post("/activation", catchAsyncError(activation));
 router.post("/login", catchAsyncError(loginUser));
 
 router.get("/getuser", isVerify, catchAsyncError(getUser));
+
+router.get("/logout", isVerify, catchAsyncError(logOutUser));
 
 module.exports = router;

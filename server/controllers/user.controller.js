@@ -151,3 +151,20 @@ exports.getUser = async (req, res, next) => {
     next(new ErrorHandler(error.message, 500));
   }
 };
+
+// log out user
+
+exports.logOutUser = async (req, res, next) => {
+  try {
+    console.log("eee");
+    res.cookie("token", null, {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    });
+
+    res.status(201).json({ success: true, message: "Log out Successful!" });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};

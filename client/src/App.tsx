@@ -32,7 +32,8 @@ function App() {
   }, []);
 
   if (error) {
-    return <h1>Error {error}</h1>;
+    console.log(error);
+    // return <h1>Error {error}</h1>;
   }
 
   if (!isLoading && !isUserLoaded) {

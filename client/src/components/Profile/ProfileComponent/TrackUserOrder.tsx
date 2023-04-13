@@ -1,10 +1,9 @@
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { Link } from "react-router-dom";
-// import { Button } from "@material-ui/core";
 import { DataGrid } from "@mui/x-data-grid";
+import { MdOutlineTrackChanges } from "react-icons/md";
+import { Link } from "react-router-dom";
 import { formattedPrice } from "../../../helper/formatPrice";
 
-export default function UserOrders() {
+export default function TrackUserOrder() {
   const orders = [
     {
       _id: "7463hvbfbhfbrtr28820221",
@@ -58,7 +57,7 @@ export default function UserOrders() {
           <>
             <Link to={`/order/${params.id}`}>
               <button className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
-                <AiOutlineArrowRight size={20} />
+                <MdOutlineTrackChanges size={20} />
               </button>
             </Link>
           </>
@@ -90,8 +89,8 @@ export default function UserOrders() {
         rows={rows}
         columns={columns}
         pageSize={10}
-        disableSelectionOnClick
         autoHeight
+        disableRowSelectionOnClick
       />
     </div>
   );
