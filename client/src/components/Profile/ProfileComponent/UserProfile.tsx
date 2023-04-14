@@ -23,6 +23,7 @@ export default function UserProfile() {
 
   function handleUpdate() {
     setIsDisabled((prev) => !prev);
+    window.scrollTo(0, 176);
     toast.info("Now you can make change.");
   }
 
@@ -58,9 +59,13 @@ export default function UserProfile() {
       </div>
 
       <div className="w-full max-w-4xl mx-auto">
-        <form action="" onSubmit={handleSubmit} className="space-y-9">
-          <div className="w-full flex justify-between gap-8">
-            <div className="w-1/2">
+        <form
+          action=""
+          onSubmit={handleSubmit}
+          className="space-y-7 md:space-y-9"
+        >
+          <div className="w-full flex flex-col md:flex-row gap-4 lg:gap-8">
+            <div className="w-full md:w-1/2">
               <label className="block mb-2" htmlFor="name">
                 Full Name :
               </label>
@@ -74,7 +79,7 @@ export default function UserProfile() {
                 disabled={isDisabled}
               />
             </div>
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2">
               <label className="block mb-2" htmlFor="email">
                 Email :
               </label>
@@ -90,8 +95,8 @@ export default function UserProfile() {
             </div>
           </div>
 
-          <div className="w-full flex justify-between gap-8">
-            <div className="w-1/2">
+          <div className="w-full flex flex-col md:flex-row gap-4 lg:gap-8">
+            <div className="w-full md:w-1/2">
               <label className="block mb-2" htmlFor="phone">
                 Phone number :
               </label>
@@ -106,7 +111,7 @@ export default function UserProfile() {
                 disabled={isDisabled}
               />
             </div>
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2">
               <label className="block mb-2" htmlFor="zipcode">
                 Zipcode :
               </label>

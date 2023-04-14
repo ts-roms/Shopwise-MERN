@@ -33,12 +33,12 @@ export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
     },
     { linkName: "Refunds", icon: <HiReceiptRefund title="Refunds" />, id: 3 },
     {
-      linkName: "Track order",
+      linkName: "Track orders",
       icon: <MdOutlineTrackChanges title="Track Orders" />,
       id: 4,
     },
     {
-      linkName: "payment method",
+      linkName: "payment methods",
       icon: <AiOutlineCreditCard title="Payment Methods" />,
       id: 5,
     },
@@ -51,7 +51,6 @@ export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
         withCredentials: true,
       });
 
-      console.log(res);
       toast.success(res.data.message);
       window.location.reload();
       navigate("/");
@@ -62,11 +61,11 @@ export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
   }
 
   return (
-    <div className="bg-white shadow rounded-lg py-8">
+    <div className="bg-white shadow rounded-lg py-8 flex flex-col items-center md:items-start lg:block">
       {userLinks?.map((link, idx) => (
         <div
           key={idx}
-          className={`${style.flex_normal} gap-3 cursor-pointer transition-all px-8 py-4 hover:bg-orange-200`}
+          className={`${style.flex_normal} gap-3 cursor-pointer transition-all px-5 py-4 lg:px-12 hover:bg-orange-200`}
           onClick={() => setActiveTab(idx)}
         >
           <span
@@ -77,14 +76,14 @@ export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
           <span
             className={`${
               activeTab === idx ? "text-orange-500" : ""
-            } capitalize hidden  lg:block`}
+            } capitalize hidden text-sm lg:text-base md:block`}
           >
             {link.linkName}
           </span>
         </div>
       ))}
       <div
-        className={`${style.flex_normal} gap-3 cursor-pointer transition-all px-8 py-4 hover:bg-orange-200`}
+        className={`${style.flex_normal} gap-3 cursor-pointer transition-all px-5 py-4 lg:px-12 hover:bg-orange-200`}
         // onClick={() => setActiveTab(userLinks.length + 1)}
         onClick={handleLogout}
       >
@@ -104,7 +103,7 @@ export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
         <span
           className={`${
             activeTab === userLinks.length + 1 ? "text-orange-500" : ""
-          } capitalize hidden lg:block`}
+          } capitalize hidden text-sm lg:text-base md:block`}
         >
           Log out
         </span>

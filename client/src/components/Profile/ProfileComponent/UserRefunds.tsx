@@ -84,14 +84,8 @@ export default function UserRefunds() {
     });
 
   return (
-    <div className="px-8 py-4">
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={10}
-        autoHeight
-        disableRowSelectionOnClick
-      />
+    <div>
+      <DataGrid rows={rows} columns={columns} autoHeight />
     </div>
   );
 }

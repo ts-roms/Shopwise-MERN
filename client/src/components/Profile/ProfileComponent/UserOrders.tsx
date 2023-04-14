@@ -24,7 +24,7 @@ export default function UserOrders() {
     {
       field: "status",
       headerName: "Status",
-      minWidth: 130,
+      minWidth: 100,
       flex: 0.7,
       cellClassName: (params: any) => {
         return params.value.status === "Delivered" ? "greenColor" : "redColor";
@@ -34,7 +34,7 @@ export default function UserOrders() {
       field: "itemsQty",
       headerName: "Items Qty",
       type: "number",
-      minWidth: 130,
+      minWidth: 100,
       flex: 0.7,
     },
 
@@ -42,14 +42,14 @@ export default function UserOrders() {
       field: "total",
       headerName: "Total",
       type: "number",
-      minWidth: 130,
+      minWidth: 100,
       flex: 0.8,
     },
 
     {
       field: " ",
       flex: 1,
-      minWidth: 150,
+      minWidth: 130,
       headerName: "",
       type: "number",
       sortable: false,
@@ -85,14 +85,8 @@ export default function UserOrders() {
     });
 
   return (
-    <div className="px-8 py-4">
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={10}
-        disableSelectionOnClick
-        autoHeight
-      />
+    <div>
+      <DataGrid rows={rows} columns={columns} autoHeight />
     </div>
   );
 }
