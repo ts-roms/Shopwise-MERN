@@ -36,9 +36,9 @@ export default function Header() {
 
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  const userState = useSelector((state: IAppState) => state.user);
+  const userState = useSelector((state: IAppState) => state?.user);
 
-  const { avatar, name } = userState?.user;
+  const user = userState?.user;
 
   function handleChange(e: ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
@@ -287,10 +287,10 @@ export default function Header() {
               >
                 <img
                   className="h-8 w-8 rounded-full"
-                  src={`${host}/${avatar}`}
+                  src={`${host}/${userState?.user?.avatar}`}
                   alt=""
                 />
-                <span>{name}</span>
+                <span>{userState?.user?.name}</span>
               </Link>
             )}
           </div>

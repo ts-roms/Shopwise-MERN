@@ -118,6 +118,15 @@ export default function Login() {
               Signup
             </Link>
           </div>
+          <div>
+            looking for Home Page?
+            <Link
+              to="/"
+              className="font-medium text-blue-500 transition-all hover:text-blue-500 focus:text-blue-500 ml-2"
+            >
+              click here
+            </Link>
+          </div>
         </form>
       </div>
     </div>

@@ -12,16 +12,20 @@ export const loadUser = () => async (dispatch: Dispatch<Action>) => {
 
     dispatch({ type: "LoadUserSuccess", payload: data.user });
   } catch (error: any) {
-    if (error.response && error.response.status === 401) {
-      dispatch({
-        type: "LoadUserSuccess",
-        payload: { id: null, username: null, email: null },
-      });
-    } else {
-      dispatch({
-        type: "LoadUserFail",
-        error: error.message,
-      });
-    }
+    // if (error.response && error.response.status === 401) {
+    //   dispatch({
+    //     type: "LoadUserSuccess",
+    //     payload: { id: null, username: null, email: null },
+    //   });
+    // } else {
+    //   dispatch({
+    //     type: "LoadUserFail",
+    //     error: error.message,
+    //   });
+    // }
+    dispatch({
+      type: "LoadUserFail",
+      payload: error.response.data.message,
+    });
   }
 };

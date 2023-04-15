@@ -17,6 +17,7 @@ export default function UserNavigation({
   toggleWishlist,
 }: IProps) {
   const { user, isAuthenticate } = userState;
+
   return (
     <div className={`${style.flex_normal} gap-6`}>
       <div className="relative cursor-pointer ">
