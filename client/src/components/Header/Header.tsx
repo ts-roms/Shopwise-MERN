@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { IAppState } from "../../Interface";
 import Cart from "../Cart/Cart";
 import Wishlist from "../Wishlist/Wishlist";
+import { host } from "../../server";
 
 type Product = {
   id: number;
@@ -37,6 +38,8 @@ export default function Header() {
 
   const userState = useSelector((state: IAppState) => state.user);
 
+  const { avatar, name } = userState?.user;
+
   function handleChange(e: ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     setSearchQuery(e.target.value);
@@ -54,6 +57,10 @@ export default function Header() {
 
   function toggleWishlist(): void {
     setIsWishlistOpen((prev: boolean) => !prev);
+  }
+
+  function toggleMobileNav() {
+    setIsMobileOpen(!isMobileOpen);
   }
 
   useEffect(() => {
@@ -141,7 +148,7 @@ export default function Header() {
           <div className={` ${style.section}`}>
             <div className={`relative ${style.flex_normal} justify-between `}>
               <Dropdown />
-              <Navbar />
+              <Navbar mobile={false} toggleMobileNav={toggleMobileNav} />
               <UserNavigation
                 userState={userState}
                 toggleCart={toggleCart}
@@ -163,10 +170,7 @@ export default function Header() {
       <header className="w-full fixed top-0 z-50 bg-white shadow left-0 lg:hidden">
         <div className={`${style.section} py-5`}>
           <div className={`${style.flex_normal} justify-between`}>
-            <div
-              className="cursor-pointer"
-              onClick={() => setIsMobileOpen(!isMobileOpen)}
-            >
+            <div className="cursor-pointer" onClick={toggleMobileNav}>
               <CgMenuLeft size={30} title="Menu" />
             </div>
             <div>
@@ -195,7 +199,7 @@ export default function Header() {
         >
           <div
             className="border-b py-5 px-4  justify-between flex items-center"
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
+            onClick={toggleMobileNav}
           >
             <RiCloseLine size={30} title="Close Menu" />
             <h4 className="flex-1 text-center">Menu</h4>
@@ -210,7 +214,7 @@ export default function Header() {
               </span>
             </div>
           </div>
-          <div className="py-5 px-4">
+          <div className="py-5 px-4 space-y-12">
             <div className="relative">
               <input
                 type="text"
@@ -232,7 +236,7 @@ export default function Header() {
                     return (
                       <Link
                         to={`/products/${productSlug}`}
-                        onClick={() => setIsMobileOpen(!isMobileOpen)}
+                        onClick={toggleMobileNav}
                         key={idx}
                       >
                         <div
@@ -255,6 +259,40 @@ export default function Header() {
                 </div>
               ) : null}
             </div>
+            <div className="pl-4">
+              <Navbar mobile={true} toggleMobileNav={toggleMobileNav} />
+            </div>
+            <div>
+              <Link to="/seller">
+                <button className={`${style.button} text-white`}>
+                  Become Seller <IoIosArrowForward className="ml-1" />
+                </button>
+              </Link>
+            </div>
+            {!userState.isAuthenticate ? (
+              <div className={`${style.flex_normal} gap-4`}>
+                <Link to="/login" className="text-lg text-gray-600">
+                  Login
+                </Link>
+                /
+                <Link to="/signup" className="text-lg text-gray-600">
+                  Signup
+                </Link>
+              </div>
+            ) : (
+              <Link
+                to="/profile"
+                onClick={toggleMobileNav}
+                className="flex items-center gap-3 p-2 border text-gray-700 hover:text-gray-900  focus:text-gray-900 border-gray-300 transition-all rounded hover:border-gray-500 focus:border-gray-500"
+              >
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src={`${host}/${avatar}`}
+                  alt=""
+                />
+                <span>{name}</span>
+              </Link>
+            )}
           </div>
         </div>
       </header>

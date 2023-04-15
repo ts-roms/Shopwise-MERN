@@ -4,7 +4,7 @@ import Countdown from "../CountDown/Countdown";
 
 export default function EventCard() {
   return (
-    <div className="w-full bg-white rounded-lg flex p-6">
+    <div className="w-full bg-white rounded-lg flex flex-col gap-6 p-6">
       <div className="w-full lg:w-1/2 mx-auto">
         <img
           src="https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg"
@@ -22,7 +22,7 @@ export default function EventCard() {
           elit. Labore aspernatur recusandae quod asperiores nobis id architecto
           nam.
         </p>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between flex-wrap gap-5 items-center">
           <div className={`${style.flex_normal} gap-5`}>
             <h4 className="line-through text-gray-400 font-medium">
               {formattedPrice(12999999)}
