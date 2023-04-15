@@ -48,10 +48,10 @@ const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
     setActiveTab(tabName);
   };
   return (
-    <div className="bg-white lg:px-10 rounded my-16 px-4 py-6">
+    <div className="bg-white lg:px-10 rounded my-16 px-3 py-6">
       <div className="w-full flex justify-between border-b py-4">
         <h4
-          className={`text-lg font-semibold cursor-pointer lg:text-xl relative py-1.5 after:bg-red-400 after:absolute after:left-0 after:bottom-0 after:h-1 ${
+          className={`text-base font-medium lg:font-semibold cursor-pointer lg:text-xl relative py-1.5 after:bg-red-400 after:absolute after:left-0 after:bottom-0 after:h-1 ${
             activeTab === "productDetails" ? "after:w-full" : "after:w-0"
           }`}
           onClick={() => handleTabClick("productDetails")}
@@ -59,7 +59,7 @@ const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
           Products Details
         </h4>
         <h4
-          className={`text-lg font-semibold cursor-pointer lg:text-xl relative py-1.5 after:bg-red-400 after:absolute after:left-0 after:bottom-0 after:h-1 ${
+          className={`text-base font-medium lg:font-semibold cursor-pointer lg:text-xl relative py-1.5 after:bg-red-400 after:absolute after:left-0 after:bottom-0 after:h-1 ${
             activeTab === "reviews" ? "after:w-full" : "after:w-0"
           }`}
           onClick={() => handleTabClick("reviews")}
@@ -67,7 +67,7 @@ const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
           Products Reviews
         </h4>
         <h4
-          className={`text-lg font-semibold cursor-pointer lg:text-xl relative py-1.5 after:bg-red-400 after:absolute after:left-0 after:bottom-0 after:h-1 ${
+          className={`text-base font-medium lg:font-semibold cursor-pointer lg:text-xl relative py-1.5 after:bg-red-400 after:absolute after:left-0 after:bottom-0 after:h-1 ${
             activeTab === "seller" ? "after:w-full" : "after:w-0"
           }`}
           onClick={() => handleTabClick("seller")}
@@ -76,8 +76,8 @@ const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
         </h4>
       </div>
       {activeTab === "productDetails" && (
-        <div className="space-y-10 px-8 py-5">
-          <p className=" text-lg whitespace-pre-line">
+        <div className="space-y-6 lg:space-y-10 px-4 lg:px-8 py-5">
+          <p className="text-base lg:text-lg whitespace-pre-line">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione
             quos dolor, assumenda tempore optio laboriosam saepe porro quaerat
             magni fuga iure ducimus, dignissimos exercitationem dicta quisquam
@@ -86,13 +86,13 @@ const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
             vitae adipisci officia modi. Facere dolorum, natus in eligendi iure
             cumque repellendus illo aut cum quis.
           </p>
-          <p className=" text-lg whitespace-pre-line">
+          <p className="text-base lg:text-lg whitespace-pre-line">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam odio
             error aut incidunt fuga voluptatibus accusantium earum cupiditate
             quidem optio, fugit voluptas, in molestias dignissimos asperiores
             deleniti! Alias, laborum ut?
           </p>
-          <p className=" text-lg whitespace-pre-line">
+          <p className="text-base lg:text-lg whitespace-pre-line">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam odio
             error aut incidunt fuga voluptatibus accusantium earum cupiditate
             quidem optio, fugit voluptas, in molestias dignissimos asperiores
@@ -142,7 +142,9 @@ const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
                 Total Reviews : <span>23</span>
               </h4>
               <Link className="inline-block" to="/shop">
-                <button className={` ${style.button} `}>Visit Shop</button>
+                <button className={` ${style.button} text-white `}>
+                  Visit Shop
+                </button>
               </Link>
             </div>
           </div>

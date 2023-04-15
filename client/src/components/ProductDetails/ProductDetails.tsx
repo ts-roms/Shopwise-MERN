@@ -12,7 +12,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
 
   window.scrollTo(0, 0);
   return (
-    <div className="w-full py-5">
+    <div className="w-full py-5 mt-8">
       <div className="block w-full lg:flex">
         <div className="w-full lg:w-1/2">
           <img src={image_Url[select].url} className="w-4/5 mx-auto" alt="" />
@@ -36,9 +36,9 @@ export default function ProductDetails({ product }: { product: IProduct }) {
           </div>
         </div>
         <div className="w-full lg:w-1/2">
-          <div className="space-y-12 p-10">
+          <div className="space-y-12 px-3 py-9 lg:p-10">
             <h1 className={`${style.productTitle}`}>{name}</h1>
-            <p>{description}</p>
+            <p className="text-sm lg:text-base">{description}</p>
 
             <div className={`${style.flex_normal}`}>
               <h4 className={`${style.productDiscountPrice} text-3xl`}>
@@ -51,7 +51,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
               <AddtoCart product={product} />
               <AiOutlineHeart title="Add to Wishlist" size={30} />
             </div>
-            <div className={`${style.flex_normal} gap-8`}>
+            <div className={`${style.flex_normal} flex-col md:flex-row gap-8`}>
               <div className={`${style.flex_normal} gap-3`}>
                 <img
                   className="h-12 w-12 rounded-full"

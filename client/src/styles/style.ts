@@ -2,7 +2,7 @@ const style = {
   custom_container: "w-11/12 hidden sm:block",
   heading: "text-2xl text-center md:text-start font-semibold front-Roboto pb-5",
   section: "max-w-[90%] w-full mx-auto py-10",
-  productTitle: "text-[25px] font-semibold font-Roboto text-[#333]",
+  productTitle: "text-xl lg:text-[25px] font-semibold font-Roboto text-[#333]",
   productDiscountPrice:
     "font-bold text-lg text-[#333] font-Roboto text-[#FB0000]",
   price:

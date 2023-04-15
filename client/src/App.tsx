@@ -65,14 +65,6 @@ function App() {
               element={<ActivationPage />}
             />
             <Route
-              path="/products"
-              element={
-                <Layout>
-                  <ProductsPage />
-                </Layout>
-              }
-            />
-            <Route
               path="/products/:product_slug"
               element={
                 <Layout>
@@ -80,6 +72,15 @@ function App() {
                 </Layout>
               }
             />
+            <Route
+              path="/products"
+              element={
+                <Layout>
+                  <ProductsPage />
+                </Layout>
+              }
+            />
+
             <Route
               path="/best-selling"
               element={

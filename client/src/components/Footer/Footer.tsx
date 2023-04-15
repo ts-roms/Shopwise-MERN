@@ -4,7 +4,7 @@ import { FiInstagram } from "react-icons/fi";
 import style from "../../styles/style";
 import siteLink from "../../constant/footerLinks.json";
 import supportLink from "../../constant/footerSupportLinks.json";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -37,7 +37,7 @@ export default function Footer() {
           </div>
           <div className="mb-6">
             <h4 className="mb-2">Subcribe to get notified for latest offer</h4>
-            <form action="">
+            <form action="" className="flex items-center gap-4 flex-wrap">
               <input
                 type="text"
                 placeholder="Your Email"
@@ -59,7 +59,7 @@ export default function Footer() {
                       key={idx}
                       className="hover:text-[#ff7d1a] transition-all hover:underline mb-1"
                     >
-                      <NavLink to={link.link}>{link.name}</NavLink>
+                      <Link to={link.link}>{link.name}</Link>
                     </li>
                   ))}
                 </ul>
