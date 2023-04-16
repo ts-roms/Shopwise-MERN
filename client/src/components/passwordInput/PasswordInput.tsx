@@ -23,7 +23,6 @@ export default function PasswordInput({
         type={isShow ? "text" : "password"}
         placeholder={placeholder}
         required
-        autoComplete="current-password"
         name={name}
         id={name}
         value={value}

@@ -8,11 +8,10 @@ import { IAppState } from "../Interface";
 export default function LoginPage() {
   const navigate = useNavigate();
 
-  const { isAuthenticate } = useSelector((state: IAppState) => state.user);
+  const { isUserAuthenticate } = useSelector((state: IAppState) => state.user);
 
-  console.log(isAuthenticate);
   useEffect(() => {
-    if (isAuthenticate) {
+    if (isUserAuthenticate) {
       toast.info("You are allready logged in");
       navigate("/");
     }

@@ -1,27 +1,27 @@
-import { createReducer, PayloadAction } from "@reduxjs/toolkit";
+import { createReducer } from "@reduxjs/toolkit";
 
 const initialState = {
-  isAuthenticate: false,
-  isLoading: false,
-  error: null,
+  isUserAuthenticate: false,
+  isUserLoading: false,
+  userError: null,
   user: null,
 };
 
 export const userReducer = createReducer(initialState, {
   LoadUserRequest: (state) => {
-    state.isLoading = true;
+    state.isUserLoading = true;
   },
   LoadUserSuccess: (state, action) => {
-    state.isAuthenticate = true;
-    state.isLoading = false;
+    state.isUserAuthenticate = true;
+    state.isUserLoading = false;
     state.user = action.payload;
   },
   LoadUserFail: (state, action) => {
-    (state.isLoading = false),
-      (state.error = action.error),
-      (state.isAuthenticate = false);
+    (state.isUserLoading = false),
+      (state.userError = action.error),
+      (state.isUserAuthenticate = false);
   },
   ClearErrors: (state) => {
-    state.error = null;
+    state.userError = null;
   },
 });

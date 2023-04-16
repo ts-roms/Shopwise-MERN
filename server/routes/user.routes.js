@@ -18,6 +18,6 @@ router.post("/login", catchAsyncError(loginUser));
 
 router.get("/getuser", isVerify, catchAsyncError(getUser));
 
-router.get("/logout", isVerify, catchAsyncError(logOutUser));
+router.get("/logout", catchAsyncError(logOutUser));
 
 module.exports = router;

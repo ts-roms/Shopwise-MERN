@@ -2,23 +2,26 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import ShopLogin from "../components/shop/ShopLogin";
 import { IAppState } from "../Interface";
-import Signup from "../components/signup/Signup";
 
-export default function SignupPage() {
+export default function ShopLoginPage() {
   const navigate = useNavigate();
 
-  const { isUserAuthenticate } = useSelector((state: IAppState) => state.user);
+  const { isSellerAuthenticate, seller } = useSelector(
+    (state: IAppState) => state.seller
+  );
 
   useEffect(() => {
-    if (isUserAuthenticate) {
+    if (isSellerAuthenticate) {
       toast.info("You are allready logged in");
-      navigate("/");
+      navigate(`/shop/${seller._id}`);
     }
   }, []);
+
   return (
     <section className="min-h-screen bg-gray-50 flex flex-col justify-center">
-      <Signup />
+      <ShopLogin />
     </section>
   );
 }

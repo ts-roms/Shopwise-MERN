@@ -56,15 +56,34 @@ export interface IUser {
   avatar: string;
 }
 
+export interface ISeller {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  avatar: string;
+  phoneNumber: number;
+  address: string;
+  zipcode: number;
+}
+
 export interface IUserState {
-  isAuthenticate: boolean;
-  isLoading?: boolean;
-  error?: null | string;
+  isUserAuthenticate: boolean;
+  isUserLoading?: boolean;
+  userError?: null | string;
   user: IUser;
+}
+
+export interface ISellerState {
+  isSellerAuthenticate: boolean;
+  isSellerLoading: boolean;
+  sellerError?: null | string;
+  seller: ISeller;
 }
 
 export interface IAppState {
   user: IUserState;
+  seller: ISellerState;
 }
 
 export interface IQuestion {

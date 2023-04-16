@@ -16,7 +16,7 @@ export default function UserNavigation({
   toggleCart,
   toggleWishlist,
 }: IProps) {
-  const { user, isAuthenticate } = userState;
+  const { user, isUserAuthenticate } = userState;
 
   return (
     <div className={`${style.flex_normal} gap-6`}>
@@ -43,7 +43,7 @@ export default function UserNavigation({
         </span>
       </div>
       <div className="relative cursor-pointer">
-        {isAuthenticate ? (
+        {isUserAuthenticate ? (
           <Link to="/profile">
             <img
               className="h-7 w-7 rounded-full"

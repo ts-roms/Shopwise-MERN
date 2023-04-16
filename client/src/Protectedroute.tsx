@@ -2,12 +2,12 @@ import { Navigate } from "react-router-dom";
 import { ReactNode } from "react";
 
 interface IProps {
-  isAuthenticate: boolean;
+  isUserAuthenticate: boolean;
   children: ReactNode;
 }
 
-const ProtectedRoute = ({ isAuthenticate, children }: IProps) => {
-  if (!isAuthenticate) {
+const ProtectedRoute = ({ isUserAuthenticate, children }: IProps) => {
+  if (!isUserAuthenticate) {
     return <Navigate to="/login" replace />;
   }
   return children;

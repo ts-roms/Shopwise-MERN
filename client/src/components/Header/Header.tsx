@@ -137,7 +137,7 @@ export default function Header() {
             </div>
           </div>
           <div>
-            <Link to="/seller">
+            <Link to="/create-shop">
               <button className={`${style.button} text-white`}>
                 Become Seller <IoIosArrowForward className="ml-1" />
               </button>
@@ -263,13 +263,13 @@ export default function Header() {
               <Navbar mobile={true} toggleMobileNav={toggleMobileNav} />
             </div>
             <div>
-              <Link to="/seller">
+              <Link to="/create-shop">
                 <button className={`${style.button} text-white`}>
                   Become Seller <IoIosArrowForward className="ml-1" />
                 </button>
               </Link>
             </div>
-            {!userState.isAuthenticate ? (
+            {!userState.isUserAuthenticate ? (
               <div className={`${style.flex_normal} gap-4`}>
                 <Link to="/login" className="text-lg text-gray-600">
                   Login

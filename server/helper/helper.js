@@ -1,5 +1,3 @@
-const jwt = require("jsonwebtoken");
-
 exports.createActivationToken = (user, expirationDate) => {
   // return jwt.sign(user, process.env.ACTIVATION_SECRET, {
   //   expiresIn: "5m",

@@ -2,7 +2,6 @@ const path = require("path");
 const fs = require("fs");
 const User = require("../models/user.model");
 const ErrorHandler = require("../utils/errorHandler");
-const jwt = require("jsonwebtoken");
 const {
   createActivationToken,
   decodeActivationToken,
