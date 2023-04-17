@@ -17,9 +17,9 @@ export const SellerReducer = createReducer(initialState, {
     state.seller = action.payload;
   },
   LoadSellerFail: (state, action) => {
-    (state.isSellerLoading = false),
-      (state.sellerError = action.error),
-      (state.isSellerAuthenticate = false);
+    state.isSellerLoading = false;
+    state.sellerError = action.error;
+    state.isSellerAuthenticate = false;
   },
   ClearErrors: (state) => {
     state.sellerError = null;
