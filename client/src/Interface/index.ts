@@ -65,6 +65,7 @@ export interface ISeller {
   phoneNumber: number;
   address: string;
   zipcode: number;
+  createdAt: string;
 }
 
 export interface IUserState {

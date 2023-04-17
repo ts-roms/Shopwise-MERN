@@ -13,13 +13,14 @@ const SellerProtectedRoute = ({ children }: IProps) => {
     (state: IAppState) => state.seller
   );
 
-  if (isSellerLoading === false) {
-    if (!isSellerAuthenticate) {
-      return <Navigate to="/login-shop" replace />;
-    }
+  if (isSellerLoading) {
+    return <Loader />;
+  }
+
+  if (!isSellerAuthenticate) {
+    return <Navigate to="/login-shop" replace />;
   }
 
   return children;
 };
-
 export default SellerProtectedRoute;

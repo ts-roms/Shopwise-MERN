@@ -22,7 +22,7 @@ import ShopLoginPage from "./pages/Seller/SellerAuth/ShopLoginPage";
 import { loadSeller } from "./redux/actions/sellerActions";
 import ShopHomePage from "./pages/Seller/ShopHomePage";
 import SellerProtectedRoute from "./protected-routes/SellerProtectedRoute";
-import ShopDashboard from "./pages/Seller/ShopDashboard";
+import ShopDashboardPage from "./pages/Seller/ShopDashboardPage";
 
 function App() {
   useEffect(() => {
@@ -108,7 +108,7 @@ function App() {
           path="/dashboard"
           element={
             <SellerProtectedRoute>
-              <ShopDashboard />
+              <ShopDashboardPage />
             </SellerProtectedRoute>
           }
         />

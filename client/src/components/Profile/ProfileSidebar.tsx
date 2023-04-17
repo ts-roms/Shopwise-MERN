@@ -22,8 +22,6 @@ interface IProps {
 export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-
   const userLinks = [
     { linkName: "Profile", icon: <RxPerson title="Profile" />, id: 1 },
     {

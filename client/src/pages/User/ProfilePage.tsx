@@ -10,7 +10,7 @@ export default function ProfilePage() {
     <section>
       <div className={`${style.section}`}>
         <div className="flex py-10 gap-4">
-          <aside className="max-w-1/4 m-full">
+          <aside className="max-w-1/4 w-full">
             <ProfileSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
           </aside>
           <div className="flex-1 w-full overflow-scroll">

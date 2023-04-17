@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, ChangeEvent, useEffect, useRef } from "react";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/shopwise.png";
 import style from "../../../styles/style";
 import {
   AiOutlineHeart,
@@ -20,12 +20,6 @@ import Cart from "../../Cart/Cart";
 import Wishlist from "../../Wishlist/Wishlist";
 import { host } from "../../../server";
 
-// interface IProduct {
-//   id: number;
-//   name: string;
-//   image_Url: { public_id: string; url: string }[];
-// }
-
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchedProduct, setSearchedProduct] = useState<IProduct[]>([]);
@@ -37,8 +31,6 @@ export default function Header() {
   const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false);
 
   const userState = useSelector((state: IAppState) => state?.user);
-
-  const user = userState?.user;
 
   function handleChange(e: ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
@@ -90,8 +82,7 @@ export default function Header() {
         >
           <div>
             <Link to="/" className={`${style.flex_normal}`}>
-              <img className="h-10 w-20" src={logo} alt="Logo" />
-              <span>Shopwise</span>
+              <img className="h-11 w-32" src={logo} alt="Logo" />
             </Link>
           </div>
           <div className="flex-1 flex justify-center">
