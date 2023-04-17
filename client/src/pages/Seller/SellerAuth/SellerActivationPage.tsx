@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { server } from "../server";
+import { server } from "../../../server";
 
 export default function SellerActivationPage() {
   const { activation_token } = useParams();
@@ -14,8 +14,6 @@ export default function SellerActivationPage() {
         const res = await axios.post(`${server}/shops/activation`, {
           activation_token,
         });
-
-        console.log(res.data);
       } catch (error) {
         console.log(error);
         setError(true);

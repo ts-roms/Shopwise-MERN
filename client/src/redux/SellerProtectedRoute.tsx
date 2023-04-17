@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { ReactNode } from "react";
-import { ISeller } from "./Interface";
+import { ISeller } from "../Interface";
 
 interface IProps {
   isSellerAuthenticate: boolean;
@@ -14,7 +14,7 @@ const SellerProtectedRoute = ({
   children,
 }: IProps) => {
   if (!isSellerAuthenticate) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login-shop" replace />;
   }
   return children;
 };

@@ -40,6 +40,7 @@ export default function ShopLogin() {
       console.log(res);
       if (res.status) {
         toast.success("Login Success!");
+        navigate("/dashboard");
         window.location.reload();
       }
     } catch (error: any) {

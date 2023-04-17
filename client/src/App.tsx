@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
-import ActivationPage from "./pages/ActivationPage";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
+import ActivationPage from "./pages/User/ActivationPage";
+import LoginPage from "./pages/User/LoginPage";
+import SignupPage from "./pages/User/SignupPage";
 import HomePage from "./pages/HomePage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,14 +17,14 @@ import FAQ from "./pages/FAQPage";
 import { useSelector } from "react-redux";
 import { IAppState } from "./Interface";
 import Loader from "./components/Loader/Loader";
-import ProfilePage from "./pages/ProfilePage";
-import ProtectedRoute from "./Protectedroute";
-import CreateShop from "./pages/CreateShopPage";
-import SellerActivationPage from "./pages/SellerActivationPage";
-import ShopLoginPage from "./pages/ShopLoginPage";
+import ProfilePage from "./pages/User/ProfilePage";
+import ProtectedRoute from "./redux/Protectedroute";
+import CreateShop from "./pages/Seller/SellerAuth/CreateShopPage";
+import SellerActivationPage from "./pages/Seller/SellerAuth/SellerActivationPage";
+import ShopLoginPage from "./pages/Seller/SellerAuth/ShopLoginPage";
 import { loadSeller } from "./redux/actions/sellerActions";
-import ShopHomePage from "./pages/ShopHomePage";
-import SellerProtectedRoute from "./SellerProtectedRoute";
+import ShopHomePage from "./pages/Seller/ShopHomePage";
+import SellerProtectedRoute from "./redux/SellerProtectedRoute";
 
 function App() {
   const { isUserLoading, isUserAuthenticate, userError } = useSelector(

@@ -2,11 +2,10 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import CreateShop from "../components/shop/CreateShop";
-import { IAppState } from "../Interface";
-import style from "../styles/style";
+import ShopLogin from "../../../components/shop/ShopLogin";
+import { IAppState } from "../../../Interface";
 
-export default function CreateShopPage() {
+export default function ShopLoginPage() {
   const navigate = useNavigate();
 
   const { isSellerAuthenticate, seller } = useSelector(
@@ -15,16 +14,14 @@ export default function CreateShopPage() {
 
   useEffect(() => {
     if (isSellerAuthenticate) {
-      toast.info("You are allready logged in");
+      toast.info("You are already logged in");
       navigate(`/shop/${seller._id}`);
     }
-  }, []);
+  }, [isSellerAuthenticate]);
 
   return (
-    <section>
-      <div className={`${style.section}`}>
-        <CreateShop />
-      </div>
+    <section className="min-h-screen bg-gray-50 flex flex-col justify-center">
+      <ShopLogin />
     </section>
   );
 }

@@ -1,7 +1,7 @@
-import ProfileContent from "../components/Profile/ProfileContent";
-import ProfileSidebar from "../components/Profile/ProfileSidebar";
+import ProfileContent from "../../components/Profile/ProfileContent";
+import ProfileSidebar from "../../components/Profile/ProfileSidebar";
 import { useState } from "react";
-import style from "../styles/style";
+import style from "../../styles/style";
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState(0);
