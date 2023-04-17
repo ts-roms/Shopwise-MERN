@@ -1,54 +1,41 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
-import PasswordInput from "../Auth/passwordInput/PasswordInput";
-import style from "../../styles/style";
-import { server } from "../../server";
+import PasswordInput from "../passwordInput/PasswordInput";
+import style from "../../../styles/style";
+import { server } from "../../../server";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { ICustomResponse } from "../../Interface";
+import { ICustomResponse } from "../../../Interface";
 
 const initialState = {
   file: null as File | null,
   fullname: "",
   email: "",
   password: "",
-  phoneNumber: "",
-  address: "",
-  zipcode: "",
 };
 
-export default function CreateShop() {
+export default function Signup() {
   const [formData, setFormData] = useState(initialState);
 
-  console.log(formData);
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const { name, value, type, files } = event.target;
 
-  function handleChange(
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    const { name, value, type } = event.target;
-
-    if (type === "file") {
-      const fileInput = event.target as HTMLInputElement;
-      const files = fileInput.files;
-
-      if (files?.[0]) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          [name]: files[0],
-        }));
-
-        // Create a preview of the uploaded image and display it in the UI
-        const reader = new FileReader();
-        reader.onload = () => {
-          const imgPreview = document.getElementById(
-            "img-preview"
-          ) as HTMLImageElement;
-          if (imgPreview) {
-            imgPreview.src = reader.result as string;
-          }
-        };
-        reader.readAsDataURL(files[0]);
-      }
+    if (type === "file" && files) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: files?.[0] || null,
+      }));
+      // Create a preview of the uploaded image and display it in the UI
+      const reader = new FileReader();
+      reader.onload = () => {
+        const imgPreview = document.getElementById(
+          "img-preview"
+        ) as HTMLImageElement;
+        if (imgPreview) {
+          imgPreview.src = reader.result as string;
+        }
+      };
+      reader.readAsDataURL(files?.[0]);
     } else {
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -60,17 +47,13 @@ export default function CreateShop() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const { file, fullname, email, password, address, phoneNumber, zipcode } =
-      formData;
+    const { file, fullname, email, password } = formData;
 
     const newFrom = new FormData();
 
     newFrom.append("name", fullname);
     newFrom.append("email", email);
     newFrom.append("password", password);
-    newFrom.append("address", address);
-    newFrom.append("phoneNumber", phoneNumber);
-    newFrom.append("zipcode", zipcode);
     if (file) {
       newFrom.append("file", file);
     }
@@ -78,7 +61,7 @@ export default function CreateShop() {
     try {
       const config = { headers: { "Content-Type": "multipart/form-data" } };
       const res = await axios.post<ICustomResponse>(
-        `${server}/shops/create-shop`,
+        `${server}/users/signup`,
         newFrom,
         config
       );
@@ -93,9 +76,9 @@ export default function CreateShop() {
   }
 
   return (
-    <div className="px-8 py-12 w-full max-w-lg mx-auto bg-white shadow-lg">
+    <div className="px-8 py-12 w-full max-w-md mx-auto bg-white shadow-lg">
       <h2 className="text-center text-2xl font-extrabold text-gray-900">
-        Register as a new Seller
+        Register as a new user
       </h2>
       <div className="mt-10">
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -123,7 +106,7 @@ export default function CreateShop() {
             </label>
           </div>
 
-          <div className="w-full">
+          <div>
             <label htmlFor="email" className="sr-only">
               Full Name
             </label>
@@ -137,66 +120,20 @@ export default function CreateShop() {
               className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
             />
           </div>
-
-          <div className="w-full">
+          <div>
             <label htmlFor="email" className="sr-only">
               Email
             </label>
             <input
               type="email"
               name="email"
+              autoComplete="email"
               required
               value={formData.email}
               onChange={handleChange}
               placeholder="Email"
               className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
             />
-          </div>
-
-          <div>
-            <label htmlFor="email" className="sr-only">
-              Phone Number
-            </label>
-            <input
-              type="number"
-              name="phoneNumber"
-              required
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              placeholder="Phone Number"
-              className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="email" className="sr-only">
-              Zip Code
-            </label>
-            <input
-              type="number"
-              name="zipcode"
-              required
-              value={formData.zipcode}
-              onChange={handleChange}
-              placeholder="Zip Code"
-              className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="email" className="sr-only">
-              Address
-            </label>
-
-            <textarea
-              name="address"
-              id="address"
-              cols={30}
-              rows={3}
-              value={formData.address}
-              onChange={handleChange}
-              className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
-            ></textarea>
           </div>
 
           <PasswordInput
@@ -213,9 +150,9 @@ export default function CreateShop() {
             Submit
           </button>
           <div className={`${style.flex_normal}`}>
-            <h4>Already have shop?</h4>
+            <h4>Already have an account ?</h4>
             <Link
-              to="/login-shop"
+              to="/login"
               className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 focus:text-orange-500 ml-2"
             >
               Login

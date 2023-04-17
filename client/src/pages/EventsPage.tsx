@@ -1,4 +1,4 @@
-import EventCard from "../components/EventCard/EventCard";
+import EventCard from "../components/Events/EventCard/EventCard";
 import style from "../styles/style";
 
 export default function EventsPage() {

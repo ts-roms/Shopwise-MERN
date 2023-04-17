@@ -6,7 +6,7 @@ import { IProduct } from "../Interface";
 import Loader from "../components/Loader/Loader";
 import style from "../styles/style";
 import { Link } from "react-router-dom";
-import RelatedProducts from "../components/RelatedProducts/RelatedProducts";
+import RelatedProducts from "../components/ProductDetails/RelatedProducts/RelatedProducts";
 
 export default function ProductPage() {
   const { product_slug } = useParams();

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { IAppState } from "../Interface";
-import Signup from "../components/signup/Signup";
+import Signup from "../components/Auth/signup/Signup";
 
 export default function SignupPage() {
   const navigate = useNavigate();

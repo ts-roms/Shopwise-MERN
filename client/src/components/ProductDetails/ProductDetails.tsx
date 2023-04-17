@@ -2,7 +2,7 @@ import { IProduct } from "../../Interface";
 import { useState } from "react";
 import style from "../../styles/style";
 import { formattedPrice } from "../../helper/formatPrice";
-import AddtoCart from "../AddtoCart/AddtoCart";
+import AddtoCart from "../Product/AddtoCart/AddtoCart";
 import { AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
 
 export default function ProductDetails({ product }: { product: IProduct }) {

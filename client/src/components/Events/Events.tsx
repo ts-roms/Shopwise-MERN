@@ -1,5 +1,5 @@
 import style from "../../styles/style";
-import EventCard from "../EventCard/EventCard";
+import EventCard from "./EventCard/EventCard";
 
 export default function Events() {
   return (

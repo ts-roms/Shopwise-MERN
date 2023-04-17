@@ -1,9 +1,9 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import PasswordInput from "../Auth/passwordInput/PasswordInput";
-import style from "../../styles/style";
+import PasswordInput from "../passwordInput/PasswordInput";
+import style from "../../../styles/style";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { server } from "../../server";
+import { server } from "../../../server";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -12,7 +12,7 @@ const initialState = {
   isRemeber: false,
 };
 
-export default function ShopLogin() {
+export default function Login() {
   const [formData, setFormData] = useState(initialState);
 
   const navigate = useNavigate();
@@ -30,16 +30,16 @@ export default function ShopLogin() {
 
     try {
       const res = await axios.post(
-        `${server}/shops/login-shop`,
+        `${server}/users/login`,
         {
           email: formData.email,
           password: formData.password,
         },
         { withCredentials: true }
       );
-      console.log(res);
       if (res.status) {
         toast.success("Login Success!");
+        navigate("/");
         window.location.reload();
       }
     } catch (error: any) {
@@ -51,7 +51,7 @@ export default function ShopLogin() {
   return (
     <div className="px-8 py-12 w-full max-w-md mx-auto bg-white shadow-lg">
       <h2 className="text-center text-2xl font-extrabold text-gray-900">
-        Log in to your shop account
+        Log in to your account
       </h2>
       <div className="mt-14">
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -112,7 +112,7 @@ export default function ShopLogin() {
           <div className={`${style.flex_normal}`}>
             <h4>Not have any account?</h4>
             <Link
-              to="/create-sho"
+              to="/signup"
               className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 focus:text-orange-500 ml-2"
             >
               Signup
