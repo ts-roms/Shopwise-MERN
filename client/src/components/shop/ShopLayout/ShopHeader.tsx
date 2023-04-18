@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { IAppState } from "../../../Interface";
 import { host } from "../../../server";
 
-export default function DashboardHeader() {
+export default function ShopHeader() {
   const { seller } = useSelector((state: IAppState) => state.seller);
 
   return (

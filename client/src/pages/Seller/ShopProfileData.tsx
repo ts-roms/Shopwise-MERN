@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import OngoingShopEvents from "../../components/shop/ShopData/OngoingShopEvents";
 import ShopProducts from "../../components/shop/ShopData/ShopProducts";
+import ShopReviews from "../../components/shop/ShopData/ShopReviews";
 
 interface IProps {
   isOwner: boolean;
@@ -35,9 +37,9 @@ export default function ShopProfileData({ isOwner }: IProps) {
           </h4>
           <h4
             className={`text-base font-medium lg:font-semibold cursor-pointer lg:text-lg relative py-1.5 after:bg-red-400 after:absolute after:left-0 after:bottom-0 after:h-1 ${
-              activeTab === "review" ? "after:w-full" : "after:w-0"
+              activeTab === "reviews" ? "after:w-full" : "after:w-0"
             }`}
-            onClick={() => handleTabClick("review")}
+            onClick={() => handleTabClick("reviews")}
           >
             Shop Reviews
           </h4>
@@ -54,6 +56,8 @@ export default function ShopProfileData({ isOwner }: IProps) {
       </div>
       <div className="py-8 px-6">
         {activeTab === "products" && <ShopProducts />}
+        {activeTab === "events" && <OngoingShopEvents />}
+        {activeTab === "reviews" && <ShopReviews />}
       </div>
     </div>
   );

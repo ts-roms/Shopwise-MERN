@@ -23,6 +23,7 @@ import { loadSeller } from "./redux/actions/sellerActions";
 import ShopHomePage from "./pages/Seller/ShopHomePage";
 import SellerProtectedRoute from "./protected-routes/SellerProtectedRoute";
 import ShopDashboardPage from "./pages/Seller/ShopDashboardPage";
+import SellerAddProductPage from "./pages/Seller/SellerAddProductPage";
 
 function App() {
   useEffect(() => {
@@ -95,6 +96,7 @@ function App() {
         <Route
           path="/profile"
           element={
+            // @ts-ignore
             <ProtectedRoute>
               <Layout>
                 <ProfilePage />
@@ -107,14 +109,25 @@ function App() {
         <Route
           path="/dashboard"
           element={
+            // @ts-ignore
             <SellerProtectedRoute>
               <ShopDashboardPage />
             </SellerProtectedRoute>
           }
         />
         <Route
+          path="/shop-add-product"
+          element={
+            // @ts-ignore
+            <SellerProtectedRoute>
+              <SellerAddProductPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
           path="/shop/:shopId"
           element={
+            // @ts-ignore
             <SellerProtectedRoute>
               <ShopHomePage />
             </SellerProtectedRoute>
