@@ -27,10 +27,12 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 // import routes
 const userRoutes = require("./routes/user.routes");
 const shopRoutes = require("./routes/shop.routes");
+const productRoutes = require("./routes/product.routes");
 
 // routes
 app.use("/api/v2/users", userRoutes);
 app.use("/api/v2/shops", shopRoutes);
+app.use("/api/v2/products", productRoutes);
 
 // if error
 app.use(ErrorHandler);

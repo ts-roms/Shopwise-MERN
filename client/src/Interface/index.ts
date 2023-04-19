@@ -21,6 +21,18 @@ export interface IProduct {
   discount_price: number;
 }
 
+export interface IAddProduct {
+  name: string;
+  description: string;
+  category: string;
+  tags?: string;
+  price: number;
+  discount_percentage?: number;
+  discount_price?: number;
+  stock: number;
+  images: File[];
+}
+
 export interface ICategory {
   id: number;
   subTitle: string;
@@ -82,9 +94,17 @@ export interface ISellerState {
   seller: ISeller;
 }
 
+export interface IAddProductState {
+  isProductLoading: boolean;
+  product: IAddProduct;
+  error?: null | string;
+  isSuccess: boolean;
+}
+
 export interface IAppState {
   user: IUserState;
   seller: ISellerState;
+  product: IAddProductState;
 }
 
 export interface IQuestion {

@@ -7,9 +7,12 @@ import categoriesData from "../../../constant/categories.json";
 import calculateDiscountPrice from "../../../helper/calculateDiscountPrice";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
+import { addProduct } from "../../../redux/actions/productActions";
+import { toast } from "react-toastify";
 
 export default function AddProduct() {
   const { seller } = useSelector((state: IAppState) => state.seller);
+  const { error, isSuccess } = useSelector((state: IAppState) => state.product);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -37,6 +40,24 @@ export default function AddProduct() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
+
+    const form = new FormData();
+
+    productImages.forEach((img) => {
+      form.append("images", img);
+    });
+
+    form.append("name", productName.toString());
+    form.append("description", productDescription.toString());
+    form.append("category", productCategory.toString());
+    form.append("tags", productTags.toString());
+    form.append("price", productPrice.toString());
+    form.append("discount_percentage", productDiscountPercentage.toString());
+    form.append("discount_price", productDiscountPrice.toString());
+    form.append("stock", productStock.toString());
+
+    //@ts-ignore
+    dispatch(addProduct(form));
   }
 
   useEffect(() => {
@@ -44,6 +65,18 @@ export default function AddProduct() {
       calculateDiscountPrice(productPrice, productDiscountPercentage)
     );
   }, [productPrice, productDiscountPercentage]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+
+    if (isSuccess) {
+      toast.success("Product Added successfully!");
+      navigate("/dashboard");
+      window.location.reload();
+    }
+  }, [error, isSuccess, navigate]);
 
   return (
     <div className="w-full lg:w-1/2 bg-white shadow h-[87vh] rounded p-8 overflow-scroll">
