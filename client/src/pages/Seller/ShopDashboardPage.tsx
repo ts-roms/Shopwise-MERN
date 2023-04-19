@@ -6,7 +6,7 @@ export default function ShopDashboardPage() {
     <>
       <ShopHeader />
       <section>
-        <div className="flex gap-5">
+        <div className="flex gap-5 mt-3 ">
           <ShopSidebar activeTab={1} />
         </div>
       </section>

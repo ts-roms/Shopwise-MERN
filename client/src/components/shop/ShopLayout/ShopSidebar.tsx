@@ -66,21 +66,21 @@ export default function ShopSidebar({ activeTab }: IProps) {
       linkName: "refunds",
       link: "/shop-refunds",
       icon: <HiOutlineReceiptRefund size={25} title="Refunds" />,
-      id: 8,
+      id: 9,
     },
     {
       linkName: "settings",
       link: "/shop-settings",
       icon: <CiSettings size={25} title="settings" />,
-      id: 8,
+      id: 10,
     },
   ];
 
   return (
-    <aside className="w-full lg:w-1/4 h-[90vh] overflow-scroll bg-white shadow">
+    <aside className="w-full lg:w-1/4 h-[87vh] overflow-scroll bg-white shadow">
       <div className="w-full py-4">
         {sellerLinks?.map((link) => (
-          <Link to={link.link}>
+          <Link to={link.link} key={link.id}>
             <div
               key={link.id}
               className={`${style.flex_normal} gap-3 cursor-pointer transition-all px-5 py-4 lg:px-12 hover:bg-orange-200`}

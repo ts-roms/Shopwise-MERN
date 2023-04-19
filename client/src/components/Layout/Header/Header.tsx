@@ -103,7 +103,7 @@ export default function Header() {
                 />
                 {searchedProduct.length !== 0 ? (
                   <div className="absolute bg-slate-50 shadow-sm z-50 max-h-[60vh] overflow-scroll mt-4 rounded-md py-2">
-                    {searchedProduct.map((product, idx) => {
+                    {searchedProduct?.map((product, idx) => {
                       const productSlug = product.name.replace(/\s+/g, "-");
                       return (
                         <Link to={`/products/${productSlug}`} key={idx}>
@@ -222,7 +222,7 @@ export default function Header() {
               />
               {searchedProduct.length !== 0 ? (
                 <div className="absolute bg-slate-50 shadow-sm z-50 max-h-[73vh] overflow-scroll mt-4 rounded-md py-2">
-                  {searchedProduct.map((product, idx) => {
+                  {searchedProduct?.map((product, idx) => {
                     const productSlug = product.name.replace(/\s+/g, "-");
                     return (
                       <Link

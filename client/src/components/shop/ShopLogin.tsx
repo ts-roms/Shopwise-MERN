@@ -113,7 +113,7 @@ export default function ShopLogin() {
           <div className={`${style.flex_normal}`}>
             <h4>Not have any account?</h4>
             <Link
-              to="/create-sho"
+              to="/create-shop"
               className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 focus:text-orange-500 ml-2"
             >
               Signup

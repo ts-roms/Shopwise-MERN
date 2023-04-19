@@ -91,3 +91,15 @@ export interface IQuestion {
   question: string;
   answer: string;
 }
+
+export interface IAddProduct {
+  productName: string;
+  productDescription: string;
+  productImages: any[];
+  productCategory: string;
+  productTags: string;
+  productPrice: number;
+  productDiscountPrice: number;
+  productDiscountPercentage: number;
+  productStock: number;
+}

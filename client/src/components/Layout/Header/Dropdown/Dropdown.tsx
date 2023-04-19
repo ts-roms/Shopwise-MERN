@@ -55,7 +55,7 @@ export default function Dropdown() {
         {isDropdownOpen ? (
           <div className="w-full bg-[#fff] absolute rounded-b-md shadow-sm z-30 max-h-[60vh] overflow-scroll">
             {categories &&
-              categories.map((category, idx) => (
+              categories?.map((category, idx) => (
                 <div
                   className={`${style.flex_normal} cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white`}
                   onClick={() => handleSubmit(category)}
