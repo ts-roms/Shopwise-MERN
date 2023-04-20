@@ -104,7 +104,7 @@ export interface IAddProductState {
 export interface IAppState {
   user: IUserState;
   seller: ISellerState;
-  product: IAddProductState;
+  products: IAddProductState;
 }
 
 export interface IQuestion {

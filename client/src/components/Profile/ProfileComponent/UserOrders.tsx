@@ -1,7 +1,6 @@
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
-// import { Button } from "@material-ui/core";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { formattedPrice } from "../../../helper/formatPrice";
 
 export default function UserOrders() {
@@ -53,7 +52,7 @@ export default function UserOrders() {
       headerName: "",
       type: "number",
       sortable: false,
-      renderCell: (params: any) => {
+      renderCell: (params: GridCellParams) => {
         return (
           <>
             <Link to={`/order/${params.id}`}>

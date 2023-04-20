@@ -1,21 +1,15 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import generateProductName from "../../../helper/generateRandomProductName";
-import { IAppState } from "../../../Interface";
 import categoriesData from "../../../constant/categories.json";
 import calculateDiscountPrice from "../../../helper/calculateDiscountPrice";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
-import { addProduct } from "../../../redux/actions/productActions";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { server } from "../../../server";
 
 export default function AddProduct() {
-  const { seller } = useSelector((state: IAppState) => state.seller);
-  const { error, isSuccess } = useSelector((state: IAppState) => state.product);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [productName, setProductName] = useState(generateProductName);
@@ -58,9 +52,6 @@ export default function AddProduct() {
     form.append("discount_price", productDiscountPrice.toString());
     form.append("stock", productStock.toString());
 
-    // @ts
-    // dispatch(addProduct(form));
-
     try {
       axios.defaults.withCredentials = true;
       const config = { headers: { "Content-Type": "multipart/form-data" } };
@@ -85,20 +76,8 @@ export default function AddProduct() {
     );
   }, [productPrice, productDiscountPercentage]);
 
-  // useEffect(() => {
-  //   if (error) {
-  //     toast.error(error);
-  //   }
-
-  //   if (isSuccess) {
-  //     toast.success("Product Added successfully!");
-  //     navigate("/dashboard");
-  //     window.location.reload();
-  //   }
-  // }, [error, isSuccess, navigate]);
-
   return (
-    <div className="w-full lg:w-3/5 bg-white shadow h-[87vh] rounded p-8 overflow-scroll">
+    <div className="w-full lg:w-3/5 p-8">
       <h4 className="text-3xl font-Poppins text-center">Add Product</h4>
       <form onSubmit={handleSubmit} className="space-y-6 mt-8">
         <div>
@@ -191,8 +170,9 @@ export default function AddProduct() {
           </label>
           <input
             type="number"
-            max={2}
+            max={90}
             min={0}
+            maxLength={2}
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="produtdiscountpercentage"
             name="productDiscountPercentage"
@@ -234,7 +214,7 @@ export default function AddProduct() {
 
         <div>
           <label className="text-sm md:text-base">
-            Upload Images <span className="text-red-500">*</span>
+            Upload Images (max 5 images) <span className="text-red-500">*</span>
           </label>
           <input
             type="file"

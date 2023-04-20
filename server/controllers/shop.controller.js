@@ -1,4 +1,5 @@
 const Shop = require("../models/shop.model");
+const Product = require("../models/product.model");
 const path = require("path");
 const fs = require("fs");
 const { sendMail } = require("../utils/sendMail");
@@ -9,6 +10,7 @@ const {
 } = require("../helper/helper");
 const { sendShopToken } = require("../utils/shopToken");
 
+// shop creation
 exports.createShop = async (req, res, next) => {
   try {
     const { email, name, password, address, zipcode, phoneNumber } = req.body;
@@ -67,6 +69,7 @@ exports.createShop = async (req, res, next) => {
   }
 };
 
+// shop email verification or activation
 exports.shopActivation = async (req, res, next) => {
   try {
     const { activation_token } = req.body;
@@ -103,6 +106,7 @@ exports.shopActivation = async (req, res, next) => {
   }
 };
 
+// shop login
 exports.shopLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -130,6 +134,7 @@ exports.shopLogin = async (req, res, next) => {
   }
 };
 
+// get shop details
 exports.getShop = async (req, res, next) => {
   try {
     const sellerId = req.seller.id;
@@ -140,6 +145,20 @@ exports.getShop = async (req, res, next) => {
     }
 
     res.status(200).json({ success: true, shop });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};
+
+// get all products of a shop
+exports.getAllProductsOfShop = async (req, res, next) => {
+  try {
+    const { shopId } = req.params;
+
+    const products = await Product.find({ shop: shopId }).populate("shop");
+
+    res.status(200).json({ success: true, products });
   } catch (error) {
     console.log(error);
     next(new ErrorHandler(error.message, 500));

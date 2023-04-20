@@ -1,7 +1,10 @@
 const router = require("express").Router();
 const upload = require("../upload");
 const catchAsyncErrors = require("../middleware/catchAsyncError");
-const { addProduct } = require("../controllers/product.controller");
+const {
+  addProduct,
+  getAllProductsOfShop,
+} = require("../controllers/product.controller");
 const { isSeller } = require("../middleware/auth");
 
 router.post(

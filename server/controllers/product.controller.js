@@ -2,6 +2,7 @@ const Product = require("../models/product.model");
 const Shop = require("../models/shop.model");
 const ErrorHandler = require("../utils/errorHandler");
 
+// add product
 exports.addProduct = async (req, res, next) => {
   try {
     const sellerId = req.seller.id;
