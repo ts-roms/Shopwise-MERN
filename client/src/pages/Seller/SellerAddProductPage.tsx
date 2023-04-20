@@ -7,9 +7,9 @@ export default function SellerAddProductPage() {
     <>
       <ShopHeader />
       <section>
-        <div className="flex gap-5 mt-3">
+        <div className="flex gap-2 md:gap-5 mt-3">
           <ShopSidebar activeTab={4} />
-          <div className="w-full flex justify-between">
+          <div className="w-full flex-grow flex justify-between">
             <AddProduct />
           </div>
         </div>

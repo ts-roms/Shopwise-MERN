@@ -9,6 +9,8 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { addProduct } from "../../../redux/actions/productActions";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { server } from "../../../server";
 
 export default function AddProduct() {
   const { seller } = useSelector((state: IAppState) => state.seller);
@@ -38,7 +40,7 @@ export default function AddProduct() {
     }
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
     const form = new FormData();
@@ -56,8 +58,25 @@ export default function AddProduct() {
     form.append("discount_price", productDiscountPrice.toString());
     form.append("stock", productStock.toString());
 
-    //@ts-ignore
-    dispatch(addProduct(form));
+    // @ts
+    // dispatch(addProduct(form));
+
+    try {
+      axios.defaults.withCredentials = true;
+      const config = { headers: { "Content-Type": "multipart/form-data" } };
+
+      const res = await axios.post(`${server}/products`, form, config);
+
+      if (res.status == 201) {
+        toast.success("Product Added Successfully");
+        navigate("/dashboard");
+      }
+    } catch (error: any) {
+      console.log(error);
+      if (error.response) {
+        toast.error(error.response.data.message);
+      }
+    }
   }
 
   useEffect(() => {
@@ -66,24 +85,24 @@ export default function AddProduct() {
     );
   }, [productPrice, productDiscountPercentage]);
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-    }
+  // useEffect(() => {
+  //   if (error) {
+  //     toast.error(error);
+  //   }
 
-    if (isSuccess) {
-      toast.success("Product Added successfully!");
-      navigate("/dashboard");
-      window.location.reload();
-    }
-  }, [error, isSuccess, navigate]);
+  //   if (isSuccess) {
+  //     toast.success("Product Added successfully!");
+  //     navigate("/dashboard");
+  //     window.location.reload();
+  //   }
+  // }, [error, isSuccess, navigate]);
 
   return (
-    <div className="w-full lg:w-1/2 bg-white shadow h-[87vh] rounded p-8 overflow-scroll">
+    <div className="w-full lg:w-3/5 bg-white shadow h-[87vh] rounded p-8 overflow-scroll">
       <h4 className="text-3xl font-Poppins text-center">Add Product</h4>
       <form onSubmit={handleSubmit} className="space-y-6 mt-8">
         <div>
-          <label htmlFor="productname">
+          <label className="text-sm md:text-base" htmlFor="productname">
             Product Name <span className="text-red-500">*</span>
           </label>
           <input
@@ -98,7 +117,7 @@ export default function AddProduct() {
         </div>
 
         <div>
-          <label htmlFor="productdescription">
+          <label className="text-sm md:text-base" htmlFor="productdescription">
             Product Description <span className="text-red-500">*</span>
           </label>
           <input
@@ -113,16 +132,16 @@ export default function AddProduct() {
         </div>
 
         <div>
-          <label htmlFor="productcategory">
+          <label className="text-sm md:text-base" htmlFor="productcategory">
             Product Category <span className="text-red-500">*</span>
           </label>
           <select
-            className="w-full mt-2 border h-9 rounded"
+            className="w-full mt-2 border h-9 rounded bg-gray-50 text-sm md:text-base px-3 py-1.5"
             name="productCategory"
             id="productcategory"
             onChange={(e) => setProductCategory(e.target.value)}
           >
-            <option value="" disabled selected>
+            <option disabled selected>
               Choose a Category
             </option>
             {categoriesData?.map((category, idx) => (
@@ -134,7 +153,9 @@ export default function AddProduct() {
         </div>
 
         <div>
-          <label htmlFor="produttags">Product Tags</label>
+          <label className="text-sm md:text-base" htmlFor="produttags">
+            Product Tags
+          </label>
           <input
             type="text"
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
@@ -147,7 +168,7 @@ export default function AddProduct() {
         </div>
 
         <div>
-          <label htmlFor="produtprice">
+          <label className="text-sm md:text-base" htmlFor="produtprice">
             Product Price (in paisa) <span className="text-red-500">*</span>
           </label>
           <input
@@ -162,7 +183,10 @@ export default function AddProduct() {
         </div>
 
         <div>
-          <label htmlFor="produtdiscountpercentage">
+          <label
+            className="text-sm md:text-base"
+            htmlFor="produtdiscountpercentage"
+          >
             Product Discount (between 1-90 in percentage(%))
           </label>
           <input
@@ -181,7 +205,7 @@ export default function AddProduct() {
         </div>
 
         <div>
-          <label htmlFor="produtdiscountprice">
+          <label className="text-sm md:text-base" htmlFor="produtdiscountprice">
             Product Discount Price (in paisa)
           </label>
           <input
@@ -195,7 +219,9 @@ export default function AddProduct() {
         </div>
 
         <div>
-          <label htmlFor="produtstock">Stocks of Product</label>
+          <label className="text-sm md:text-base" htmlFor="produtstock">
+            Stocks of Product
+          </label>
           <input
             type="number"
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
@@ -207,7 +233,7 @@ export default function AddProduct() {
         </div>
 
         <div>
-          <label>
+          <label className="text-sm md:text-base">
             Upload Images <span className="text-red-500">*</span>
           </label>
           <input
@@ -219,7 +245,7 @@ export default function AddProduct() {
             required
             onChange={handleImageChange}
           />
-          <div className="flex items-center mt-2 gap-1">
+          <div className="flex items-center mt-2 gap-1 overflow-x-scroll whitespace-nowrap">
             {productImages.length < 5 && (
               <label htmlFor="productdimages" className="cursor-pointer">
                 <div className="h-24 w-24 rounded bg-gray-200 flex justify-center items-center">
@@ -233,8 +259,8 @@ export default function AddProduct() {
                   src={URL.createObjectURL(img)}
                   className="h-24 w-24 rounded object-cover m-2"
                 />
-                <button
-                  className="absolute top-0 right-0 rounded-full bg-red-600 text-white h-6 w-6 flex items-center justify-center"
+                <span
+                  className="absolute cursor-pointer top-0 right-0 rounded-full bg-red-600 text-white h-6 w-6 flex items-center justify-center"
                   onClick={() => {
                     const newImages = [...productImages];
                     newImages.splice(idx, 1);
@@ -242,7 +268,7 @@ export default function AddProduct() {
                   }}
                 >
                   <RxCross2 />
-                </button>
+                </span>
               </div>
             ))}
           </div>

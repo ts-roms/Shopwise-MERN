@@ -77,13 +77,13 @@ export default function ShopSidebar({ activeTab }: IProps) {
   ];
 
   return (
-    <aside className="w-full lg:w-1/4 h-[87vh] overflow-scroll bg-white shadow">
+    <aside className="w-fit lg:w-1/4 h-[87vh] overflow-scroll bg-white shadow">
       <div className="w-full py-4">
         {sellerLinks?.map((link) => (
           <Link to={link.link} key={link.id}>
             <div
               key={link.id}
-              className={`${style.flex_normal} gap-3 cursor-pointer transition-all px-5 py-4 lg:px-12 hover:bg-orange-200`}
+              className={`${style.flex_normal} gap-3 cursor-pointer transition-all w-fit px-5 py-4 lg:px-12 hover:bg-orange-200`}
               // onClick={() => setActiveTab(idx)}
             >
               <span
