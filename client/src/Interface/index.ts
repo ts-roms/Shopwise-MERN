@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { ChangeEvent, ReactNode } from "react";
 
 export interface IProduct {
@@ -101,10 +102,34 @@ export interface IAddProductState {
   isSuccess: boolean;
 }
 
+export interface IServerProduct {
+  _id: string;
+  name: string;
+  description: string;
+  category: string;
+  tags?: string;
+  price: number;
+  discount_percentage: number;
+  discount_price: number;
+  stock: number;
+  images: ["ipad-5-1681970571904-420174802.png"];
+  shop: ISeller;
+  sold_out: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IServerProductsState {
+  isProductsLoading: boolean;
+  products: IServerProduct[];
+  error: null | AxiosError;
+  isSuccess: boolean;
+}
+
 export interface IAppState {
   user: IUserState;
   seller: ISellerState;
-  products: IAddProductState;
+  products: IServerProductsState;
 }
 
 export interface IQuestion {

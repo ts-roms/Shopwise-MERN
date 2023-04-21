@@ -4,9 +4,19 @@ import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { formattedPrice } from "../../../helper/formatPrice";
-import { IAppState } from "../../../Interface";
+import { IAppState, IServerProduct } from "../../../Interface";
 import { getShopAllProducts } from "../../../redux/actions/productActions";
 import Loader from "../../Loader/Loader";
+
+type row = {
+  id: string;
+  name: string;
+  price: string;
+  stock: number;
+  sold: number;
+  discountpercentage: number;
+  discountprice: string;
+};
 
 export default function ShopAllProducts() {
   const dispatch = useDispatch();
@@ -16,6 +26,7 @@ export default function ShopAllProducts() {
   );
 
   useEffect(() => {
+    // @ts-ignore
     dispatch(getShopAllProducts(seller._id));
   }, [dispatch, seller._id]);
 
@@ -56,7 +67,7 @@ export default function ShopAllProducts() {
       maxWidth: 120,
     },
     {
-      field: "Stock",
+      field: "stock",
       headerName: "Stock",
       type: "number",
       minWidth: 80,
@@ -113,14 +124,14 @@ export default function ShopAllProducts() {
     },
   ];
 
-  const row = [];
+  const row: row[] = [];
 
   products?.forEach((item) => {
     row.push({
       id: item._id,
       name: item.name,
       price: formattedPrice(item.price),
-      Stock: item.stock,
+      stock: item.stock,
       sold: item.sold_out,
       discountpercentage: item.discount_percentage,
       discountprice: formattedPrice(item.discount_price),
@@ -132,7 +143,7 @@ export default function ShopAllProducts() {
       {isProductsLoading ? (
         <Loader />
       ) : (
-        <div className="w-full mx-8 pt-1 mt-10 bg-white overflow-x-scroll">
+        <div className="w-full lg:mx-8 pt-1 lg:mt-10 bg-white overflow-x-scroll">
           <DataGrid
             rows={row}
             columns={columns}
