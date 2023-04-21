@@ -89,6 +89,7 @@ export default function AddProduct() {
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="productname"
             name="productName"
+            required
             onChange={(e) => setProductName(e.target.value)}
             value={productName}
             placeholder="Enter your product name"
@@ -104,6 +105,7 @@ export default function AddProduct() {
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="productdescription"
             name="productDescription"
+            required
             onChange={(e) => setProductDescription(e.target.value)}
             value={productDescription}
             placeholder="Enter your product Description"
@@ -118,6 +120,7 @@ export default function AddProduct() {
             className="w-full mt-2 border h-9 rounded bg-gray-50 text-sm md:text-base px-3 py-1.5"
             name="productCategory"
             id="productcategory"
+            required
             onChange={(e) => setProductCategory(e.target.value)}
           >
             <option disabled selected>
@@ -155,6 +158,7 @@ export default function AddProduct() {
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="productprice"
             name="productPrice"
+            required
             onChange={(e) => setProductPrice(parseInt(e.target.value))}
             value={productPrice}
             placeholder="Enter your product price"
@@ -200,13 +204,14 @@ export default function AddProduct() {
 
         <div>
           <label className="text-sm md:text-base" htmlFor="produtstock">
-            Stocks of Product
+            Stocks of Product <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="produtstock"
             name="productStock"
+            required
             onChange={(e) => setproductStock(parseInt(e.target.value))}
             value={productStock}
           />

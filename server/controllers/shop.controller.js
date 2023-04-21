@@ -164,3 +164,21 @@ exports.getAllProductsOfShop = async (req, res, next) => {
     next(new ErrorHandler(error.message, 500));
   }
 };
+
+exports.deleteShopSingleProduct = async (req, res, next) => {
+  try {
+    const { productId } = req.params;
+
+    const product = await Product.findByIdAndDelete(productId);
+
+    if (!product) {
+      return next(new ErrorHandler("Product does not exist", 404));
+    }
+
+    res
+      .status(201)
+      .json({ success: true, message: "Product deleted successfully" });
+  } catch (error) {
+    next(new ErrorHandler(error.message, 500));
+  }
+};

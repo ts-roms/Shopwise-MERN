@@ -4,8 +4,11 @@ import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { formattedPrice } from "../../../helper/formatPrice";
-import { IAppState, IServerProduct } from "../../../Interface";
-import { getShopAllProducts } from "../../../redux/actions/productActions";
+import { IAppState } from "../../../Interface";
+import {
+  deleteProduct,
+  getShopAllProducts,
+} from "../../../redux/actions/productActions";
 import Loader from "../../Loader/Loader";
 
 type row = {
@@ -24,6 +27,12 @@ export default function ShopAllProducts() {
   const { products, isProductsLoading } = useSelector(
     (state: IAppState) => state.products
   );
+
+  function deleteProductHandler(productId: string, sellerId: string) {
+    // @ts-ignore
+    dispatch(deleteProduct(productId, sellerId));
+    window.location.reload();
+  }
 
   useEffect(() => {
     // @ts-ignore
@@ -95,7 +104,7 @@ export default function ShopAllProducts() {
         const product_name = d.replace(/\s+/g, "-");
         return (
           <>
-            <Link to={`/product/${product_name}`}>
+            <Link to={`/products/${product_name}`}>
               <button className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
                 <AiOutlineEye size={20} />
               </button>
@@ -115,7 +124,12 @@ export default function ShopAllProducts() {
       renderCell: (params: GridCellParams) => {
         return (
           <>
-            <button className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
+            <button
+              onClick={() =>
+                deleteProductHandler(params.id.toString(), seller._id)
+              }
+              className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all"
+            >
               <AiOutlineDelete size={20} />
             </button>
           </>

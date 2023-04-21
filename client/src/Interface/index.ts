@@ -124,6 +124,7 @@ export interface IServerProductsState {
   products: IServerProduct[];
   error: null | AxiosError;
   isSuccess: boolean;
+  message: string;
 }
 
 export interface IAppState {

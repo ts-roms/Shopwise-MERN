@@ -3,20 +3,6 @@ import axios, { AxiosError } from "axios";
 import { IAddProduct } from "../../Interface";
 import { server } from "../../server";
 
-interface GetShopAllProductsAction {
-  type: "getShopAllProducts";
-}
-
-interface GetShopAllProductsSuccessAction {
-  type: "getShopAllProductsSuccess";
-  payload: [] | any;
-}
-
-interface GetShopAllProductsFailAction {
-  type: "getShopAllProductsFail";
-  payload: string;
-}
-
 axios.defaults.withCredentials = true;
 
 export const addProduct =
@@ -39,14 +25,7 @@ export const addProduct =
   };
 
 export const getShopAllProducts =
-  (sellerId: string) =>
-  async (
-    dispatch: Dispatch<
-      | GetShopAllProductsAction
-      | GetShopAllProductsSuccessAction
-      | GetShopAllProductsFailAction
-    >
-  ) => {
+  (sellerId: string) => async (dispatch: Dispatch) => {
     try {
       dispatch({ type: "getShopAllProducts" });
 
@@ -57,6 +36,28 @@ export const getShopAllProducts =
       console.log(error);
       dispatch({
         type: "getShopAllProductsFail",
+        payload: error.response?.data?.message || error.message,
+      });
+    }
+  };
+
+export const deleteProduct =
+  (productId: string, shopId: string) => async (dispatch: Dispatch) => {
+    try {
+      dispatch({ type: "deleteProductRequest" });
+
+      const config = { headers: { "Content-Type": "multipart/form-data" } };
+
+      const { data } = await axios.delete(
+        `${server}/shops/${shopId}/products/${productId}`,
+        config
+      );
+
+      dispatch({ type: "deleteProductSuccess", payload: data.message });
+    } catch (error: AxiosError | any) {
+      console.log(error);
+      dispatch({
+        type: "deleteProductFail",
         payload: error.response?.data?.message || error.message,
       });
     }

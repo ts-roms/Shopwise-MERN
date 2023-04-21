@@ -6,6 +6,7 @@ const inititalState: IServerProductsState = {
   products: [],
   error: null,
   isSuccess: false,
+  message: "",
 };
 
 export const productReducer = createReducer(inititalState, {
@@ -36,6 +37,19 @@ export const productReducer = createReducer(inititalState, {
   },
   getShopAllProductsFail: (state, action) => {
     state.isProductsLoading = false;
+    state.error = action.payload;
+  },
+
+  // delete product
+  deleteProductRequest: (state) => {
+    state.isProductsLoading = true;
+  },
+  deleteProductSuccess: (state, action) => {
+    state.isProductsLoading = true;
+    state.message = action.payload;
+  },
+  deleteProductFail: (state, action) => {
+    state.isProductsLoading = true;
     state.error = action.payload;
   },
 });
