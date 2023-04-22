@@ -84,7 +84,6 @@ export default function ShopSidebar({ activeTab }: IProps) {
             <div
               key={link.id}
               className={`${style.flex_normal} gap-3 cursor-pointer transition-all w-fit md:w-full px-5 py-4 lg:px-12 hover:bg-orange-200`}
-              // onClick={() => setActiveTab(idx)}
             >
               <span
                 className={`${

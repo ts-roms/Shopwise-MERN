@@ -25,6 +25,7 @@ import SellerProtectedRoute from "./protected-routes/SellerProtectedRoute";
 import ShopDashboardPage from "./pages/Seller/ShopDashboardPage";
 import SellerAddProductPage from "./pages/Seller/SellerAddProductPage";
 import SellerProductsPage from "./pages/Seller/SellerProductsPage";
+import SellerCreatEventPag from "./pages/Seller/SellerCreatEventPag";
 
 function App() {
   useEffect(() => {
@@ -122,6 +123,15 @@ function App() {
             // @ts-ignore
             <SellerProtectedRoute>
               <SellerAddProductPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/shop-create-event"
+          element={
+            // @ts-ignore
+            <SellerProtectedRoute>
+              <SellerCreatEventPag />
             </SellerProtectedRoute>
           }
         />

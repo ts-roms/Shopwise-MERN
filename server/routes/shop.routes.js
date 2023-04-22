@@ -1,3 +1,4 @@
+const { createEvent } = require("../controllers/event.controller");
 const {
   createShop,
   shopActivation,
@@ -13,15 +14,28 @@ const upload = require("../upload");
 
 const router = require("express").Router();
 
+// create a new shop
 router.post("/create-shop", upload.single("file"), createShop);
 
+// shop activation
 router.post("/activation", catchAsyncError(shopActivation));
 
+// login shop
 router.post("/login-shop", catchAsyncError(shopLogin));
 
+// to logout shop
 router.get("/logout", catchAsyncError(logOutShop));
 
+// to retrive shop information
 router.get("/get-shop", isSeller, getShop);
+
+// create event handlers
+router.post(
+  "/events",
+  isSeller,
+  upload.array("images"),
+  catchAsyncError(createEvent)
+);
 
 // get all products of shop
 router.get("/:shopId/products", catchAsyncError(getAllProductsOfShop));

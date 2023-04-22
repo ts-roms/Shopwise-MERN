@@ -165,6 +165,7 @@ exports.getAllProductsOfShop = async (req, res, next) => {
   }
 };
 
+// delete sinlge product of a shop
 exports.deleteShopSingleProduct = async (req, res, next) => {
   try {
     const { productId } = req.params;
@@ -183,6 +184,7 @@ exports.deleteShopSingleProduct = async (req, res, next) => {
   }
 };
 
+// logout shop
 exports.logOutShop = async (req, res, next) => {
   try {
     res.cookie("seller_token", null, {

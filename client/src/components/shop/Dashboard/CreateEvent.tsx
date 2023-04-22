@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { server } from "../../../server";
 
-export default function AddProduct() {
+export default function CreateEvent() {
   const navigate = useNavigate();
 
   const [productName, setProductName] = useState(generateProductName);
@@ -21,6 +21,8 @@ export default function AddProduct() {
   const [productDiscountPercentage, setproductDiscountPercentage] = useState(0);
   const [productDiscountPrice, setProductDiscountPrice] = useState(0);
   const [productStock, setproductStock] = useState(0);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
@@ -33,6 +35,33 @@ export default function AddProduct() {
       }
     }
   }
+
+  function handleStartDateChange(e: ChangeEvent<HTMLInputElement>) {
+    const startDate = new Date(e.target.value);
+    const minEndDate = new Date(startDate.getTime() + 3 * 60 * 60 * 1000);
+    setStartDate(startDate);
+    setEndDate(null);
+
+    const inputDateElement = document.getElementById(
+      "eventenddate"
+    ) as HTMLInputElement | null;
+    if (inputDateElement) {
+      inputDateElement.min = minEndDate.toISOString().slice(0, 10);
+    }
+  }
+
+  function handleEndDateChange(e: ChangeEvent<HTMLInputElement>) {
+    const endDate = new Date(e.target.value);
+    setEndDate(endDate);
+  }
+
+  const today = new Date().toISOString().slice(0, 10);
+
+  const minendDate = startDate
+    ? new Date(startDate.getTime() + 3 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .slice(0, 10)
+    : today;
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -82,7 +111,7 @@ export default function AddProduct() {
       <form onSubmit={handleSubmit} className="space-y-6 mt-8">
         <div>
           <label className="text-sm md:text-base" htmlFor="productname">
-            Product Name <span className="text-red-500">*</span>
+            Name <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -92,13 +121,13 @@ export default function AddProduct() {
             required
             onChange={(e) => setProductName(e.target.value)}
             value={productName}
-            placeholder="Enter your product name"
+            placeholder="Enter your event product name"
           />
         </div>
 
         <div>
           <label className="text-sm md:text-base" htmlFor="productdescription">
-            Product Description <span className="text-red-500">*</span>
+            Description <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -108,13 +137,13 @@ export default function AddProduct() {
             required
             onChange={(e) => setProductDescription(e.target.value)}
             value={productDescription}
-            placeholder="Enter your product Description"
+            placeholder="Enter your event product Description"
           />
         </div>
 
         <div>
           <label className="text-sm md:text-base" htmlFor="productcategory">
-            Product Category <span className="text-red-500">*</span>
+            Category <span className="text-red-500">*</span>
           </label>
           <select
             className="w-full mt-2 border h-9 rounded bg-gray-50 text-sm md:text-base px-3 py-1.5"
@@ -136,7 +165,7 @@ export default function AddProduct() {
 
         <div>
           <label className="text-sm md:text-base" htmlFor="produttags">
-            Product Tags
+            Event Tags
           </label>
           <input
             type="text"
@@ -145,24 +174,55 @@ export default function AddProduct() {
             name="productTags"
             onChange={(e) => setProductTags(e.target.value)}
             value={productTags}
-            placeholder="Enter your product tags"
+            placeholder="Enter your event product tags"
+          />
+        </div>
+
+        <div>
+          <label className="text-sm md:text-base" htmlFor="eventstartdate">
+            Event Start Date
+          </label>
+          <input
+            type="date"
+            className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
+            id="eventstartdate"
+            name="startDate"
+            min={today}
+            onChange={handleStartDateChange}
+            value={startDate ? startDate.toISOString().slice(0, 10) : ""}
+            placeholder="Enter your event product tags"
+          />
+        </div>
+        <div>
+          <label className="text-sm md:text-base" htmlFor="eventstartdate">
+            Event End Date
+          </label>
+          <input
+            type="date"
+            className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
+            id="eventenddate"
+            name="endDate"
+            min={minendDate}
+            onChange={handleEndDateChange}
+            value={endDate ? endDate.toISOString().slice(0, 10) : ""}
+            placeholder="Enter your event product tags"
           />
         </div>
 
         <div>
           <label className="text-sm md:text-base" htmlFor="produtprice">
-            Product Price (in paisa) <span className="text-red-500">*</span>
+            Price (in paisa) <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="productprice"
             name="productPrice"
-            min={0}
             required
             onChange={(e) => setProductPrice(parseInt(e.target.value))}
             value={productPrice}
-            placeholder="Enter your product price"
+            placeholder="Enter your event product price"
+            min={0}
           />
         </div>
 
@@ -171,7 +231,7 @@ export default function AddProduct() {
             className="text-sm md:text-base"
             htmlFor="produtdiscountpercentage"
           >
-            Product Discount (between 1-90 in percentage(%))
+            Discount (between 1-90 in percentage(%))
           </label>
           <input
             type="number"
@@ -185,13 +245,13 @@ export default function AddProduct() {
               setproductDiscountPercentage(parseInt(e.target.value))
             }
             value={productDiscountPercentage}
-            placeholder="Enter your product discount percentage"
+            placeholder="Enter your event product discount percentage"
           />
         </div>
 
         <div>
           <label className="text-sm md:text-base" htmlFor="produtdiscountprice">
-            Product Discount Price (in paisa)
+            Discount Price (in paisa)
           </label>
           <input
             type="number"
@@ -263,7 +323,7 @@ export default function AddProduct() {
         <div>
           <input
             type="submit"
-            value="Add Product"
+            value="Create Event"
             className="appearance-none cursor-pointer text-center block w-full h-9 border border-orange-500 text-orange-500 rounded transition-all hover:text-white hover:bg-orange-500"
           />
         </div>

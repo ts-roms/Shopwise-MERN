@@ -1,12 +1,10 @@
 const router = require("express").Router();
 const upload = require("../upload");
 const catchAsyncErrors = require("../middleware/catchAsyncError");
-const {
-  addProduct,
-  getAllProductsOfShop,
-} = require("../controllers/product.controller");
+const { addProduct } = require("../controllers/product.controller");
 const { isSeller } = require("../middleware/auth");
 
+// add product
 router.post(
   "/",
   isSeller,

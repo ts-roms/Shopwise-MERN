@@ -9,6 +9,7 @@ const {
 const { sendMail } = require("../utils/sendMail");
 const { sendToken } = require("../utils/jwtToken");
 
+// register user
 exports.createUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
@@ -68,6 +69,7 @@ exports.createUser = async (req, res, next) => {
   }
 };
 
+// activate user account
 exports.activation = async (req, res, next) => {
   try {
     const { activation_token } = req.body;
@@ -100,6 +102,7 @@ exports.activation = async (req, res, next) => {
   }
 };
 
+// login user
 exports.loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -135,6 +138,7 @@ exports.loginUser = async (req, res, next) => {
   }
 };
 
+// get user information
 exports.getUser = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -152,7 +156,6 @@ exports.getUser = async (req, res, next) => {
 };
 
 // log out user
-
 exports.logOutUser = async (req, res, next) => {
   try {
     console.log("eee");
