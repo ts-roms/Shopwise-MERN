@@ -5,6 +5,7 @@ const {
   getShop,
   getAllProductsOfShop,
   deleteShopSingleProduct,
+  logOutShop,
 } = require("../controllers/shop.controller");
 const { isSeller } = require("../middleware/auth");
 const catchAsyncError = require("../middleware/catchAsyncError");
@@ -17,6 +18,8 @@ router.post("/create-shop", upload.single("file"), createShop);
 router.post("/activation", catchAsyncError(shopActivation));
 
 router.post("/login-shop", catchAsyncError(shopLogin));
+
+router.get("/logout", catchAsyncError(logOutShop));
 
 router.get("/get-shop", isSeller, getShop);
 

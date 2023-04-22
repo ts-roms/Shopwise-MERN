@@ -1,8 +1,11 @@
+import axios, { AxiosError } from "axios";
 import { MouseEvent } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import formateDate from "../../helper/formatDate";
 import { IAppState } from "../../Interface";
-import { host } from "../../server";
+import { host, server } from "../../server";
 import style from "../../styles/style";
 
 interface IProps {
@@ -13,9 +16,25 @@ export default function ShopInfo({ isOwner }: IProps) {
   const { seller } = useSelector((state: IAppState) => state.seller);
 
   const { name, avatar, address, phoneNumber, createdAt } = seller;
+  const navigate = useNavigate();
 
-  function logoutHandler(event: MouseEvent<HTMLElement>) {
+  async function logoutHandler(event: MouseEvent<HTMLElement>) {
     event.preventDefault();
+
+    try {
+      const res = await axios.get(`${server}/shops/logout`, {
+        withCredentials: true,
+      });
+
+      if (res.status == 201) {
+        toast.success(res.data.message);
+        navigate("/login-shop");
+        window.location.reload();
+      }
+    } catch (error: AxiosError | any) {
+      console.error(error);
+      toast.error(error.response.data.message);
+    }
   }
 
   return (

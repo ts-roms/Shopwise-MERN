@@ -182,3 +182,17 @@ exports.deleteShopSingleProduct = async (req, res, next) => {
     next(new ErrorHandler(error.message, 500));
   }
 };
+
+exports.logOutShop = async (req, res, next) => {
+  try {
+    res.cookie("seller_token", null, {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    });
+
+    res.status(201).json({ success: true, message: "Log out Successful!" });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};
