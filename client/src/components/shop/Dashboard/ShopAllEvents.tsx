@@ -34,7 +34,6 @@ export default function ShopAllEvents() {
   function deleteEventHandler(eventId: string, sellerId: string) {
     // @ts-ignore
     dispatch(deleteEvent(eventId, sellerId));
-    window.location.reload();
   }
 
   useEffect(() => {

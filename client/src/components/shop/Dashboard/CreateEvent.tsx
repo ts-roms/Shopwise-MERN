@@ -91,7 +91,7 @@ export default function CreateEvent() {
 
       if (res.status == 201) {
         toast.success("Event Added Successfully");
-        navigate("/dashboard");
+        navigate("/shop-events");
       }
     } catch (error: any) {
       console.log(error);

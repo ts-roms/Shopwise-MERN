@@ -49,11 +49,14 @@ export const deleteEvent =
       const config = { headers: { "Content-Type": "multipart/form-data" } };
 
       const { data } = await axios.delete(
-        `${server}/shops/${shopId}/products/${eventId}`,
+        `${server}/shops/${shopId}/events/${eventId}`,
         config
       );
 
-      dispatch({ type: "deleteEventSuccess", payload: data.message });
+      dispatch({
+        type: "deleteEventSuccess",
+        payload: { message: data.message, eventId },
+      });
     } catch (error: AxiosError | any) {
       console.log(error);
       dispatch({

@@ -40,16 +40,18 @@ export const eventReducer = createReducer(inititalState, {
     state.error = action.payload;
   },
 
-  // delete product
+  // delete event
   deleteEventRequest: (state) => {
     state.isEventsLoading = true;
   },
   deleteEventSuccess: (state, action) => {
-    state.isEventsLoading = true;
-    state.message = action.payload;
+    state.isEventsLoading = false;
+    state.message = action.payload.message;
+    const deletedEventId = action.payload.eventId;
+    state.events = state.events.filter((event) => event._id !== deletedEventId);
   },
   deleteEventFail: (state, action) => {
-    state.isEventsLoading = true;
+    state.isEventsLoading = false;
     state.error = action.payload;
   },
 });

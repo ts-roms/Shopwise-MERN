@@ -245,9 +245,23 @@ exports.deleteShopSingleEvent = async (req, res, next) => {
   try {
     const { eventId } = req.params;
 
-    const Event = await Event.findByIdAndDelete(eventId);
+    const eventData = await Event.findById(eventId);
 
-    if (!Event) {
+    console.log("Dfd");
+    eventData.images.forEach((image) => {
+      const filepath = `uploads/${image}`;
+
+      fs.unlink(filepath, (err) => {
+        if (err) {
+          console.log(err);
+          return next(new ErrorHandler(err.message, 500));
+        }
+      });
+    });
+
+    const event = await Event.findByIdAndDelete(eventId);
+
+    if (!event) {
       return next(new ErrorHandler("Event does not exist", 404));
     }
 
