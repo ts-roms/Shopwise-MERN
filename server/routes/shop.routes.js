@@ -1,4 +1,3 @@
-const { createEvent } = require("../controllers/event.controller");
 const {
   createShop,
   shopActivation,
@@ -7,6 +6,9 @@ const {
   getAllProductsOfShop,
   deleteShopSingleProduct,
   logOutShop,
+  createEvent,
+  getAllEventsOfShop,
+  deleteShopSingleEvent,
 } = require("../controllers/shop.controller");
 const { isSeller } = require("../middleware/auth");
 const catchAsyncError = require("../middleware/catchAsyncError");
@@ -35,6 +37,16 @@ router.post(
   isSeller,
   upload.array("images"),
   catchAsyncError(createEvent)
+);
+
+// get all events of shop
+router.get("/:shopId/events", catchAsyncError(getAllEventsOfShop));
+
+// delete shop single event
+router.delete(
+  "/:shopId/events/:eventId",
+  isSeller,
+  catchAsyncError(deleteShopSingleEvent)
 );
 
 // get all products of shop

@@ -1,4 +1,5 @@
 const Shop = require("../models/shop.model");
+const Event = require("../models/event.model");
 const Product = require("../models/product.model");
 const path = require("path");
 const fs = require("fs");
@@ -179,6 +180,67 @@ exports.deleteShopSingleProduct = async (req, res, next) => {
     res
       .status(201)
       .json({ success: true, message: "Product deleted successfully" });
+  } catch (error) {
+    next(new ErrorHandler(error.message, 500));
+  }
+};
+
+// create shop event
+exports.createEvent = async (req, res, next) => {
+  try {
+    const sellerId = req.seller.id;
+
+    const shop = await Shop.findById(sellerId);
+
+    if (!shop) {
+      return next(new ErrorHandler("Invalid Seller id", 400));
+    }
+
+    const files = req.files;
+    const imageUrls = files.map((file) => `${file.filename}`);
+
+    const eventData = req.body;
+
+    eventData.images = imageUrls;
+    eventData.shop = shop._id;
+
+    const event = await Event.create(eventData);
+
+    res.status(201).json({ success: true, event });
+  } catch (e) {
+    console.error(e);
+    next(new ErrorHandler(e.message, 500));
+  }
+};
+
+// get shop all events
+exports.getAllEventsOfShop = async (req, res, next) => {
+  try {
+    const { shopId } = req.params;
+
+    const events = await Event.find({ shop: shopId }).populate("shop");
+
+    res.status(200).json({ success: true, events });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};
+
+// delete sinlge product of a shop
+exports.deleteShopSingleEvent = async (req, res, next) => {
+  try {
+    const { eventId } = req.params;
+
+    const Event = await Event.findByIdAndDelete(productId);
+
+    if (!Event) {
+      return next(new ErrorHandler("Event does not exist", 404));
+    }
+
+    res
+      .status(201)
+      .json({ success: true, message: "Event deleted successfully" });
   } catch (error) {
     next(new ErrorHandler(error.message, 500));
   }

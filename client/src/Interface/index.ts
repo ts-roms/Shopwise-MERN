@@ -61,6 +61,24 @@ export interface IStarsProps {
   stars: number;
 }
 
+export interface IEvent {
+  _id: string;
+  name: string;
+  description: string;
+  category: string;
+  startDate: Date;
+  endDate: Date;
+  status: string;
+  tags: string;
+  price: number;
+  discount_percentage: number;
+  discount_price: number;
+  stock: number;
+  images: File[];
+  shop: ISeller;
+  sold_out: number;
+}
+
 export interface IUser {
   _id: string;
   name: string;
@@ -127,10 +145,19 @@ export interface IServerProductsState {
   message: string;
 }
 
+export interface IEventsState {
+  isEventsLoading: boolean;
+  events: IEvent[];
+  error: null | AxiosError;
+  isSuccess: boolean;
+  message: string;
+}
+
 export interface IAppState {
   user: IUserState;
   seller: ISellerState;
   products: IServerProductsState;
+  events: IEventsState;
 }
 
 export interface IQuestion {

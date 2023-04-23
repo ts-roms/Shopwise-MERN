@@ -36,6 +36,8 @@ export default function CreateEvent() {
     }
   }
 
+  console.log(startDate, endDate);
+
   function handleStartDateChange(e: ChangeEvent<HTMLInputElement>) {
     const startDate = new Date(e.target.value);
     const minEndDate = new Date(startDate.getTime() + 3 * 60 * 60 * 1000);
@@ -80,15 +82,17 @@ export default function CreateEvent() {
     form.append("discount_percentage", productDiscountPercentage.toString());
     form.append("discount_price", productDiscountPrice.toString());
     form.append("stock", productStock.toString());
+    if (startDate !== null) form.append("startDate", startDate.toISOString());
+    if (endDate !== null) form.append("endDate", endDate.toISOString());
 
     try {
       axios.defaults.withCredentials = true;
       const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-      const res = await axios.post(`${server}/products`, form, config);
+      const res = await axios.post(`${server}/shops/events`, form, config);
 
       if (res.status == 201) {
-        toast.success("Product Added Successfully");
+        toast.success("Event Added Successfully");
         navigate("/dashboard");
       }
     } catch (error: any) {
