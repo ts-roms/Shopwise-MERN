@@ -37,7 +37,6 @@ export default function ShopLogin() {
         },
         { withCredentials: true }
       );
-      console.log(res);
       if (res.status) {
         toast.success("Login Success!");
         navigate("/dashboard");

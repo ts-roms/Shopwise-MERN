@@ -53,7 +53,10 @@ export const deleteProduct =
         config
       );
 
-      dispatch({ type: "deleteProductSuccess", payload: data.message });
+      dispatch({
+        type: "deleteProductSuccess",
+        payload: { message: data.message, productId },
+      });
     } catch (error: AxiosError | any) {
       console.log(error);
       dispatch({

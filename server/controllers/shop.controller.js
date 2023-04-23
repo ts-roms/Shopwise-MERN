@@ -171,6 +171,19 @@ exports.deleteShopSingleProduct = async (req, res, next) => {
   try {
     const { productId } = req.params;
 
+    const productData = await Product.findById(productId);
+
+    productData.images.forEach((image) => {
+      const filepath = `uploads/${image}`;
+
+      fs.unlink(filepath, (err) => {
+        if (err) {
+          console.log(err);
+          return next(new ErrorHandler(err.message, 500));
+        }
+      });
+    });
+
     const product = await Product.findByIdAndDelete(productId);
 
     if (!product) {
@@ -232,7 +245,7 @@ exports.deleteShopSingleEvent = async (req, res, next) => {
   try {
     const { eventId } = req.params;
 
-    const Event = await Event.findByIdAndDelete(productId);
+    const Event = await Event.findByIdAndDelete(eventId);
 
     if (!Event) {
       return next(new ErrorHandler("Event does not exist", 404));

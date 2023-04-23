@@ -31,7 +31,6 @@ export default function ShopAllProducts() {
   function deleteProductHandler(productId: string, sellerId: string) {
     // @ts-ignore
     dispatch(deleteProduct(productId, sellerId));
-    window.location.reload();
   }
 
   useEffect(() => {

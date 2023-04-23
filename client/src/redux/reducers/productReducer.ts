@@ -45,11 +45,15 @@ export const productReducer = createReducer(inititalState, {
     state.isProductsLoading = true;
   },
   deleteProductSuccess: (state, action) => {
-    state.isProductsLoading = true;
-    state.message = action.payload;
+    state.isProductsLoading = false;
+    state.message = action.payload.message;
+    const deletedProductId = action.payload.productId;
+    state.products = state.products.filter(
+      (product) => product._id !== deletedProductId
+    );
   },
   deleteProductFail: (state, action) => {
-    state.isProductsLoading = true;
+    state.isProductsLoading = false;
     state.error = action.payload;
   },
 });

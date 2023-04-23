@@ -14,8 +14,6 @@ export default function ActivationPage() {
         const res = await axios.post(`${server}/users/activation`, {
           activation_token,
         });
-
-        console.log(res.data);
       } catch (error) {
         console.log(error);
         setError(true);

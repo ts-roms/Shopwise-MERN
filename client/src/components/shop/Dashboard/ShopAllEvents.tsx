@@ -9,17 +9,13 @@ import {
   deleteEvent,
   getShopAllEvents,
 } from "../../../redux/actions/eventsActions";
-import {
-  deleteProduct,
-  getShopAllProducts,
-} from "../../../redux/actions/productActions";
 import Loader from "../../Loader/Loader";
 
 type row = {
   id: string;
   name: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   status: string;
   price: string;
   stock: number;
@@ -138,7 +134,6 @@ export default function ShopAllEvents() {
       type: "number",
       sortable: false,
       renderCell: (params: GridCellParams) => {
-        console.log(params);
         return (
           <>
             <button
@@ -161,9 +156,9 @@ export default function ShopAllEvents() {
     row.push({
       id: item._id,
       name: item.name,
-      startDate: item.startDate,
-      endDate: item.endDate,
-      status: item.status,
+      startDate: new Date(item.startDate).toLocaleDateString(),
+      endDate: new Date(item.endDate).toLocaleDateString(),
+      status: item.status.toUpperCase(),
       price: formattedPrice(item.price),
       stock: item.stock,
       sold: item.sold_out,

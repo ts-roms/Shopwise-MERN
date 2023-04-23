@@ -60,7 +60,7 @@ export default function AddProduct() {
 
       if (res.status == 201) {
         toast.success("Product Added Successfully");
-        navigate("/dashboard");
+        navigate("/shop-products");
       }
     } catch (error: any) {
       console.log(error);

@@ -20,8 +20,6 @@ const initialState = {
 export default function CreateShop() {
   const [formData, setFormData] = useState(initialState);
 
-  console.log(formData);
-
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {

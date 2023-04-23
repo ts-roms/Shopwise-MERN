@@ -36,8 +36,6 @@ export default function CreateEvent() {
     }
   }
 
-  console.log(startDate, endDate);
-
   function handleStartDateChange(e: ChangeEvent<HTMLInputElement>) {
     const startDate = new Date(e.target.value);
     const minEndDate = new Date(startDate.getTime() + 3 * 60 * 60 * 1000);
