@@ -9,6 +9,8 @@ const {
   createEvent,
   getAllEventsOfShop,
   deleteShopSingleEvent,
+  createcuopon,
+  getShopcuopons,
 } = require("../controllers/shop.controller");
 const { isSeller } = require("../middleware/auth");
 const catchAsyncError = require("../middleware/catchAsyncError");
@@ -58,5 +60,11 @@ router.delete(
   isSeller,
   catchAsyncError(deleteShopSingleProduct)
 );
+
+// create cuopon of shop
+router.post("/:shopId/coupons", isSeller, catchAsyncError(createcuopon));
+
+// get cuopons of shops
+router.get("/:shopId/coupons", isSeller, catchAsyncError(getShopcuopons));
 
 module.exports = router;

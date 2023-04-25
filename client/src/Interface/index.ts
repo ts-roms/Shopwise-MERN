@@ -61,6 +61,15 @@ export interface IStarsProps {
   stars: number;
 }
 
+export interface ICoupon {
+  _id: string;
+  name: string;
+  value: number;
+  minAmount: number;
+  selectedProduct: IServerProduct;
+  shop: ISeller;
+}
+
 export interface IEvent {
   _id: string;
   name: string;

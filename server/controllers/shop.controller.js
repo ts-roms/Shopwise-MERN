@@ -1,5 +1,6 @@
 const Shop = require("../models/shop.model");
 const Event = require("../models/event.model");
+const Cupon = require("../models/cuponcode.model");
 const Product = require("../models/product.model");
 const path = require("path");
 const fs = require("fs");
@@ -247,7 +248,6 @@ exports.deleteShopSingleEvent = async (req, res, next) => {
 
     const eventData = await Event.findById(eventId);
 
-    console.log("Dfd");
     eventData.images.forEach((image) => {
       const filepath = `uploads/${image}`;
 
@@ -282,6 +282,42 @@ exports.logOutShop = async (req, res, next) => {
     });
 
     res.status(201).json({ success: true, message: "Log out Successful!" });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};
+
+// create cuopon code
+exports.createcuopon = async (req, res, next) => {
+  try {
+    const cuoponcode = await Cupon.findOne({ name: req.body.name });
+
+    if (cuoponcode) {
+      return next(new ErrorHandler("Cupon code already exists", 400));
+    }
+
+    const obj = {
+      ...req.body,
+      shop: req.seller.id,
+    };
+    const newCuopon = await Cupon.create(obj);
+
+    res
+      .status(201)
+      .json({ success: true, message: "Coupon Added Successfully" });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};
+
+// get shop cupons
+exports.getShopcuopons = async (req, res, next) => {
+  try {
+    const coupons = await Cupon.find({ shop: req.seller.id });
+
+    res.status(200).json({ success: true, coupons });
   } catch (error) {
     console.log(error);
     next(new ErrorHandler(error.message, 500));

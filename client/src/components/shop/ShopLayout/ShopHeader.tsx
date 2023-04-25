@@ -21,16 +21,16 @@ export default function ShopHeader() {
           </Link>
         </div>
         <div className={` ${style.flex_normal} gap-8 hidden lg:flex`}>
-          <Link to="/dashboard/cupouns">
+          <Link to="/shop-cupouns">
             <AiOutlineGift title="Cupouns" size={30} color="#555" />
           </Link>
-          <Link to="/dashboard/cupouns">
+          <Link to="/shop-events">
             <BsCalendarEvent title="All Events" size={30} color="#555" />
           </Link>
-          <Link to="/dashboard/cupouns">
+          <Link to="/shop-products">
             <FiShoppingBag title="All Products" size={30} color="#555" />
           </Link>
-          <Link to="/dashboard/cupouns">
+          <Link to="/shop-orders">
             <FiPackage title="All Orders" size={30} color="#555" />
           </Link>
           <Link to={`/shop/${seller._id}`}>

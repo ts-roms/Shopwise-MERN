@@ -27,6 +27,7 @@ import SellerAddProductPage from "./pages/Seller/SellerAddProductPage";
 import SellerProductsPage from "./pages/Seller/SellerProductsPage";
 import SellerCreatEventPag from "./pages/Seller/SellerCreatEventPag";
 import ShopAllEventsPage from "./pages/Seller/ShopAllEventsPage";
+import ShopCuponsPage from "./pages/Seller/ShopCuponsPage";
 
 function App() {
   useEffect(() => {
@@ -151,6 +152,15 @@ function App() {
             // @ts-ignore
             <SellerProtectedRoute>
               <ShopAllEventsPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/shop-cupouns"
+          element={
+            // @ts-ignore
+            <SellerProtectedRoute>
+              <ShopCuponsPage />
             </SellerProtectedRoute>
           }
         />
