@@ -11,7 +11,6 @@ const {
   decodeActivationToken,
 } = require("../helper/helper");
 const { sendShopToken } = require("../utils/shopToken");
-const mongoose = require("mongoose");
 
 // shop creation
 exports.createShop = async (req, res, next) => {
@@ -334,9 +333,6 @@ exports.deleteSingleCoupon = async (req, res, next) => {
 
     const couponData = await Cupon.findById(couponId);
 
-    const sellerIdAsObject = new mongoose.Types.ObjectId(sellerId);
-
-    // console.log(sellerIdAsObject, couponData.shop);
     if (couponData.shop.toString() !== sellerId) {
       return next(
         new ErrorHandler("You are not allowed to perform this action", 400)
