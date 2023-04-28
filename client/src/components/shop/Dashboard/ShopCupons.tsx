@@ -63,6 +63,7 @@ export default function ShopCupons() {
         getCoupons();
       }
     } catch (err: AxiosError | any) {
+      setIsLoading(false);
       if (err.response) {
         toast.error(err.response.data.message);
         console.log(err);
@@ -85,6 +86,7 @@ export default function ShopCupons() {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const res = await axios.post(
         `${server}/shops/${seller._id}/coupons`,
         {
@@ -100,6 +102,7 @@ export default function ShopCupons() {
 
       if (res.status === 201) {
         setIsOpen(!isOpen);
+        setIsLoading(false);
         setCuponcode("");
         setDiscountpercentage(0);
         setMiniAmount(0);
@@ -108,6 +111,7 @@ export default function ShopCupons() {
         toast.success(res.data.message);
       }
     } catch (e: AxiosError | any) {
+      setIsLoading(false);
       console.log(e);
       if (e.response) {
         toast.error(e.response.data.message);
@@ -127,39 +131,34 @@ export default function ShopCupons() {
     {
       field: "id",
       headerName: "Coupon Id",
-      minWidth: 150,
+      minWidth: 260,
       flex: 0.7,
-      maxWidth: 250,
     },
     {
       field: "name",
       headerName: "Coupon Name",
       minWidth: 180,
       flex: 1.4,
-      maxWidth: 350,
     },
     {
       field: "discountpercentage",
       headerName: "Discount Percentage",
       minWidth: 80,
       flex: 0.6,
-      maxWidth: 100,
     },
     {
       field: "minamt",
       headerName: "Minimum Amount",
       minWidth: 80,
       flex: 0.6,
-      maxWidth: 120,
     },
     {
       field: "Delete",
       flex: 0.8,
       minWidth: 100,
-      headerName: "",
+      headerName: "Delete",
       type: "number",
       sortable: false,
-      maxWidth: 100,
       renderCell: (params: GridCellParams) => {
         return (
           <>
