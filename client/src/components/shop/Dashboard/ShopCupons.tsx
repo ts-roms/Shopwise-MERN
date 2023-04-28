@@ -3,9 +3,9 @@ import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { IAppState, ICoupon } from "../../../Interface";
-import { deleteProduct } from "../../../redux/actions/productActions";
 import { server } from "../../../server";
 import Loader from "../../Loader/Loader";
 
@@ -46,9 +46,33 @@ export default function ShopCupons() {
     }
   }
 
+  async function handleDeleteCoupon(id: string) {
+    try {
+      setIsLoading(true);
+      const res = await axios.delete(
+        `${server}/shops/${seller._id}/coupons/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      if (res.status == 200) {
+        setIsLoading(false);
+        toast.success(res.data.message);
+      }
+    } catch (err: AxiosError | any) {
+      if (err.response) {
+        toast.error(err.response.data.message);
+        console.log(err);
+      } else {
+        setError(err.message);
+        console.log(err);
+      }
+    }
+  }
+
   useEffect(() => {
     getCoupons();
-  }, [dispatch, seller._id]);
+  }, [dispatch, seller._id, isLoading]);
 
   const columns = [
     {
@@ -90,7 +114,10 @@ export default function ShopCupons() {
       renderCell: (params: GridCellParams) => {
         return (
           <>
-            <button className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
+            <button
+              onClick={() => handleDeleteCoupon(params.id.toString())}
+              className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all"
+            >
               <AiOutlineDelete size={20} />
             </button>
           </>

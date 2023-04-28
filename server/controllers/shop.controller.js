@@ -11,6 +11,7 @@ const {
   decodeActivationToken,
 } = require("../helper/helper");
 const { sendShopToken } = require("../utils/shopToken");
+const mongoose = require("mongoose");
 
 // shop creation
 exports.createShop = async (req, res, next) => {
@@ -318,6 +319,34 @@ exports.getShopcuopons = async (req, res, next) => {
     const coupons = await Cupon.find({ shop: req.seller.id });
 
     res.status(200).json({ success: true, coupons });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};
+
+// delete single coupon
+exports.deleteSingleCoupon = async (req, res, next) => {
+  try {
+    const { couponId } = req.params;
+
+    const sellerId = req.seller.id;
+
+    const couponData = await Cupon.findById(couponId);
+
+    const sellerIdAsObject = new mongoose.Types.ObjectId(sellerId);
+
+    // console.log(sellerIdAsObject, couponData.shop);
+    if (couponData.shop.toString() !== sellerId) {
+      return next(
+        new ErrorHandler("You are not allowed to perform this action", 400)
+      );
+    }
+
+    const coupon = await Cupon.findByIdAndDelete(couponId);
+    res
+      .status(200)
+      .json({ success: true, message: "Coupon code deleted successfully" });
   } catch (error) {
     console.log(error);
     next(new ErrorHandler(error.message, 500));
