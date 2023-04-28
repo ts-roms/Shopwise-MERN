@@ -1,25 +1,16 @@
+import shooes from "../assets/shooes.jpg";
+import shooes2 from "../assets/shooes1.jpg";
+import shooes3 from "../assets/shoosse2.jpg";
+import shooes4 from "../assets/shoosse2.jpg";
+import headphone from "../assets/heaphone.jpg";
+import camera from "../assets/camera.jpg";
+
 export const sliderItems = [
-  {
-    id: 1,
-    img: "https://i.ibb.co/XsdmR2c/1.png",
-    title: "SUMMER SALE",
-    desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-    bg: "f5fafd",
-  },
-  {
-    id: 2,
-    img: "https://i.ibb.co/DG69bQ4/2.png",
-    title: "AUTUMN COLLECTION",
-    desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-    bg: "fcf1ed",
-  },
-  {
-    id: 3,
-    img: "https://i.ibb.co/cXFnLLV/3.png",
-    title: "LOUNGEWEAR LOVE",
-    desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-    bg: "fbf0f4",
-  },
+  { id: 1, img: headphone },
+  { id: 2, img: shooes },
+  { id: 3, img: shooes2 },
+  { id: 4, img: shooes3 },
+  { id: 5, img: camera },
 ];
 
 export const categories = [
