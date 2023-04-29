@@ -15,7 +15,7 @@ export default function CreateShopPage() {
 
   useEffect(() => {
     if (isSellerAuthenticate) {
-      toast.info("You are allready logged in");
+      toast.info("You are already logged in");
       navigate(`/shop/${seller._id}`);
     }
   }, []);

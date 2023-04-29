@@ -39,15 +39,13 @@ export default function Hero() {
           <FaChevronRight color="white" />
         </button>
       </div>
-      <div className="h-full w-full">
-        <Slider {...settings} className="w-full h-full" ref={setSliderRef}>
-          {sliderItems?.map((i) => (
-            <div key={i.id}>
-              <img className="lg:h-[80vh] w-full md:object-cover" src={i.img} />
-            </div>
-          ))}
-        </Slider>
-      </div>
+      <Slider {...settings} className="w-full h-full" ref={setSliderRef}>
+        {sliderItems?.map((i) => (
+          <div key={i.id}>
+            <img className="lg:h-[80vh] w-full md:object-cover" src={i.img} />
+          </div>
+        ))}
+      </Slider>
     </section>
   );
 }

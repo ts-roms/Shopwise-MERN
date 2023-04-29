@@ -2,7 +2,7 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import PasswordInput from "../passwordInput/PasswordInput";
 import style from "../../../styles/style";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { server } from "../../../server";
 import { toast } from "react-toastify";
 
@@ -42,9 +42,12 @@ export default function Login() {
         navigate("/");
         window.location.reload();
       }
-    } catch (error: any) {
-      console.log(error);
-      if (error.response) toast.error(error.response.data.message);
+    } catch (error: AxiosError | any) {
+      if (error.response) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(error.message);
+      }
     }
   }
 

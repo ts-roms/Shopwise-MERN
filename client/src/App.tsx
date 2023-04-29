@@ -28,6 +28,7 @@ import SellerProductsPage from "./pages/Seller/SellerProductsPage";
 import SellerCreatEventPag from "./pages/Seller/SellerCreatEventPag";
 import ShopAllEventsPage from "./pages/Seller/ShopAllEventsPage";
 import ShopCuponsPage from "./pages/Seller/ShopCuponsPage";
+import NotFound from "./components/404/NotFound";
 
 function App() {
   useEffect(() => {
@@ -174,7 +175,7 @@ function App() {
           }
         />
 
-        <Route path="*" element={<h1>wrong route</h1>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer
         position="bottom-center"

@@ -8,9 +8,6 @@ import Sponsored from "../components/Home/Sponsored/Sponsored";
 import { useEffect } from "react";
 
 export default function HomePage() {
-  // useEffect(() => {
-  //   window.location.reload(true);
-  // }, []);
   return (
     <>
       <Hero />

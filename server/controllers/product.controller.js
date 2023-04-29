@@ -14,7 +14,13 @@ exports.addProduct = async (req, res, next) => {
     }
 
     const files = req.files;
-    const imageUrls = files.map((file) => `${file.filename}`);
+    const imageUrls = files.map((file, idx) => ({
+      id: idx + 1,
+      url: `${file.filename}`,
+      name: file.filename,
+      type: file.mimetype,
+      size: file.size,
+    }));
 
     const productData = req.body;
 
