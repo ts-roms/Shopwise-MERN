@@ -1,7 +1,8 @@
+import loadable from "@loadable/component";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Signup from "../../components/Auth/signup/Signup";
+const Signup = loadable(() => import("../../components/Auth/signup/Signup"));
 import { useAppSelector } from "../../hooks";
 
 export default function SignupPage() {

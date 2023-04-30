@@ -1,5 +1,8 @@
-import FaqComponent from "../components/FaqComponent/FaqComponent";
+import loadable from "@loadable/component";
 import faqData from "../constant/faqData.json";
+const FaqComponent = loadable(
+  () => import("../components/FaqComponent/FaqComponent")
+);
 
 export default function FAQ() {
   window.scrollTo(0, 0);

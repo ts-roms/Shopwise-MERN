@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
+import { host } from "../../../server";
 import { ImageProps } from "../Carousel/Carousel";
 
 export default function Slider({ images }: { images: ImageProps[] }) {
-  if (!images) {
-    return;
-  }
-
   const [slide, setSlide] = useState(0);
 
   function changeSlide(direction: string) {
@@ -21,12 +18,18 @@ export default function Slider({ images }: { images: ImageProps[] }) {
   return (
     <div className="lg:hidden w-full relative overflow-x-hidden pt-22">
       <div
-        className="w-[400vw] flex items-center justify-center transition-all duration-1000 ease-in-out"
+        className={`w-[${
+          images.length * 100
+        }vw] flex items-center justify-center transition-all duration-1000 ease-in-out`}
         style={{ transform: `translateX(${-100 * slide}vw)` }}
       >
         {images?.map((image) => (
           <div key={image.id} className="w-[100vw]">
-            <img src={image.url} className="object-center" alt={image.name} />{" "}
+            <img
+              src={`${host}/${image.url}`}
+              className="object-center"
+              alt={image.name}
+            />
           </div>
         ))}
       </div>

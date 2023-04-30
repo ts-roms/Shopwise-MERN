@@ -168,7 +168,6 @@ export default function Header() {
             <div>
               <Link className={`${style.flex_normal}`} to="/">
                 <img src={logo} alt="Company logo" className="h-8 w-12" />
-                <span>Shopwise</span>
               </Link>
             </div>
             <div className="relative cursor-pointer">

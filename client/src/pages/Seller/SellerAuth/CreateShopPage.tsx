@@ -1,7 +1,10 @@
+import loadable from "@loadable/component";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import CreateShop from "../../../components/shop/CreateShop";
+const CreateShop = loadable(
+  () => import("../../../components/shop/CreateShop")
+);
 import { useAppSelector } from "../../../hooks";
 import style from "../../../styles/style";
 

@@ -1,27 +1,27 @@
+import loadable from "@loadable/component";
 import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Product from "../components/Product/Product";
-import productsData from "../constant/product.json";
 import style from "../styles/style";
 import { IProduct } from "../Interface";
+import { useAppSelector } from "../hooks";
+import productsData from "../constant/product.json";
+const Product = loadable(() => import("../components/Product/Product"));
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<IProduct[]>([]);
+  const { allProducts } = useAppSelector((state) => state.allProducts);
 
   const [searchParams] = useSearchParams();
-
   const categoryData = searchParams.get("category");
 
   useEffect(() => {
     if (categoryData === null) {
-      const sorted =
-        productsData &&
-        productsData.sort((a, b) => a.total_sell - b.total_sell);
+      const sorted = [...allProducts]?.sort((a, b) => a.sold_out - b.sold_out);
       setProducts(sorted);
     } else {
-      const sorted =
-        productsData &&
-        productsData.filter((product) => product.category == categoryData);
+      const sorted = allProducts?.filter(
+        (product) => product.category == categoryData
+      );
       setProducts(sorted);
     }
     window.scrollTo(0, 0);

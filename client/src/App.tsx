@@ -1,35 +1,50 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import loadable from "@loadable/component";
-import { useEffect } from "react";
-import ActivationPage from "./pages/User/ActivationPage";
-import SignupPage from "./pages/User/SignupPage";
-import HomePage from "./pages/HomePage";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import store from "./redux/store";
-import { loadUser } from "./redux/actions/userActions";
-import ProductPage from "./pages/ProductPage";
-import ProductsPage from "./pages/ProductsPage";
-import Layout from "./components/Layout/Layout";
-import BestSelling from "./pages/BestSelling";
-import EventsPage from "./pages/EventsPage";
-import FAQ from "./pages/FAQPage";
-import ProfilePage from "./pages/User/ProfilePage";
-import ProtectedRoute from "./protected-routes/Protectedroute";
-import CreateShop from "./pages/Seller/SellerAuth/CreateShopPage";
-import SellerActivationPage from "./pages/Seller/SellerAuth/SellerActivationPage";
-import ShopLoginPage from "./pages/Seller/SellerAuth/ShopLoginPage";
-import { loadSeller } from "./redux/actions/sellerActions";
-import ShopHomePage from "./pages/Seller/ShopHomePage";
-import SellerProtectedRoute from "./protected-routes/SellerProtectedRoute";
-import ShopDashboardPage from "./pages/Seller/ShopDashboardPage";
-import SellerAddProductPage from "./pages/Seller/SellerAddProductPage";
-import SellerProductsPage from "./pages/Seller/SellerProductsPage";
-import SellerCreatEventPag from "./pages/Seller/SellerCreatEventPag";
-import ShopCuponsPage from "./pages/Seller/ShopCuponsPage";
-import NotFound from "./components/404/NotFound";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { getAllProducts } from "./redux/actions/allProductsActions";
+import { loadUser } from "./redux/actions/userActions";
+import { useEffect } from "react";
+import { loadSeller } from "./redux/actions/sellerActions";
+import store from "./redux/store";
+import loadable from "@loadable/component";
 
+import SellerProtectedRoute from "./protected-routes/SellerProtectedRoute";
+import ProtectedRoute from "./protected-routes/Protectedroute";
+import Layout from "./components/Layout/Layout";
+import HomePage from "./pages/HomePage";
+
+const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
+const ProductsPage = loadable(() => import("./pages/ProductsPage"));
+const ProductPage = loadable(() => import("./pages/ProductPage"));
+const SignupPage = loadable(() => import("./pages/User/SignupPage"));
+const BestSelling = loadable(() => import("./pages/BestSelling"));
+const EventsPage = loadable(() => import("./pages/EventsPage"));
+const FAQ = loadable(() => import("./pages/FAQPage"));
+const ProfilePage = loadable(() => import("./pages/User/ProfilePage"));
+const CreateShop = loadable(
+  () => import("./pages/Seller/SellerAuth/CreateShopPage")
+);
+const SellerActivationPage = loadable(
+  () => import("./pages/Seller/SellerAuth/SellerActivationPage")
+);
+const ShopLoginPage = loadable(
+  () => import("./pages/Seller/SellerAuth/ShopLoginPage")
+);
+const ShopHomePage = loadable(() => import("./pages/Seller/ShopHomePage"));
+const ShopDashboardPage = loadable(
+  () => import("./pages/Seller/ShopDashboardPage")
+);
+const SellerAddProductPage = loadable(
+  () => import("./pages/Seller/SellerAddProductPage")
+);
+const SellerProductsPage = loadable(
+  () => import("./pages/Seller/SellerProductsPage")
+);
+const SellerCreatEventPage = loadable(
+  () => import("./pages/Seller/SellerCreatEventPag")
+);
+const ShopCuponsPage = loadable(() => import("./pages/Seller/ShopCuponsPage"));
+const NotFound = loadable(() => import("./components/404/NotFound"));
 const LoginPage = loadable(() => import("./pages/User/LoginPage"));
 const ShopAllEventsPage = loadable(
   () => import("./pages/Seller/ShopAllEventsPage")
@@ -136,7 +151,7 @@ function App() {
           path="/shop-create-event"
           element={
             <SellerProtectedRoute>
-              <SellerCreatEventPag />
+              <SellerCreatEventPage />
             </SellerProtectedRoute>
           }
         />

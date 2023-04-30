@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { host } from "../../../server";
 
 export type ImageProps = {
   id: number;
   url: string;
   name: string;
   type: string;
-  size: string;
+  size: number;
 };
 
 export default function Carousel({ images }: { images: ImageProps[] }) {
@@ -17,13 +18,14 @@ export default function Carousel({ images }: { images: ImageProps[] }) {
         {images?.map((image) => (
           <div
             key={image.id}
-            className="hover:opacity-40 cursor-pointer w-28 duration-500 border-[2.5px] border-transparent hover:border-[2.5px] hover:border-orange-500 hover:bg-orange-500 rounded-lg"
+            className="hover:opacity-40 cursor-pointer w-28 duration-500 border-[2.5px] hover:border-[2.5px] hover:border-orange-500 hover:bg-orange-500 rounded-lg"
           >
             <img
-              src={image.url}
+              src={`${host}/${image.url}`}
               className="rounded-lg"
               onClick={() => setSelectImg(image.id)}
               alt={image.name}
+              loading="lazy"
             />
           </div>
         ))}
@@ -31,12 +33,13 @@ export default function Carousel({ images }: { images: ImageProps[] }) {
       <div className="lg:w-3/4 md:w-full">
         {images?.map((image) => (
           <img
-            src={image.url}
+            src={`${host}/${image.url}`}
             key={image.id}
             className={`${
               image.id === selectImg ? "block" : "hidden"
-            } rounded-lg`}
+            } rounded-lg border`}
             alt={image.name}
+            loading="lazy"
           />
         ))}
       </div>

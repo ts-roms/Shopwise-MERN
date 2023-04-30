@@ -1,7 +1,8 @@
+import loadable from "@loadable/component";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import ShopLogin from "../../../components/shop/ShopLogin";
+const ShopLogin = loadable(() => import("../../../components/shop/ShopLogin"));
 import { useAppSelector } from "../../../hooks";
 
 export default function ShopLoginPage() {

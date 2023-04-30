@@ -1,6 +1,13 @@
-import ShopAllProducts from "../../components/shop/Dashboard/ShopAllProducts";
-import ShopHeader from "../../components/shop/ShopLayout/ShopHeader";
-import ShopSidebar from "../../components/shop/ShopLayout/ShopSidebar";
+import loadable from "@loadable/component";
+const ShopHeader = loadable(
+  () => import("../../components/shop/ShopLayout/ShopHeader")
+);
+const ShopSidebar = loadable(
+  () => import("../../components/shop/ShopLayout/ShopSidebar")
+);
+const ShopAllProducts = loadable(
+  () => import("../../components/shop/Dashboard/ShopAllProducts")
+);
 
 export default function SellerProductsPage() {
   return (

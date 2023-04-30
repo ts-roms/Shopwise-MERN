@@ -1,7 +1,8 @@
+import loadable from "@loadable/component";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Login from "../../components/Auth/login/Login";
+const Login = loadable(() => import("../../components/Auth/login/Login"));
 import { useAppSelector } from "../../hooks";
 
 export default function LoginPage() {
@@ -11,7 +12,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isUserAuthenticate) {
-      toast.info("You are allready logged in");
+      toast.info("You are already logged in");
       navigate("/");
     }
   }, []);

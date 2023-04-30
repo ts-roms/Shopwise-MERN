@@ -174,8 +174,9 @@ exports.deleteShopSingleProduct = async (req, res, next) => {
 
     const productData = await Product.findById(productId);
 
+    console.log(productData);
     productData.images.forEach((image) => {
-      const filepath = `uploads/${image}`;
+      const filepath = `uploads/${image.filename}`;
 
       fs.unlink(filepath, (err) => {
         if (err) {

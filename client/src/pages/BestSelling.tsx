@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
-import Product from "../components/Product/Product";
+const Product = loadable(() => import("../components/Product/Product"));
 import productsData from "../constant/product.json";
 import style from "../styles/style";
 import { IProduct } from "../Interface";
+import loadable from "@loadable/component";
+import { useAppSelector } from "../hooks";
 
 export default function BestSelling() {
   const [products, setProducts] = useState<IProduct[]>([]);
+  const { allProducts } = useAppSelector((state) => state.allProducts);
 
   useEffect(() => {
-    const sorted = productsData.sort((a, b) => b.total_sell - a.total_sell);
+    const sorted = [...allProducts].sort((a, b) => b.sold_out - a.sold_out);
     setProducts(sorted);
     window.scrollTo(0, 0);
   }, []);

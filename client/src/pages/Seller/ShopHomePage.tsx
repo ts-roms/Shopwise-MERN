@@ -1,9 +1,9 @@
-import ShopInfo from "../../components/shop/ShopInfo";
+import loadable from "@loadable/component";
 import style from "../../styles/style";
-import ShopProfileData from "./ShopProfileData";
+const ShopInfo = loadable(() => import("../../components/shop/ShopInfo"));
+const ShopProfileData = loadable(() => import("./ShopProfileData"));
 
 export default function ShopHomePage() {
-  console.log("ddfd");
   return (
     <section>
       <div className={`${style.section}`}>

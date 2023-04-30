@@ -1,22 +1,28 @@
+import loadable from "@loadable/component";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import products from "../constant/product.json";
-import ProductDetails from "../components/ProductDetails/ProductDetails";
+const ProductDetails = loadable(
+  () => import("../components/ProductDetails/ProductDetails")
+);
 import { IProduct } from "../Interface";
 import Loader from "../components/Loader/Loader";
 import style from "../styles/style";
 import { Link } from "react-router-dom";
 import RelatedProducts from "../components/ProductDetails/RelatedProducts/RelatedProducts";
+import { useAppSelector } from "../hooks";
 
 export default function ProductPage() {
   const { product_slug } = useParams();
   const [product, setProduct] = useState<IProduct | null>(null);
-
+  const { allProducts } = useAppSelector((state) => state.allProducts);
   const productName = product_slug?.replace(/-/g, " ");
 
   useEffect(() => {
     if (productName) {
-      const product = products.find((product) => product.name === productName);
+      const product = [...allProducts]?.find(
+        (product) => product.name === productName
+      );
       if (product !== undefined) {
         setProduct(product);
       }
@@ -42,7 +48,8 @@ export default function ProductPage() {
 
 const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
   const [activeTab, setActiveTab] = useState("productDetails");
-  const { image_Url, name, description, shop } = product;
+  console.log(product);
+  const { images, name, description, shop } = product;
 
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
@@ -113,14 +120,14 @@ const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
         <div className="w-full p-5 lg:flex">
           <div className="w-full lg:w-1/2 space-y-8">
             <div className={`${style.flex_normal} gap-3`}>
-              <img
+              {/* <img
                 className="h-12 w-12 rounded-full"
                 src={shop.shop_avatar.url}
                 alt=""
-              />
+              /> */}
               <div>
                 <h4 className={`${style.shop_name} text-xl`}>{shop.name}</h4>
-                <h4>{shop.ratings} Ratings</h4>
+                {/* <h4>{shop.ratings} Ratings</h4> */}
               </div>
             </div>
             <p>

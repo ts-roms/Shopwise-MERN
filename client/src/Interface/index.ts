@@ -10,7 +10,13 @@ export interface IProduct {
   discount_percentage: number;
   discount_price: number;
   tags?: string;
-  images: { id: number; url: string; name: string; size: number }[];
+  images: {
+    id: number;
+    url: string;
+    name: string;
+    type: string;
+    size: number;
+  }[];
   shop: ISeller;
   reviews?: { user: {}; comment: string; rating: number }[];
   rating: number;

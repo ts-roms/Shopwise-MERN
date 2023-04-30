@@ -1,8 +1,15 @@
+import loadable from "@loadable/component";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import OngoingShopEvents from "../../components/shop/ShopData/OngoingShopEvents";
-import ShopProducts from "../../components/shop/ShopData/ShopProducts";
-import ShopReviews from "../../components/shop/ShopData/ShopReviews";
+const OngoingShopEvents = loadable(
+  () => import("../../components/shop/ShopData/OngoingShopEvents")
+);
+const ShopProducts = loadable(
+  () => import("../../components/shop/ShopData/ShopProducts")
+);
+const ShopReviews = loadable(
+  () => import("../../components/shop/ShopData/ShopReviews")
+);
 
 interface IProps {
   isOwner: boolean;
