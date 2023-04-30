@@ -1,16 +1,14 @@
 import { Navigate } from "react-router-dom";
-import { ReactNode } from "react";
-import { IAppState } from "../Interface";
-import { useSelector } from "react-redux";
 import Loader from "../components/Loader/Loader";
+import { useAppSelector } from "../hooks";
 
 interface IProps {
-  children: ReactNode;
+  children: JSX.Element;
 }
 
-const SellerProtectedRoute = ({ children }: IProps) => {
-  const { isSellerLoading, isSellerAuthenticate } = useSelector(
-    (state: IAppState) => state.seller
+const SellerProtectedRoute = ({ children }: IProps): JSX.Element => {
+  const { isSellerLoading, isSellerAuthenticate } = useAppSelector(
+    (state) => state.seller
   );
 
   if (isSellerLoading) {

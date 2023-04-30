@@ -31,11 +31,7 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Please enter the stock of product"],
     },
-    images: [
-      {
-        type: String,
-      },
-    ],
+    images: [],
     shop: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Shop",

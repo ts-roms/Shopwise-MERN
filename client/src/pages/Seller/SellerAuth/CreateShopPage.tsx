@@ -1,16 +1,15 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CreateShop from "../../../components/shop/CreateShop";
-import { IAppState } from "../../../Interface";
+import { useAppSelector } from "../../../hooks";
 import style from "../../../styles/style";
 
 export default function CreateShopPage() {
   const navigate = useNavigate();
 
-  const { isSellerAuthenticate, seller } = useSelector(
-    (state: IAppState) => state.seller
+  const { isSellerAuthenticate, seller } = useAppSelector(
+    (state) => state.seller
   );
 
   useEffect(() => {

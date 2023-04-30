@@ -1,15 +1,14 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ShopLogin from "../../../components/shop/ShopLogin";
-import { IAppState } from "../../../Interface";
+import { useAppSelector } from "../../../hooks";
 
 export default function ShopLoginPage() {
   const navigate = useNavigate();
 
-  const { isSellerAuthenticate, isSellerLoading } = useSelector(
-    (state: IAppState) => state.seller
+  const { isSellerAuthenticate, isSellerLoading } = useAppSelector(
+    (state) => state.seller
   );
 
   useEffect(() => {

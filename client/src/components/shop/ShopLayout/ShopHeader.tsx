@@ -5,12 +5,11 @@ import { AiOutlineGift } from "react-icons/ai";
 import { BsCalendarEvent } from "react-icons/bs";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { FiPackage, FiShoppingBag } from "react-icons/fi";
-import { useSelector } from "react-redux";
-import { IAppState } from "../../../Interface";
 import { host } from "../../../server";
+import { useAppSelector } from "../../../hooks";
 
 export default function ShopHeader() {
-  const { seller } = useSelector((state: IAppState) => state.seller);
+  const { seller } = useAppSelector((state) => state.seller);
 
   return (
     <header className="shadow w-full sticky top-0 left-0 py-4 px-6 bg-white">

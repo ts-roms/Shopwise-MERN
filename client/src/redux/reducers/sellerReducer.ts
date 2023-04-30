@@ -4,7 +4,17 @@ const initialState = {
   isSellerAuthenticate: false,
   isSellerLoading: false,
   sellerError: null,
-  seller: null,
+  seller: {
+    _id: "",
+    name: "",
+    email: "",
+    role: "",
+    avatar: "",
+    phoneNumber: 0,
+    address: "",
+    zipcode: 0,
+    createdAt: "",
+  },
 };
 
 export const SellerReducer = createReducer(initialState, {

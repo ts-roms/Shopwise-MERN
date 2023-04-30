@@ -1,10 +1,17 @@
 import { createReducer } from "@reduxjs/toolkit";
+import { IUserState } from "../../Interface";
 
-const initialState = {
+const initialState: IUserState = {
   isUserAuthenticate: false,
   isUserLoading: false,
   userError: null,
-  user: null,
+  user: {
+    _id: "",
+    name: "",
+    email: "",
+    role: "",
+    avatar: "",
+  },
 };
 
 export const userReducer = createReducer(initialState, {

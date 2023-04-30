@@ -1,14 +1,13 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Login from "../../components/Auth/login/Login";
-import { IAppState } from "../../Interface";
+import { useAppSelector } from "../../hooks";
 
 export default function LoginPage() {
   const navigate = useNavigate();
 
-  const { isUserAuthenticate } = useSelector((state: IAppState) => state.user);
+  const { isUserAuthenticate } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     if (isUserAuthenticate) {

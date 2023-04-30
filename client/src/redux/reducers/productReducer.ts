@@ -10,23 +10,7 @@ const inititalState: IServerProductsState = {
 };
 
 export const productReducer = createReducer(inititalState, {
-  // productAddRequest: (state) => {
-  //   state.isProductsLoading = true;
-  // },
-  // productAddSuccess: (state, action) => {
-  //   state.isProductsLoading = false;
-  //   state.products = action.payload;
-  //   state.isSuccess = true;
-  // },
-  // productAddFail: (state, action) => {
-  //   state.isProductsLoading = false;
-  //   state.error = action.payload;
-  //   state.isSuccess = false;
-  // },
-  // clearError: (state) => {
-  //   state.error = null;
-  // },
-
+  // get shop product
   getShopAllProducts: (state) => {
     state.isProductsLoading = true;
   },

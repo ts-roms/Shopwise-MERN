@@ -30,7 +30,7 @@ export default function Slider({ images }: { images: ImageProps[] }) {
           </div>
         ))}
       </div>
-      <div className="absolute top-1/2 flex justify-between w-full px-2">
+      <div className="absolute top-1/2 -translate-y-1/2 flex justify-between w-full px-2">
         <div
           onClick={() => changeSlide("l")}
           className="bg-white h-8 w-8 rounded-full flex justify-center items-center"

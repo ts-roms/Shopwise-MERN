@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type ImageProps = {
+export type ImageProps = {
   id: number;
   url: string;
   name: string;

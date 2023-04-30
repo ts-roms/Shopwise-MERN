@@ -1,10 +1,9 @@
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { useEffect } from "react";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { formattedPrice } from "../../../helper/formatPrice";
-import { IAppState } from "../../../Interface";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 import {
   deleteEvent,
   getShopAllEvents,
@@ -25,19 +24,15 @@ type row = {
 };
 
 export default function ShopAllEvents() {
-  const dispatch = useDispatch();
-  const { seller } = useSelector((state: IAppState) => state.seller);
-  const { events, isEventsLoading } = useSelector(
-    (state: IAppState) => state.events
-  );
+  const dispatch = useAppDispatch();
+  const { seller } = useAppSelector((state) => state.seller);
+  const { events, isEventsLoading } = useAppSelector((state) => state.events);
 
   function deleteEventHandler(eventId: string, sellerId: string) {
-    // @ts-ignore
     dispatch(deleteEvent(eventId, sellerId));
   }
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(getShopAllEvents(seller._id));
   }, [dispatch, seller._id]);
 

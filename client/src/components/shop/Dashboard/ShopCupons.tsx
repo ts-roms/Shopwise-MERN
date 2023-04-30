@@ -3,13 +3,13 @@ import axios, { AxiosError } from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
-import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { formattedPrice } from "../../../helper/formatPrice";
-import { IAppState, ICoupon } from "../../../Interface";
+import { ICoupon } from "../../../Interface";
 import { server } from "../../../server";
 import Loader from "../../Loader/Loader";
 import { getShopAllProducts } from "../../../redux/actions/productActions";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 
 type row = {
   id: string;
@@ -19,8 +19,8 @@ type row = {
 };
 
 export default function ShopCupons() {
-  const dispatch = useDispatch();
-  const { seller } = useSelector((state: IAppState) => state.seller);
+  const dispatch = useAppDispatch();
+  const { seller } = useAppSelector((state) => state.seller);
 
   const [coupons, setCoupon] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -80,7 +80,7 @@ export default function ShopCupons() {
   const [miniamount, setMiniAmount] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
-  const { products } = useSelector((state: IAppState) => state.products);
+  const { products } = useAppSelector((state) => state.products);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -122,7 +122,6 @@ export default function ShopCupons() {
   }
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(getShopAllProducts(seller._id));
     getCoupons();
   }, [seller._id]);

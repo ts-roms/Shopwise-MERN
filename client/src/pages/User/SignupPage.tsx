@@ -1,18 +1,17 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { IAppState } from "../../Interface";
 import Signup from "../../components/Auth/signup/Signup";
+import { useAppSelector } from "../../hooks";
 
 export default function SignupPage() {
   const navigate = useNavigate();
 
-  const { isUserAuthenticate } = useSelector((state: IAppState) => state.user);
+  const { isUserAuthenticate } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     if (isUserAuthenticate) {
-      toast.info("You are allready logged in");
+      toast.info("You are already logged in");
       navigate("/");
     }
   }, []);

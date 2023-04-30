@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import loadable from "@loadable/component";
 import { useEffect } from "react";
 import ActivationPage from "./pages/User/ActivationPage";
-import LoginPage from "./pages/User/LoginPage";
 import SignupPage from "./pages/User/SignupPage";
 import HomePage from "./pages/HomePage";
 import { ToastContainer } from "react-toastify";
@@ -26,14 +26,20 @@ import ShopDashboardPage from "./pages/Seller/ShopDashboardPage";
 import SellerAddProductPage from "./pages/Seller/SellerAddProductPage";
 import SellerProductsPage from "./pages/Seller/SellerProductsPage";
 import SellerCreatEventPag from "./pages/Seller/SellerCreatEventPag";
-import ShopAllEventsPage from "./pages/Seller/ShopAllEventsPage";
 import ShopCuponsPage from "./pages/Seller/ShopCuponsPage";
 import NotFound from "./components/404/NotFound";
+import { getAllProducts } from "./redux/actions/allProductsActions";
+
+const LoginPage = loadable(() => import("./pages/User/LoginPage"));
+const ShopAllEventsPage = loadable(
+  () => import("./pages/Seller/ShopAllEventsPage")
+);
 
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
     store.dispatch(loadSeller());
+    store.dispatch(getAllProducts());
   }, []);
 
   return (
@@ -101,7 +107,6 @@ function App() {
         <Route
           path="/profile"
           element={
-            // @ts-ignore
             <ProtectedRoute>
               <Layout>
                 <ProfilePage />
@@ -114,7 +119,6 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            // @ts-ignore
             <SellerProtectedRoute>
               <ShopDashboardPage />
             </SellerProtectedRoute>
@@ -123,7 +127,6 @@ function App() {
         <Route
           path="/shop-add-product"
           element={
-            // @ts-ignore
             <SellerProtectedRoute>
               <SellerAddProductPage />
             </SellerProtectedRoute>
@@ -132,7 +135,6 @@ function App() {
         <Route
           path="/shop-create-event"
           element={
-            // @ts-ignore
             <SellerProtectedRoute>
               <SellerCreatEventPag />
             </SellerProtectedRoute>
@@ -141,7 +143,6 @@ function App() {
         <Route
           path="/shop-products"
           element={
-            // @ts-ignore
             <SellerProtectedRoute>
               <SellerProductsPage />
             </SellerProtectedRoute>
@@ -150,7 +151,6 @@ function App() {
         <Route
           path="/shop-events"
           element={
-            // @ts-ignore
             <SellerProtectedRoute>
               <ShopAllEventsPage />
             </SellerProtectedRoute>
@@ -159,7 +159,6 @@ function App() {
         <Route
           path="/shop-cupouns"
           element={
-            // @ts-ignore
             <SellerProtectedRoute>
               <ShopCuponsPage />
             </SellerProtectedRoute>
@@ -168,7 +167,6 @@ function App() {
         <Route
           path="/shop/:shopId"
           element={
-            // @ts-ignore
             <SellerProtectedRoute>
               <ShopHomePage />
             </SellerProtectedRoute>

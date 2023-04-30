@@ -3,6 +3,7 @@ import style from "../../styles/style";
 import ShopProfileData from "./ShopProfileData";
 
 export default function ShopHomePage() {
+  console.log("ddfd");
   return (
     <section>
       <div className={`${style.section}`}>

@@ -4,21 +4,13 @@ import { formattedPrice } from "../../helper/formatPrice";
 import style from "../../styles/style";
 import Stars from "./Stars/Stars";
 import { IProduct } from "../../Interface";
+import { host } from "../../server";
 export interface IProps {
   product: IProduct;
 }
 
 export default function Product({ product }: IProps) {
-  const {
-    name,
-    category,
-    price,
-    description,
-    rating,
-    total_sell,
-    discount_price,
-    image_Url,
-  } = product;
+  const { name, category, price, discount_price, images } = product;
 
   const productSlug = product.name.replace(/\s+/g, "-");
 
@@ -28,7 +20,7 @@ export default function Product({ product }: IProps) {
         <div className="border p-4 bg-white relative overflow-visible shadow-lg rounded-md">
           <div className="h-40 overflow-hidden rounded-lg transition-all duration-300 hover:-translate-y-[18%] md:hover:-translate-y-1/4 hover:shadow-img">
             <img
-              src={image_Url[0].url}
+              src={`${host}/${images[0].url}`}
               loading="lazy"
               className="object-contain h-full w-full"
             />
@@ -40,10 +32,7 @@ export default function Product({ product }: IProps) {
             <span className="capitalize inline-block bg-red-300 text-white text-xs px-1.5 rounded-xl">
               {category}
             </span>
-            {/* <p className="text-xs">
-            {description.split(" ").slice(0, 25).join(" ")}
-        </p> */}
-            <Stars stars={rating} />
+            {/* <Stars stars={rating} /> */}
           </div>
           <div className="space-y-3 border-t border-[#ddd] pt-3">
             <div className={`${style.flex_normal} justify-between`}>

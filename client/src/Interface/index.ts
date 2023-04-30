@@ -2,24 +2,22 @@ import { AxiosError } from "axios";
 import { ChangeEvent, ReactNode } from "react";
 
 export interface IProduct {
-  id: number;
+  _id: string;
   category?: string;
   name: string;
   description: string;
   price: number;
-  image_Url: { public_id: string; url: string }[];
-  shop: {
-    name: string;
-    shop_avatar: {
-      public_id: string;
-      url: string;
-    };
-    ratings: number;
-  };
+  discount_percentage: number;
+  discount_price: number;
+  tags?: string;
+  images: { id: number; url: string; name: string; size: number }[];
+  shop: ISeller;
   reviews?: { user: {}; comment: string; rating: number }[];
   rating: number;
-  total_sell: number;
-  discount_price: number;
+  sold_out: number;
+  stock: number;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface IAddProduct {
@@ -66,7 +64,7 @@ export interface ICoupon {
   name: string;
   value: number;
   minAmount: number;
-  selectedProduct: IServerProduct;
+  selectedProduct: IProduct;
   shop: ISeller;
 }
 
@@ -129,26 +127,9 @@ export interface IAddProductState {
   isSuccess: boolean;
 }
 
-export interface IServerProduct {
-  _id: string;
-  name: string;
-  description: string;
-  category: string;
-  tags?: string;
-  price: number;
-  discount_percentage: number;
-  discount_price: number;
-  stock: number;
-  images: ["ipad-5-1681970571904-420174802.png"];
-  shop: ISeller;
-  sold_out: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface IServerProductsState {
   isProductsLoading: boolean;
-  products: IServerProduct[];
+  products: IProduct[];
   error: null | AxiosError;
   isSuccess: boolean;
   message: string;
@@ -162,11 +143,19 @@ export interface IEventsState {
   message: string;
 }
 
+export interface IAllProductState {
+  isAllProductsLoading: boolean;
+  allProducts: IProduct[];
+  error: null;
+  message: string;
+}
+
 export interface IAppState {
   user: IUserState;
   seller: ISellerState;
   products: IServerProductsState;
   events: IEventsState;
+  allProducts: IAllProductState;
 }
 
 export interface IQuestion {

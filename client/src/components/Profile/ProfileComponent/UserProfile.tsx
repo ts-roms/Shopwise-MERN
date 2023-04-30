@@ -1,17 +1,17 @@
 import { AiOutlineCamera } from "react-icons/ai";
-import { useSelector } from "react-redux";
 import { ChangeEvent, useState } from "react";
-import { IAppState, IUser } from "../../../Interface";
+import { IUser } from "../../../Interface";
 import { host } from "../../../server";
 import style from "../../../styles/style";
 import { toast } from "react-toastify";
+import { useAppSelector } from "../../../hooks";
 
 export default function UserProfile() {
-  const { user } = useSelector((state: IAppState) => state.user);
+  const { user } = useAppSelector((state) => state.user);
   const { name, email, avatar, role, _id } = user;
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const initialsate = {
+  const initialsate: IUser = {
     name: name,
     avatar: avatar,
     email: email,
@@ -44,7 +44,6 @@ export default function UserProfile() {
 
   function handleSubmit() {}
 
-  //   window.scrollTo(0, 0);
   return (
     <div className={`${style.flex_normal} flex-col w-full space-y-10`}>
       <div className="relative w-fit">

@@ -14,8 +14,8 @@ export default function HomePage() {
       <Branding />
       <Categories />
       <BeastDeals />
-      <Events />
-      <FeaturedProducts />
+      {/* <Events /> */}
+      {/* <FeaturedProducts /> */}
       <Sponsored />
     </>
   );

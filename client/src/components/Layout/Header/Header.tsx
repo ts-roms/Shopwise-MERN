@@ -14,11 +14,11 @@ import productData from "../../../constant/product.json";
 import Dropdown from "./Dropdown/Dropdown";
 import Navbar from "./Navbar/Navbar";
 import UserNavigation from "./UserNavigation/UserNavigation";
-import { useSelector } from "react-redux";
-import { IAppState, IProduct } from "../../../Interface";
+import { IProduct } from "../../../Interface";
 import Cart from "../../Cart/Cart";
 import Wishlist from "../../Wishlist/Wishlist";
 import { host } from "../../../server";
+import { useAppSelector } from "../../../hooks";
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -30,13 +30,14 @@ export default function Header() {
 
   const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false);
 
-  const userState = useSelector((state: IAppState) => state?.user);
+  const userState = useAppSelector((state) => state.user);
+  const { allProducts } = useAppSelector((state) => state.allProducts);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     setSearchQuery(e.target.value);
 
-    const filteredProduct = productData.filter((product: IProduct) =>
+    const filteredProduct = allProducts.filter((product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 

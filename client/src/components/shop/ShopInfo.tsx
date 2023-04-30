@@ -1,10 +1,9 @@
 import axios, { AxiosError } from "axios";
 import { MouseEvent } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import formateDate from "../../helper/formatDate";
-import { IAppState } from "../../Interface";
+import { useAppSelector } from "../../hooks";
 import { host, server } from "../../server";
 import style from "../../styles/style";
 
@@ -13,7 +12,7 @@ interface IProps {
 }
 
 export default function ShopInfo({ isOwner }: IProps) {
-  const { seller } = useSelector((state: IAppState) => state.seller);
+  const { seller } = useAppSelector((state) => state.seller);
 
   const { name, avatar, address, phoneNumber, createdAt } = seller;
   const navigate = useNavigate();

@@ -1,16 +1,14 @@
 import { Navigate } from "react-router-dom";
-import { ReactNode } from "react";
-import { IAppState } from "../Interface";
-import { useSelector } from "react-redux";
 import Loader from "../components/Loader/Loader";
+import { useAppSelector } from "../hooks";
 
 interface IProps {
-  children: ReactNode;
+  children: JSX.Element;
 }
 
-const ProtectedRoute = ({ children }: IProps) => {
-  const { isUserLoading, isUserAuthenticate } = useSelector(
-    (state: IAppState) => state.user
+const ProtectedRoute = ({ children }: IProps): JSX.Element => {
+  const { isUserLoading, isUserAuthenticate } = useAppSelector(
+    (state) => state.user
   );
 
   if (isUserLoading) {
