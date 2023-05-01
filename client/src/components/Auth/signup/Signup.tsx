@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
-import PasswordInput from "../passwordInput/PasswordInput";
+import loadable from "@loadable/component";
+const PasswordInput = loadable(() => import("../passwordInput/PasswordInput"));
 import style from "../../../styles/style";
 import { server } from "../../../server";
 import { Link } from "react-router-dom";

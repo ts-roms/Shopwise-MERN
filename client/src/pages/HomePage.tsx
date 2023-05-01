@@ -5,7 +5,6 @@ import BeastDeals from "../components/Home/BestDeals/BeastDeals";
 import FeaturedProducts from "../components/Home/FeaturedProducts/FeaturedProducts";
 import Events from "../components/Events/Events";
 import Sponsored from "../components/Home/Sponsored/Sponsored";
-import { useEffect } from "react";
 
 export default function HomePage() {
   return (
@@ -14,8 +13,8 @@ export default function HomePage() {
       <Branding />
       <Categories />
       <BeastDeals />
-      {/* <Events /> */}
-      {/* <FeaturedProducts /> */}
+      <Events />
+      <FeaturedProducts />
       <Sponsored />
     </>
   );

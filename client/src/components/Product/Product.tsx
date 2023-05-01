@@ -1,8 +1,9 @@
+import loadable from "@loadable/component";
 import { AiOutlineShoppingCart, AiOutlineHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { formattedPrice } from "../../helper/formatPrice";
 import style from "../../styles/style";
-import Stars from "./Stars/Stars";
+const Stars = loadable(() => import("./Stars/Stars"));
 import { IProduct } from "../../Interface";
 import { host } from "../../server";
 export interface IProps {

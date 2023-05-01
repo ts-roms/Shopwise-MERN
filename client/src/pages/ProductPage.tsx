@@ -11,6 +11,7 @@ import style from "../styles/style";
 import { Link } from "react-router-dom";
 import RelatedProducts from "../components/ProductDetails/RelatedProducts/RelatedProducts";
 import { useAppSelector } from "../hooks";
+import { host } from "../server";
 
 export default function ProductPage() {
   const { product_slug } = useParams();
@@ -120,11 +121,11 @@ const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
         <div className="w-full p-5 lg:flex">
           <div className="w-full lg:w-1/2 space-y-8">
             <div className={`${style.flex_normal} gap-3`}>
-              {/* <img
+              <img
                 className="h-12 w-12 rounded-full"
-                src={shop.shop_avatar.url}
+                src={`${host}/${shop.avatar}`}
                 alt=""
-              /> */}
+              />
               <div>
                 <h4 className={`${style.shop_name} text-xl`}>{shop.name}</h4>
                 {/* <h4>{shop.ratings} Ratings</h4> */}
@@ -140,7 +141,8 @@ const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
           <div className="w-full lg:w-1/2 lg:flex flex-col items-end">
             <div className="text-left space-y-2">
               <h4 className="font-medium">
-                Joined on : <span>14 April, 2023</span>
+                Joined on :{" "}
+                <span>{new Date(shop.createdAt).toLocaleDateString()}</span>
               </h4>
               <h4 className="font-medium">
                 Total Products : <span>123</span>

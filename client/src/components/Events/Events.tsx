@@ -1,5 +1,6 @@
+import loadable from "@loadable/component";
 import style from "../../styles/style";
-import EventCard from "./EventCard/EventCard";
+const EventCard = loadable(() => import("./EventCard/EventCard"));
 
 export default function Events() {
   return (

@@ -1,7 +1,8 @@
+import loadable from "@loadable/component";
 import { RxCross1 } from "react-icons/rx";
 import { BiShoppingBag } from "react-icons/bi";
 import style from "../../styles/style";
-import CartItem from "./CartItem/CartItem";
+const CartItem = loadable(() => import("./CartItem/CartItem"));
 import { Link } from "react-router-dom";
 
 interface IProps {

@@ -1,5 +1,6 @@
+import loadable from "@loadable/component";
+const PasswordInput = loadable(() => import("../passwordInput/PasswordInput"));
 import { useState, ChangeEvent, FormEvent } from "react";
-import PasswordInput from "../passwordInput/PasswordInput";
 import style from "../../../styles/style";
 import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";

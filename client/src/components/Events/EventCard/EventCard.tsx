@@ -1,6 +1,7 @@
+import loadable from "@loadable/component";
 import { formattedPrice } from "../../../helper/formatPrice";
 import style from "../../../styles/style";
-import Countdown from "../CountDown/Countdown";
+const Countdown = loadable(() => import("../CountDown/Countdown"));
 
 export default function EventCard() {
   return (

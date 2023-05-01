@@ -14,7 +14,7 @@ export default function BeastDeals() {
     const bestDealProducts = [...allProducts].sort(
       (a, b) => b.sold_out - a.sold_out
     );
-    setProducts(bestDealProducts);
+    setProducts(bestDealProducts.slice(0, 5));
   }, [allProducts]);
 
   return (
