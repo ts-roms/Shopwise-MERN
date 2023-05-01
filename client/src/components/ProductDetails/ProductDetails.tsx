@@ -3,7 +3,7 @@ import { IProduct } from "../../Interface";
 import { useEffect } from "react";
 import style from "../../styles/style";
 import { formattedPrice } from "../../helper/formatPrice";
-const AddtoCart = loadable(() => import("../Product/AddtoCart/AddtoCart"));
+const AddtoCart = loadable(() => import("./AddtoCart/AddtoCart"));
 import { AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
 import { host } from "../../server";
 const Carousel = loadable(() => import("./Carousel/Carousel"));
@@ -44,6 +44,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
                 <img
                   className="h-12 w-12 rounded-full"
                   src={`${host}/${shop.avatar}`}
+                  loading="lazy"
                   alt="Shop Profile"
                 />
                 <div>

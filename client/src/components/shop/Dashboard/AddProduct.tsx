@@ -245,6 +245,7 @@ export default function AddProduct() {
               <div className="inline-block relative" key={idx}>
                 <img
                   src={URL.createObjectURL(img)}
+                  loading="lazy"
                   className="h-24 w-24 rounded object-cover m-2"
                 />
                 <span

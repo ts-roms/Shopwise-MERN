@@ -40,7 +40,11 @@ export default function Hero() {
       <Slider {...settings} className="w-full h-full" ref={setSliderRef}>
         {sliderItems?.map((i) => (
           <div key={i.id}>
-            <img className="lg:h-[80vh] w-full md:object-cover" src={i.img} />
+            <img
+              className="lg:h-[80vh] w-full md:object-cover"
+              loading="lazy"
+              src={i.img}
+            />
           </div>
         ))}
       </Slider>

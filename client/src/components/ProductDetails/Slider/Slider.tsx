@@ -28,6 +28,7 @@ export default function Slider({ images }: { images: ImageProps[] }) {
             <img
               src={`${host}/${image.url}`}
               className="object-center"
+              loading="lazy"
               alt={image.name}
             />
           </div>

@@ -98,6 +98,7 @@ export default function Signup() {
               src="https://i.ibb.co/kK2JV13/Png-Item-1503945.png"
               className="h-40 w-40 rounded-full"
               alt="Profile Preview"
+              loading="lazy"
             />
             <label
               htmlFor="file"

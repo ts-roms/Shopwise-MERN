@@ -156,6 +156,10 @@ export interface IAllProductState {
   message: string;
 }
 
+export interface ICartItem extends IProduct {
+  quantity: number;
+}
+
 export interface IAppState {
   user: IUserState;
   seller: ISellerState;

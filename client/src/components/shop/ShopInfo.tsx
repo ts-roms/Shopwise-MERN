@@ -48,6 +48,7 @@ export default function ShopInfo({ isOwner }: IProps) {
         <img
           className="object-cover h-36 w-36 rounded-full"
           src={`${host}/${avatar}`}
+          loading="lazy"
           alt="seller profile picture"
         />
         <h4 className="text-xl">{name}</h4>

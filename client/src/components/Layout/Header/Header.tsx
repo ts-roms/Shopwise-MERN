@@ -83,7 +83,7 @@ export default function Header() {
         >
           <div>
             <Link to="/" className={`${style.flex_normal}`}>
-              <img className="h-11 w-32" src={logo} alt="Logo" />
+              <img className="h-11 w-32" src={logo} alt="Logo" loading="lazy" />
             </Link>
           </div>
           <div className="flex-1 flex justify-center">

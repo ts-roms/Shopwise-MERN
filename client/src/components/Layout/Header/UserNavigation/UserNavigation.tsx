@@ -4,6 +4,7 @@ import { BiUserCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { host } from "../../../../server";
 import { IUserState } from "../../../../Interface";
+import { useAppSelector } from "../../../../hooks";
 
 interface IProps {
   userState: IUserState;
@@ -17,6 +18,7 @@ export default function UserNavigation({
   toggleWishlist,
 }: IProps) {
   const { user, isUserAuthenticate } = userState;
+  const { cart } = useAppSelector((state) => state.cart);
 
   return (
     <div className={`${style.flex_normal} gap-6`}>
@@ -39,7 +41,7 @@ export default function UserNavigation({
           onClick={toggleCart}
         />
         <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
-          0
+          {cart?.length}
         </span>
       </div>
       <div className="relative cursor-pointer">

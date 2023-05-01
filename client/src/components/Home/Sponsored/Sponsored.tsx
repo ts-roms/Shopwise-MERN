@@ -20,7 +20,6 @@ export default function Sponsored() {
                 loading="lazy"
                 src={sponsor}
                 className="w-40 object-contain"
-                alt=""
               />
             </div>
           ))}

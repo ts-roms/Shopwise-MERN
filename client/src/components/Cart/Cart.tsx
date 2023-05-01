@@ -4,6 +4,8 @@ import { BiShoppingBag } from "react-icons/bi";
 import style from "../../styles/style";
 const CartItem = loadable(() => import("./CartItem/CartItem"));
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../hooks";
+import { ICartItem } from "../../Interface";
 
 interface IProps {
   toggleCart: () => void;
@@ -11,63 +13,7 @@ interface IProps {
 }
 
 export default function Cart({ toggleCart, isCartOpen }: IProps) {
-  const cartData = [
-    {
-      name: "dsfsfsfsd",
-      description: "fsfafsf",
-      price: 2332,
-    },
-    {
-      name: "dsfsfsfsd",
-      description: "fsfafsf",
-      price: 2332,
-    },
-    {
-      name: "dsfsfsfsd",
-      description: "fsfafsf",
-      price: 2332,
-    },
-    {
-      name: "dsfsfsfsd",
-      description: "fsfafsf",
-      price: 2332,
-    },
-    {
-      name: "dsfsfsfsd",
-      description: "fsfafsf",
-      price: 2332,
-    },
-    {
-      name: "dsfsfsfsd",
-      description: "fsfafsf",
-      price: 2332,
-    },
-    {
-      name: "dsfsfsfsd",
-      description: "fsfafsf",
-      price: 2332,
-    },
-    {
-      name: "dsfsfsfsd",
-      description: "fsfafsf",
-      price: 2332,
-    },
-    {
-      name: "dsfsfsfsd",
-      description: "fsfafsf",
-      price: 2332,
-    },
-    {
-      name: "dsfsfsfsd",
-      description: "fsfafsf",
-      price: 2332,
-    },
-    {
-      name: "dsfsfsfsd",
-      description: "fsfafsf",
-      price: 2332,
-    },
-  ];
+  const { cart } = useAppSelector((state) => state.cart);
 
   return (
     <div
@@ -96,10 +42,12 @@ export default function Cart({ toggleCart, isCartOpen }: IProps) {
               "linear-gradient(to top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 1) 90%, rgba(255, 255, 255, 0) 100%)",
           }}
         >
-          {cartData.length === 0 ? (
+          {cart.length === 0 ? (
             <div>No item in cart</div>
           ) : (
-            cartData?.map((item, idx) => <CartItem key={idx} item={item} />)
+            cart?.map((item: ICartItem) => (
+              <CartItem key={item._id} item={item} />
+            ))
           )}
         </div>
         <div className="mt-6 w-full self-end">

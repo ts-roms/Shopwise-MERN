@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { TiPlus, TiMinus } from "react-icons/ti";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { IProduct } from "../../../Interface";
+import { ICartItem, IProduct } from "../../../Interface";
 import style from "../../../styles/style";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { toast } from "react-toastify";
+import { addToCart } from "../../../redux/actions/cartActions";
 
 export default function AddtoCart({ product }: { product: IProduct }) {
   const [quantity, setQuantity] = useState(1);
-
+  const { cart } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
   const maxQuantity = 4;
   const minQuantity = 1;
 
@@ -23,6 +27,17 @@ export default function AddtoCart({ product }: { product: IProduct }) {
       setQuantity((prev) => prev - 1);
     } else {
       setQuantity(minQuantity);
+    }
+  }
+
+  function handleAddToCart(id: string) {
+    const isItemExist = cart?.find((i: ICartItem) => i._id === id);
+    if (isItemExist) {
+      toast.error("Item already in cart");
+    } else {
+      const cartData = { ...product, quantity };
+      dispatch(addToCart(cartData));
+      toast.success("Item added to cart");
     }
   }
 
@@ -47,7 +62,10 @@ export default function AddtoCart({ product }: { product: IProduct }) {
           <TiPlus />
         </button>
       </div>
-      <button className={`${style.cart_button}`}>
+      <button
+        className={`${style.cart_button}`}
+        onClick={() => handleAddToCart(product._id)}
+      >
         <AiOutlineShoppingCart title="Add to Cart" />
         <span className="ml-2">Add to cart</span>
       </button>

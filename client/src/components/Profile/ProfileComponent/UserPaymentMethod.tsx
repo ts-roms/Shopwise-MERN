@@ -23,6 +23,7 @@ export default function UserPaymentMethod() {
             <img
               src="https://bonik-react.vercel.app/assets/images/payment-methods/Visa.svg"
               alt=""
+              loading="lazy"
             />
             <h4 className="font-semibold">Just9krish</h4>
           </div>

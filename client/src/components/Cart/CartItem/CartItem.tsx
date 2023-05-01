@@ -4,21 +4,26 @@ import { HiPlus, HiMinus } from "react-icons/hi";
 import { toast } from "react-toastify";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { RxCross1 } from "react-icons/rx";
+import { ICartItem } from "../../../Interface";
+import { host } from "../../../server";
 
 interface IProps {
-  item: {
-    name: string;
-    description: string;
-    price: number;
-  };
+  item: ICartItem;
 }
 
 export default function CartItem({ item }: IProps) {
-  const [quantity, setQuantity] = useState(1);
-  const { name, description, price } = item;
+  const { name, price, quantity: qty } = item;
+  const [quantity, setQuantity] = useState(qty || 1);
 
   function increaseQuantity() {
-    setQuantity(quantity + 1);
+    if (quantity < 4) {
+      setQuantity(quantity + 1);
+      const updateCart = { ...item, quantity: quantity + 1 };
+      localStorage.setItem("cartItems", JSON.stringify(updateCart));
+    } else {
+      setQuantity(4);
+      toast.info("Can not increase quantity anymore");
+    }
   }
 
   function decreaseQuantity() {
@@ -27,6 +32,8 @@ export default function CartItem({ item }: IProps) {
       toast.info("Can not decrease quantity anymore");
     } else {
       setQuantity(quantity - 1);
+      const updateCart = { ...item, quantity: quantity - 1 };
+      localStorage.setItem("cartItems", JSON.stringify(updateCart));
     }
   }
 
@@ -49,7 +56,7 @@ export default function CartItem({ item }: IProps) {
       </div>
       <div className={`${style.flex_normal} gap-4`}>
         <img
-          src="http://source.unsplash.com/400x400?clothes"
+          src={`${host}/${item.images[0].url}`}
           className="w-16 rounded-md h-16 ml-2"
           loading="lazy"
           alt=""
