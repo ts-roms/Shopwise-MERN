@@ -15,7 +15,6 @@ export default function SellerActivationPage() {
           activation_token,
         });
       } catch (error) {
-        console.log(error);
         setError(true);
       }
     };

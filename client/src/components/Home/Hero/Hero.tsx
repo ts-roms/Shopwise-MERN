@@ -21,8 +21,6 @@ export default function Hero() {
     arrows: false,
   };
 
-  console.log(sliderRef);
-
   return (
     <section className="relative mt-20 md:m-0 bg-white overflow-hidden">
       <div className="flex justify-between w-full absolute top-1/2 -translate-y-2/4 z-40">

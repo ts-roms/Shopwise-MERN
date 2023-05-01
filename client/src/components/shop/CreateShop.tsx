@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import PasswordInput from "../Auth/passwordInput/PasswordInput";
 import style from "../../styles/style";
 import { server } from "../../server";
@@ -80,12 +80,14 @@ export default function CreateShop() {
         newFrom,
         config
       );
-      toast(res.data.message);
+      toast.success(res.data.message);
       setFormData(initialState);
-    } catch (error: any) {
+    } catch (error: AxiosError | any) {
       console.error(error);
       if (error.response) {
         toast.error(error.response.data.message);
+      } else {
+        toast.error(error.message);
       }
     }
   }

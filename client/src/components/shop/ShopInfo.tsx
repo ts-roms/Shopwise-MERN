@@ -32,7 +32,11 @@ export default function ShopInfo({ isOwner }: IProps) {
       }
     } catch (error: AxiosError | any) {
       console.error(error);
-      toast.error(error.response.data.message);
+      if (error.response) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(error.message);
+      }
     }
   }
 

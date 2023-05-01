@@ -1,7 +1,6 @@
 import loadable from "@loadable/component";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import products from "../constant/product.json";
 const ProductDetails = loadable(
   () => import("../components/ProductDetails/ProductDetails")
 );
@@ -21,14 +20,14 @@ export default function ProductPage() {
 
   useEffect(() => {
     if (productName) {
-      const product = [...allProducts]?.find(
+      const product = allProducts?.find(
         (product) => product.name === productName
       );
       if (product !== undefined) {
         setProduct(product);
       }
     }
-  }, [productName]);
+  }, [productName, allProducts]);
 
   return (
     <>
@@ -41,7 +40,9 @@ export default function ProductPage() {
           </div>
         </section>
       ) : (
-        <Loader />
+        <section className="min-h-screen flex justify-center items-center">
+          <Loader />
+        </section>
       )}
     </>
   );
@@ -49,7 +50,6 @@ export default function ProductPage() {
 
 const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
   const [activeTab, setActiveTab] = useState("productDetails");
-  console.log(product);
   const { images, name, description, shop } = product;
 
   const handleTabClick = (tabName: string) => {

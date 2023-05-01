@@ -16,7 +16,6 @@ export const addProduct =
 
       dispatch({ type: "productAddSuccess", payload: data.product });
     } catch (error: AxiosError | any) {
-      console.log(error);
       dispatch({
         type: "ProductAddFail",
         payload: error.response?.data?.message || error.message,
@@ -58,7 +57,6 @@ export const deleteProduct =
         payload: { message: data.message, productId },
       });
     } catch (error: AxiosError | any) {
-      console.log(error);
       dispatch({
         type: "deleteProductFail",
         payload: error.response?.data?.message || error.message,

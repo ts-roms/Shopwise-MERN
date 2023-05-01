@@ -66,6 +66,8 @@ export default function AddProduct() {
       console.log(error);
       if (error.response) {
         toast.error(error.response.data.message);
+      } else {
+        toast.error(error.message);
       }
     }
   }

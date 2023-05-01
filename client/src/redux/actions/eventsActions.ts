@@ -33,7 +33,6 @@ export const getShopAllEvents =
 
       dispatch({ type: "getShopAllEventsSuccess", payload: data.events });
     } catch (error: AxiosError | any) {
-      console.log(error);
       dispatch({
         type: "getShopAllEventsFail",
         payload: error.response?.data?.message || error.message,
