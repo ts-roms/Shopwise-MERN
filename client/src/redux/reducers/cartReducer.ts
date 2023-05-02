@@ -1,20 +1,20 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { ICartItem } from "../../Interface";
+import { ICartItem, ICartSate } from "../../Interface";
 
 const cartItems = localStorage.getItem("cartItems");
-const initialState = {
+const initialState: ICartSate = {
   cart: cartItems ? JSON.parse(cartItems) : [],
 };
 
 export const cartReducer = createReducer(initialState, {
   addToCart: (state, action) => {
     const item = action.payload;
-    const existItem = state.cart.find((i: ICartItem) => i._id === item.id);
+    const existItem = state.cart.find((i: ICartItem) => i._id === item._id);
     if (existItem) {
       return {
         ...state,
         cart: state.cart.map((i: ICartItem) =>
-          i._id === existItem.id ? item : i
+          i._id === existItem._id ? item : i
         ),
       };
     } else {

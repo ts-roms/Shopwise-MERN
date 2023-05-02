@@ -6,6 +6,7 @@ const CartItem = loadable(() => import("./CartItem/CartItem"));
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks";
 import { ICartItem } from "../../Interface";
+import { formattedPrice } from "../../helper/formatPrice";
 
 interface IProps {
   toggleCart: () => void;
@@ -14,6 +15,11 @@ interface IProps {
 
 export default function Cart({ toggleCart, isCartOpen }: IProps) {
   const { cart } = useAppSelector((state) => state.cart);
+
+  const totalPrice = cart.reduce(
+    (acc: number, item: ICartItem) => acc + item.quantity * item.price,
+    0
+  );
 
   return (
     <div
@@ -53,7 +59,7 @@ export default function Cart({ toggleCart, isCartOpen }: IProps) {
         <div className="mt-6 w-full self-end">
           <Link to="/checkout">
             <button className="rounded-lg px-10 bg-[#ff7d1a] text-white text-center w-full h-10">
-              Checkout
+              Checkout {formattedPrice(totalPrice)}
             </button>
           </Link>
         </div>

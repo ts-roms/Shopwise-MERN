@@ -6,35 +6,44 @@ import { formattedPrice } from "../../../helper/formatPrice";
 import { RxCross1 } from "react-icons/rx";
 import { ICartItem } from "../../../Interface";
 import { host } from "../../../server";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { addToCart, removeFromCart } from "../../../redux/actions/cartActions";
 
 interface IProps {
   item: ICartItem;
 }
 
 export default function CartItem({ item }: IProps) {
-  const { name, price, quantity: qty } = item;
+  const { name, price, quantity: qty, _id } = item;
   const [quantity, setQuantity] = useState(qty || 1);
+  const dispatch = useAppDispatch();
 
   function increaseQuantity() {
     if (quantity < 4) {
       setQuantity(quantity + 1);
-      const updateCart = { ...item, quantity: quantity + 1 };
-      localStorage.setItem("cartItems", JSON.stringify(updateCart));
+      const updatedCart = { ...item, quantity: quantity + 1 };
+      updateCartChange(updatedCart);
     } else {
-      setQuantity(4);
-      toast.info("Can not increase quantity anymore");
+      toast.info("You cannot add more than 4 quantities.");
     }
   }
 
-  function decreaseQuantity() {
-    if (quantity === 1) {
-      setQuantity(1);
-      toast.info("Can not decrease quantity anymore");
-    } else {
+  function decreaseQuantity(): void {
+    if (quantity > 1) {
       setQuantity(quantity - 1);
-      const updateCart = { ...item, quantity: quantity - 1 };
-      localStorage.setItem("cartItems", JSON.stringify(updateCart));
+      const updatedCart = { ...item, quantity: quantity - 1 };
+      updateCartChange(updatedCart);
+    } else {
+      toast.info("Quantity cannot be less than 1");
     }
+  }
+
+  function updateCartChange(data: ICartItem) {
+    dispatch(addToCart(data));
+  }
+
+  function handleRemoveItem(data: ICartItem) {
+    dispatch(removeFromCart(data));
   }
 
   return (
@@ -59,7 +68,6 @@ export default function CartItem({ item }: IProps) {
           src={`${host}/${item.images[0].url}`}
           className="w-16 rounded-md h-16 ml-2"
           loading="lazy"
-          alt=""
         />
         <div>
           <h4>{name}</h4>
@@ -71,9 +79,9 @@ export default function CartItem({ item }: IProps) {
           </h4>
         </div>
       </div>
-      <div>
+      <button onClick={() => handleRemoveItem(item)}>
         <RxCross1 className="cursor-pointer" size={20} />
-      </div>
+      </button>
     </div>
   );
 }

@@ -160,12 +160,17 @@ export interface ICartItem extends IProduct {
   quantity: number;
 }
 
+export interface ICartSate {
+  cart: ICartItem[];
+}
+
 export interface IAppState {
   user: IUserState;
   seller: ISellerState;
   products: IServerProductsState;
   events: IEventsState;
   allProducts: IAllProductState;
+  cart: ICartSate;
 }
 
 export interface IQuestion {
