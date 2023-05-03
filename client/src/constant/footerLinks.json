@@ -8,12 +8,15 @@
     "link": "/carrers"
   },
   {
-    "name": "Store Locations"
+    "name": "Store Locations",
+    "link": "/store_locations"
   },
   {
-    "name": "Our Blog"
+    "name": "Our Blog",
+    "link": "/blog"
   },
   {
-    "name": "Reviews"
+    "name": "Reviews",
+    "link": "/reviews"
   }
 ]

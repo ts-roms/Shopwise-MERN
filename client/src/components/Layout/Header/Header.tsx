@@ -1,24 +1,27 @@
-import { Link } from "react-router-dom";
-import { useState, ChangeEvent, useEffect, useRef } from "react";
+import loadable from "@loadable/component";
 import logo from "../../../assets/shopwise.png";
 import style from "../../../styles/style";
+import productData from "../../../constant/product.json";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { useState, ChangeEvent, useEffect, useRef } from "react";
 import { CgMenuLeft } from "react-icons/cg";
 import { IoIosArrowForward } from "react-icons/io";
 import { RiCloseLine } from "react-icons/ri";
-import productData from "../../../constant/product.json";
-import Dropdown from "./Dropdown/Dropdown";
-import Navbar from "./Navbar/Navbar";
-import UserNavigation from "./UserNavigation/UserNavigation";
 import { IProduct } from "../../../Interface";
-import Cart from "../../Cart/Cart";
-import Wishlist from "../../Wishlist/Wishlist";
 import { host } from "../../../server";
 import { useAppSelector } from "../../../hooks";
+const Dropdown = loadable(() => import("./Dropdown/Dropdown"));
+const Navbar = loadable(() => import("./Navbar/Navbar"));
+const UserNavigation = loadable(
+  () => import("./UserNavigation/UserNavigation")
+);
+const Cart = loadable(() => import("../../Cart/Cart"));
+const Wishlist = loadable(() => import("../../Wishlist/Wishlist"));
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");

@@ -20,8 +20,11 @@ export default function Slider({ images }: { images: ImageProps[] }) {
       <div
         className={`w-[${
           images.length * 100
-        }vw]   flex items-center justify-center transition-all duration-1000 ease-in-out`}
-        style={{ transform: `translateX(${-100 * slide}vw)` }}
+        }vw] flex items-center justify-center transition-all duration-700 ease-in-out`}
+        style={{
+          width: `${images.length * 100}vw`,
+          transform: `translateX(${-100 * slide}vw)`,
+        }}
       >
         {images?.map((image) => (
           <div key={image.id} className="w-[100vw]">

@@ -4,13 +4,20 @@ import { FiInstagram } from "react-icons/fi";
 import style from "../../../styles/style";
 import siteLink from "../../../constant/footerLinks.json";
 import supportLink from "../../../constant/footerSupportLinks.json";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import logo from "../../../assets/shopwise.png";
 
 export default function Footer() {
   return (
     <footer className="bg-[#00252E] pt-24 pb-16 px-4 lg:pt-24 lg:pb-8 lg:px-0 text-white">
       <div className="container mx-auto px-4 max-w-lg md:max-w-5xl lg:max-w-7xl">
-        <h3 className="mb-6 text-2xl font-semibold lg:text-4xl">Shopwise</h3>
+        {/* <h3 className="mb-6 text-2xl font-semibold lg:text-4xl">Shopwise</h3> */}
+        <img
+          className="w-40 mb-6"
+          style={{ filter: "grayscale(100%) invert(100%) hue-rotate(180deg)" }}
+          src={logo}
+          alt="Shopwise log"
+        />
         <div className="lg:flex lg:justify-between lg:items-start">
           <div className="mb-12 md:max-w-sm">
             <div className={`${style.flex_normal} mb-4`}>

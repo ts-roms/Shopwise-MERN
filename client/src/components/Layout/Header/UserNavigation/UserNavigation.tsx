@@ -19,27 +19,18 @@ export default function UserNavigation({
 }: IProps) {
   const { user, isUserAuthenticate } = userState;
   const { cart } = useAppSelector((state) => state.cart);
+  const { wishlists } = useAppSelector((state) => state.wishlists);
 
   return (
     <div className={`${style.flex_normal} gap-6`}>
       <div className="relative cursor-pointer ">
-        <AiOutlineHeart
-          color="white"
-          size={30}
-          className="hover:fill-gray-800 transition-all"
-          onClick={toggleWishlist}
-        />
+        <AiOutlineHeart color="white" size={30} onClick={toggleWishlist} />
         <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
-          0
+          {wishlists.length}
         </span>
       </div>
       <div className="relative cursor-pointer">
-        <AiOutlineShoppingCart
-          color="white"
-          className="hover:fill-gray-800 transition-all"
-          size={30}
-          onClick={toggleCart}
-        />
+        <AiOutlineShoppingCart color="white" size={30} onClick={toggleCart} />
         <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
           {cart?.length}
         </span>

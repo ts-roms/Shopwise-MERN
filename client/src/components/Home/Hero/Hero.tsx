@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { sliderItems } from "../../../constant/data";
-import Slider from "react-slick";
+import loadable from "@loadable/component";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useState } from "react";
+import { sliderItems } from "../../../constant/data";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import Slider from "react-slick";
 
 export default function Hero() {
   const [sliderRef, setSliderRef] = useState<Slider | null>(null);

@@ -164,6 +164,10 @@ export interface ICartSate {
   cart: ICartItem[];
 }
 
+export interface IWishlistState {
+  wishlists: IProduct[];
+}
+
 export interface IAppState {
   user: IUserState;
   seller: ISellerState;
@@ -171,6 +175,7 @@ export interface IAppState {
   events: IEventsState;
   allProducts: IAllProductState;
   cart: ICartSate;
+  wishlists: IWishlistState;
 }
 
 export interface IQuestion {

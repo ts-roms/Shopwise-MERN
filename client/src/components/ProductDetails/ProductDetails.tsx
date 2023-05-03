@@ -1,18 +1,41 @@
 import loadable from "@loadable/component";
-import { IProduct } from "../../Interface";
-import { useEffect } from "react";
 import style from "../../styles/style";
+import { IProduct } from "../../Interface";
+import { useEffect, useState } from "react";
 import { formattedPrice } from "../../helper/formatPrice";
-const AddtoCart = loadable(() => import("./AddtoCart/AddtoCart"));
-import { AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
 import { host } from "../../server";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import {
+  addToWishlists,
+  removeFromWishlists,
+} from "../../redux/actions/wishlistActions";
+const AddtoCart = loadable(() => import("./AddtoCart/AddtoCart"));
 const Carousel = loadable(() => import("./Carousel/Carousel"));
 const Slider = loadable(() => import("./Slider/Slider"));
 
 export default function ProductDetails({ product }: { product: IProduct }) {
   const { images, name, discount_price, price, description, shop } = product;
+  const { wishlists } = useAppSelector((state) => state.wishlists);
+  const [isWish, setIsWish] = useState(false);
+  const dispatch = useAppDispatch();
+
+  function addToWishlistHandler(product: IProduct) {
+    dispatch(addToWishlists(product));
+    setIsWish(!isWish);
+  }
+
+  function removeFromWishlistHandler(product: IProduct) {
+    dispatch(removeFromWishlists(product));
+    setIsWish(!isWish);
+  }
 
   useEffect(() => {
+    if (wishlists?.find((i: IProduct) => i._id === product._id)) {
+      setIsWish(true);
+    } else {
+      setIsWish(false);
+    }
     window.scrollTo(0, 0);
   }, []);
 
@@ -36,8 +59,24 @@ export default function ProductDetails({ product }: { product: IProduct }) {
             </div>
 
             <div className={`${style.flex_normal} justify-between`}>
-              <AddtoCart product={product} />
-              <AiOutlineHeart title="Add to Wishlist" size={30} />
+              <AddtoCart product={product} />{" "}
+              {isWish ? (
+                <AiFillHeart
+                  cursor="pointer"
+                  title="Remove from wish list"
+                  color="red"
+                  onClick={() => removeFromWishlistHandler(product)}
+                  size={30}
+                />
+              ) : (
+                <AiOutlineHeart
+                  cursor="pointer"
+                  title="Add to wish list"
+                  color="red"
+                  onClick={() => addToWishlistHandler(product)}
+                  size={30}
+                />
+              )}
             </div>
             <div className={`${style.flex_normal} flex-col md:flex-row gap-8`}>
               <div className={`${style.flex_normal} gap-3`}>

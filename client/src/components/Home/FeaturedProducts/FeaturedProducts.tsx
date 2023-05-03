@@ -1,6 +1,7 @@
 import style from "../../../styles/style";
+import loadable from "@loadable/component";
 import productData from "../../../constant/product.json";
-import Product from "../../Product/Product";
+const Product = loadable(() => import("../../Product/Product"));
 import { useAppSelector } from "../../../hooks";
 
 export default function FeaturedProducts() {

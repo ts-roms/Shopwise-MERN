@@ -23,7 +23,7 @@ export default function Cart({ toggleCart, isCartOpen }: IProps) {
 
   return (
     <div
-      className={`fixed top-0 left-0 right-0 w-full h-screen z-10 duration-500 ease-in-out ${
+      className={`fixed top-0 left-0 right-0 w-full h-screen z-50 duration-500 ease-in-out ${
         isCartOpen ? "translate-x-0" : "translate-x-full"
       }`}
       style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
@@ -39,7 +39,9 @@ export default function Cart({ toggleCart, isCartOpen }: IProps) {
         </div>
         <div className={`${style.flex_normal} gap-2 py-8 border-b`}>
           <BiShoppingBag size={30} title="Cart" />
-          <h4 className="text-xl font-bold">3 items</h4>
+          <h4 className="text-xl font-bold">
+            {cart.length} {cart.length > 1 ? "Items" : "Item"}
+          </h4>
         </div>
         <div
           className="overflow-scroll h-[65vh]"
@@ -59,7 +61,7 @@ export default function Cart({ toggleCart, isCartOpen }: IProps) {
         <div className="mt-6 w-full self-end">
           <Link to="/checkout">
             <button className="rounded-lg px-10 bg-[#ff7d1a] text-white text-center w-full h-10">
-              Checkout {formattedPrice(totalPrice)}
+              Checkout for {formattedPrice(totalPrice)}
             </button>
           </Link>
         </div>

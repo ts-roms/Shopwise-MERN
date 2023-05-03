@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
-import productsData from "../../../constant/product.json";
+import loadable from "@loadable/component";
 import style from "../../../styles/style";
-import Product from "../../Product/Product";
+import { useState, useEffect } from "react";
 import { IProduct } from "../../../Interface";
 import { useAppSelector } from "../../../hooks";
+import productsData from "../../../constant/product.json";
+const Product = loadable(() => import("../../Product/Product"));
 
 export default function BeastDeals() {
   const [products, setProducts] = useState<IProduct[] | null>(null);
