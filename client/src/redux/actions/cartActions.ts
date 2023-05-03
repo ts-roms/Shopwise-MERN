@@ -22,3 +22,8 @@ export const removeFromCart =
     localStorage.setItem("cartItems", JSON.stringify(getState().cart.cart));
     return data;
   };
+
+// toggle cart
+export const toggleCart = () => async (dispatch: Dispatch) => {
+  dispatch({ type: "toggleCart" });
+};

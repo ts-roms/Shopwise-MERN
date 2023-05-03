@@ -4,6 +4,7 @@ import { ICartItem, ICartSate } from "../../Interface";
 const cartItems = localStorage.getItem("cartItems");
 const initialState: ICartSate = {
   cart: cartItems ? JSON.parse(cartItems) : [],
+  isCartOpen: false,
 };
 
 export const cartReducer = createReducer(initialState, {
@@ -29,6 +30,13 @@ export const cartReducer = createReducer(initialState, {
     return {
       ...state,
       cart: state.cart.filter((i: ICartItem) => i._id !== action.payload),
+    };
+  },
+
+  toggleCart: (state) => {
+    return {
+      ...state,
+      isCartOpen: !state.isCartOpen,
     };
   },
 });

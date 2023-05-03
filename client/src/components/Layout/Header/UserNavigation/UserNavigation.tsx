@@ -4,22 +4,20 @@ import { BiUserCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { host } from "../../../../server";
 import { IUserState } from "../../../../Interface";
-import { useAppSelector } from "../../../../hooks";
+import { useAppDispatch, useAppSelector } from "../../../../hooks";
+import { toggleCart } from "../../../../redux/actions/cartActions";
 
 interface IProps {
   userState: IUserState;
-  toggleCart: () => void;
   toggleWishlist: () => void;
 }
 
-export default function UserNavigation({
-  userState,
-  toggleCart,
-  toggleWishlist,
-}: IProps) {
+export default function UserNavigation({ userState, toggleWishlist }: IProps) {
   const { user, isUserAuthenticate } = userState;
   const { cart } = useAppSelector((state) => state.cart);
   const { wishlists } = useAppSelector((state) => state.wishlists);
+
+  const dispatch = useAppDispatch();
 
   return (
     <div className={`${style.flex_normal} gap-6`}>
@@ -30,7 +28,11 @@ export default function UserNavigation({
         </span>
       </div>
       <div className="relative cursor-pointer">
-        <AiOutlineShoppingCart color="white" size={30} onClick={toggleCart} />
+        <AiOutlineShoppingCart
+          color="white"
+          size={30}
+          onClick={() => dispatch(toggleCart())}
+        />
         <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
           {cart?.length}
         </span>

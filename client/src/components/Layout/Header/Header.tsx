@@ -14,7 +14,8 @@ import { IoIosArrowForward } from "react-icons/io";
 import { RiCloseLine } from "react-icons/ri";
 import { IProduct } from "../../../Interface";
 import { host } from "../../../server";
-import { useAppSelector } from "../../../hooks";
+import { toggleCart } from "../../../redux/actions/cartActions";
+import { useAppSelector, useAppDispatch } from "../../../hooks";
 const Dropdown = loadable(() => import("./Dropdown/Dropdown"));
 const Navbar = loadable(() => import("./Navbar/Navbar"));
 const UserNavigation = loadable(
@@ -28,10 +29,10 @@ export default function Header() {
   const [searchedProduct, setSearchedProduct] = useState<IProduct[]>([]);
   const ref = useRef<HTMLInputElement>(null);
 
-  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState<boolean>(false);
-
   const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
 
   const userState = useAppSelector((state) => state.user);
   const { allProducts } = useAppSelector((state) => state.allProducts);
@@ -45,10 +46,6 @@ export default function Header() {
     );
 
     setSearchedProduct(filteredProduct);
-  }
-
-  function toggleCart(): void {
-    setIsCartOpen((prev: boolean) => !prev);
   }
 
   function toggleWishlist(): void {
@@ -146,14 +143,13 @@ export default function Header() {
               <Navbar mobile={false} toggleMobileNav={toggleMobileNav} />
               <UserNavigation
                 userState={userState}
-                toggleCart={toggleCart}
                 toggleWishlist={toggleWishlist}
               />
             </div>
           </div>
         </div>
         {/* cart model */}
-        <Cart toggleCart={toggleCart} isCartOpen={isCartOpen} />
+        <Cart />
         {/* wishlist model */}
         <Wishlist
           toggleWishlist={toggleWishlist}
@@ -177,7 +173,7 @@ export default function Header() {
               <AiOutlineShoppingCart
                 className="hover:fill-gray-800 transition-all"
                 size={30}
-                onClick={toggleCart}
+                onClick={() => dispatch(toggleCart())}
               />
               <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
                 0

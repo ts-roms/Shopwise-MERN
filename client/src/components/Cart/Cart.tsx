@@ -4,18 +4,14 @@ import { BiShoppingBag } from "react-icons/bi";
 import style from "../../styles/style";
 const CartItem = loadable(() => import("./CartItem/CartItem"));
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { ICartItem } from "../../Interface";
 import { formattedPrice } from "../../helper/formatPrice";
+import { toggleCart } from "../../redux/actions/cartActions";
 
-interface IProps {
-  toggleCart: () => void;
-  isCartOpen: boolean;
-}
-
-export default function Cart({ toggleCart, isCartOpen }: IProps) {
-  const { cart } = useAppSelector((state) => state.cart);
-
+export default function Cart() {
+  const { cart, isCartOpen } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
   const totalPrice = cart.reduce(
     (acc: number, item: ICartItem) => acc + item.quantity * item.price,
     0
@@ -34,7 +30,7 @@ export default function Cart({ toggleCart, isCartOpen }: IProps) {
             title="Close"
             size={30}
             className="cursor-pointer"
-            onClick={toggleCart}
+            onClick={() => dispatch(toggleCart())}
           />
         </div>
         <div className={`${style.flex_normal} gap-2 py-8 border-b`}>
