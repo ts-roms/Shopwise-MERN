@@ -114,8 +114,8 @@ export interface ISeller {
 
 export interface IUserState {
   isUserAuthenticate: boolean;
-  isUserLoading?: boolean;
-  userError?: null | string;
+  isUserLoading: boolean;
+  userError: null | string;
   user: IUser;
 }
 

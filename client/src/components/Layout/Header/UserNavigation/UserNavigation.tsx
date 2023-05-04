@@ -21,22 +21,21 @@ export default function UserNavigation({ userState, toggleWishlist }: IProps) {
 
   return (
     <div className={`${style.flex_normal} gap-6`}>
-      <div className="relative cursor-pointer ">
-        <AiOutlineHeart color="white" size={30} onClick={toggleWishlist} />
+      <button className="relative cursor-pointer" onClick={toggleWishlist}>
+        <AiOutlineHeart color="white" size={30} />
         <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
           {wishlists.length}
         </span>
-      </div>
-      <div className="relative cursor-pointer">
-        <AiOutlineShoppingCart
-          color="white"
-          size={30}
-          onClick={() => dispatch(toggleCart())}
-        />
+      </button>
+      <button
+        className="relative cursor-pointer"
+        onClick={() => dispatch(toggleCart())}
+      >
+        <AiOutlineShoppingCart color="white" size={30} />
         <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
           {cart?.length}
         </span>
-      </div>
+      </button>
       <div className="relative cursor-pointer">
         {isUserAuthenticate ? (
           <Link to="/profile">

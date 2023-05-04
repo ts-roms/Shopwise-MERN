@@ -15,7 +15,15 @@ const Carousel = loadable(() => import("./Carousel/Carousel"));
 const Slider = loadable(() => import("./Slider/Slider"));
 
 export default function ProductDetails({ product }: { product: IProduct }) {
-  const { images, name, discount_price, price, description, shop } = product;
+  const {
+    images,
+    name,
+    discount_price,
+    price,
+    description,
+    shop,
+    discount_percentage,
+  } = product;
   const { wishlists } = useAppSelector((state) => state.wishlists);
   const [isWish, setIsWish] = useState(false);
   const dispatch = useAppDispatch();
@@ -47,19 +55,27 @@ export default function ProductDetails({ product }: { product: IProduct }) {
           <Slider images={images} />
         </div>
         <div className="w-full lg:w-1/2">
-          <div className="space-y-12 px-3 py-9 lg:p-10">
+          <div className="space-y-10 px-3 py-9 lg:p-10">
             <h1 className={`${style.productTitle}`}>{name}</h1>
             <p className="text-sm lg:text-base">{description}</p>
-
-            <div className={`${style.flex_normal}`}>
-              <h4 className={`${style.productDiscountPrice} text-3xl`}>
-                {formattedPrice(discount_price)}
-              </h4>
-              <span className={`${style.price}`}>{formattedPrice(price)}</span>
+            <div>
+              <div className={`${style.flex_normal}`}>
+                <span className="text-2xl text-[#CC0C39] mr-3">
+                  -{discount_percentage}%
+                </span>
+                <span className={`${style.productDiscountPrice} text-[28px]`}>
+                  {formattedPrice(discount_price)}
+                </span>
+              </div>
+              <div className="text-sm">
+                <span className="text-[#565959]">M.R.P.:</span>
+                <span className={`${style.price}`}>
+                  {formattedPrice(price)}
+                </span>
+              </div>
             </div>
-
             <div className={`${style.flex_normal} justify-between`}>
-              <AddtoCart product={product} />{" "}
+              <AddtoCart product={product} />
               {isWish ? (
                 <AiFillHeart
                   cursor="pointer"

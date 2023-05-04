@@ -13,21 +13,20 @@ import { useAppSelector } from "../hooks";
 import { host } from "../server";
 
 export default function ProductPage() {
-  const { product_slug } = useParams();
+  const { product_id } = useParams();
   const [product, setProduct] = useState<IProduct | null>(null);
   const { allProducts } = useAppSelector((state) => state.allProducts);
-  const productName = product_slug?.replace(/-/g, " ");
 
   useEffect(() => {
-    if (productName) {
+    if (product_id) {
       const product = allProducts?.find(
-        (product) => product.name === productName
+        (product) => product._id === product_id
       );
       if (product !== undefined) {
         setProduct(product);
       }
     }
-  }, [productName, allProducts]);
+  }, [product_id, allProducts]);
 
   return (
     <>

@@ -3,10 +3,8 @@ const style = {
   heading: "text-2xl text-center md:text-start font-semibold front-Roboto pb-5",
   section: "max-w-[90%] w-full mx-auto py-10",
   productTitle: "text-xl lg:text-[25px] font-semibold font-Roboto text-[#333]",
-  productDiscountPrice:
-    "font-bold text-lg text-[#333] font-Roboto text-[#FB0000]",
-  price:
-    "font-medium text-base text-[#d55b45] pl-3 mt-[-4px] line-through text-gray-400",
+  productDiscountPrice: "font-medium text-lg font-Roboto text-[#0F1111]",
+  price: "font-medium text-[#565959] pl-3 mt-[-4px] line-through",
   shop_name: "text-sm text-blue-400",
 
   button:

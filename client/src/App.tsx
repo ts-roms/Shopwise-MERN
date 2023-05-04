@@ -79,7 +79,7 @@ function App() {
           element={<SellerActivationPage />}
         />
         <Route
-          path="/products/:product_slug"
+          path="/products/:product_id"
           element={
             <Layout>
               <ProductPage />

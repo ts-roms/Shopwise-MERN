@@ -22,11 +22,12 @@ export interface IProps {
 }
 
 export default function Product({ product }: IProps) {
-  const { name, category, price, discount_price, images } = product;
+  const { name, category, description, price, discount_price, images, _id } =
+    product;
   const { wishlists } = useAppSelector((state) => state.wishlists);
   const { cart } = useAppSelector((state) => state.cart);
 
-  const productSlug = product.name.replace(/\s+/g, "-");
+  // const productSlug = product.name.replace(/\s+/g, "-");
 
   const [isWish, setIsWish] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
@@ -62,7 +63,7 @@ export default function Product({ product }: IProps) {
       <div className="border p-4 bg-white relative overflow-visible shadow-lg rounded-md">
         <Link
           className="block font-bold text-sm capitalize hover:text-blue-500 transition-all"
-          to={`/products/${productSlug}`}
+          to={`/products/${_id}`}
         >
           <div className="h-40 overflow-hidden rounded-lg">
             <img
@@ -75,7 +76,7 @@ export default function Product({ product }: IProps) {
         <div className="pt-[10%] pb-3 space-y-1">
           <Link
             className="block font-bold capitalize hover:text-blue-500 transition-all"
-            to={`/products/${productSlug}`}
+            to={`/products/${_id}`}
           >
             {name.length > 55 ? name.slice(0, 55) + "..." : name}
           </Link>
@@ -112,6 +113,7 @@ export default function Product({ product }: IProps) {
               />
             )}
           </div>
+          <p className="text-xs">{description.slice(0, 110)}...</p>
           {!isInCart ? (
             <button
               className={`${style.cart_button}`}

@@ -45,7 +45,9 @@ export default function Wishlist({ isWishlistOpen, toggleWishlist }: IProps) {
           {wishlists?.length === 0 ? (
             <div>No item in wishlist</div>
           ) : (
-            wishlists?.map((item, idx) => <ItemCard key={idx} item={item} />)
+            wishlists?.map((item, idx) => (
+              <ItemCard toggleWishlist={toggleWishlist} key={idx} item={item} />
+            ))
           )}
         </div>
       </div>

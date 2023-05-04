@@ -15,11 +15,11 @@ interface IProps {
 }
 
 export default function CartItem({ item }: IProps) {
-  const { name, price, quantity: qty, discount_price } = item;
+  const { name, price, quantity: qty, discount_price, _id } = item;
   const [quantity, setQuantity] = useState(qty || 1);
   const dispatch = useAppDispatch();
 
-  const productSlug = item.name.replace(/\s+/g, "-");
+  // const productSlug = item.name.replace(/\s+/g, "-");
 
   function increaseQuantity() {
     if (quantity < 4) {
@@ -69,7 +69,7 @@ export default function CartItem({ item }: IProps) {
       <div className={`${style.flex_normal} gap-4 flex-grow p-1`}>
         <Link
           className="block font-bold text-sm capitalize hover:text-blue-500 transition-all"
-          to={`/products/${productSlug}`}
+          to={`/products/${_id}`}
         >
           <img
             src={`${host}/${item.images[0].url}`}
@@ -80,7 +80,7 @@ export default function CartItem({ item }: IProps) {
         <div>
           <Link
             className="block font-bold capitalize hover:text-blue-500 transition-all"
-            to={`/products/${productSlug}`}
+            to={`/products/${_id}`}
           >
             <h4>{name}</h4>
           </Link>

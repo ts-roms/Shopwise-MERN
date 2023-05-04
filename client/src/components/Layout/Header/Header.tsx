@@ -93,7 +93,7 @@ export default function Header() {
                   type="text"
                   placeholder="Seach Product"
                   value={searchQuery}
-                  className={`${style.input} border-[#ff7d1a] h-11 px-2 w-full`}
+                  className={`${style.input} border-[#ff7d1a] h-11 px-2 w-full text-[#333]`}
                   onChange={handleChange}
                   ref={ref}
                 />
@@ -103,26 +103,23 @@ export default function Header() {
                   color="orange"
                 />
                 {searchedProduct.length !== 0 ? (
-                  <div className="absolute bg-slate-50 shadow-sm z-50 max-h-[60vh] overflow-scroll mt-4 rounded-md py-2">
-                    {searchedProduct?.map((product, idx) => {
-                      const productSlug = product.name.replace(/\s+/g, "-");
-                      return (
-                        <Link to={`/products/${productSlug}`} key={idx}>
-                          <div
-                            className={`w-full cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white`}
-                          >
-                            <div className={`px-6 py-2 ${style.flex_normal}`}>
-                              <img
-                                className="w-11 h-10 mr-8"
-                                loading="lazy"
-                                src={`${host}/${product.images[0].url}`}
-                              />
-                              <h1>{product.name}</h1>
-                            </div>
+                  <div className="absolute bg-slate-50 w-full shadow-modal-1 z-[999] max-h-[60vh] overflow-scroll mt-4 rounded-md py-2">
+                    {searchedProduct?.map((product) => (
+                      <Link to={`/products/${product._id}`} key={product._id}>
+                        <div
+                          className={`w-full cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white`}
+                        >
+                          <div className={`px-6 py-2 ${style.flex_normal}`}>
+                            <img
+                              className="w-11 h-10 mr-8"
+                              loading="lazy"
+                              src={`${host}/${product.images[0].url}`}
+                            />
+                            <h1>{product.name}</h1>
                           </div>
-                        </Link>
-                      );
-                    })}
+                        </div>
+                      </Link>
+                    ))}
                   </div>
                 ) : null}
               </div>
