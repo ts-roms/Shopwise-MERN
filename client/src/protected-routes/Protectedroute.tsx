@@ -12,8 +12,14 @@ const ProtectedRoute = ({ children }: IProps): JSX.Element => {
   );
 
   if (isUserLoading) {
-    return <Loader />;
+    return (
+      <section className="min-h-screen flex flex-col justify-center items-center">
+        <Loader />;
+      </section>
+    );
   }
+
+  console.log(isUserAuthenticate);
 
   if (!isUserAuthenticate) {
     return <Navigate to="/login" replace />;

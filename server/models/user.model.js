@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema(
   {
@@ -23,7 +22,39 @@ const userSchema = new mongoose.Schema(
       select: false,
     },
 
-    address: String,
+    primaryPhoneNumber: {
+      type: Number,
+    },
+
+    secondaryPhoneNumber: {
+      type: Number,
+    },
+
+    addresses: [
+      {
+        country: {
+          type: String,
+        },
+        city: {
+          type: String,
+        },
+        address1: {
+          type: String,
+        },
+        address2: {
+          type: String,
+        },
+        address3: {
+          type: String,
+        },
+        zipcode: {
+          type: Number,
+        },
+        addressType: {
+          type: String,
+        },
+      },
+    ],
 
     role: {
       type: String,
@@ -59,6 +90,7 @@ userSchema.methods.getJwtToken = function () {
 
 // comapre password
 userSchema.methods.comparePassword = async function (enteredPassword) {
+  console.log(enteredPassword, this.password);
   return await bcrypt.compare(enteredPassword, this.password);
 };
 

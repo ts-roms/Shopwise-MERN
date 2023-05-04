@@ -155,10 +155,61 @@ exports.getUser = async (req, res, next) => {
   }
 };
 
+exports.updateUserProfile = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const { email, password, primaryPhoneNumber, secondaryPhoneNumber, name } =
+      req.body;
+
+    const user = await User.findById(userId).select("+password");
+    console.log(password, email);
+
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+
+    const isPasswordValid = await user.comparePassword(password);
+
+    if (!isPasswordValid) {
+      return next(new ErrorHandler("Enter Correct Password", 400));
+    }
+
+    user.name = name;
+    user.email = email;
+    user.primaryPhoneNumber = primaryPhoneNumber;
+    user.secondaryPhoneNumber = secondaryPhoneNumber;
+
+    await user.save();
+
+    res.status(201).json({ success: true, user });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};
+
+exports.updateUserProfilePicture = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const existingUser = await User.findById(userId);
+
+    const existingPath = `uploads/${existingUser.avatar}`;
+    fs.unlinkSync(existingPath);
+    const filepath = path.join(req.file.filename);
+
+    const user = await User.findByIdAndUpdate(userId, { avatar: filepath });
+
+    res.status(201).json({ success: true, user });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};
+
 // log out user
 exports.logOutUser = async (req, res, next) => {
   try {
-    console.log("eee");
     res.cookie("token", null, {
       expires: new Date(Date.now()),
       httpOnly: true,

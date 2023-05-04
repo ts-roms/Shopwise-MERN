@@ -98,6 +98,8 @@ export interface IUser {
   email: string;
   role: string;
   avatar: string;
+  primaryPhoneNumber: string;
+  secondaryPhoneNumber: string;
 }
 
 export interface ISeller {

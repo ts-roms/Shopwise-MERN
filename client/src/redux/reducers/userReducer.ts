@@ -11,6 +11,8 @@ const initialState: IUserState = {
     email: "",
     role: "",
     avatar: "",
+    primaryPhoneNumber: "",
+    secondaryPhoneNumber: "",
   },
 };
 
@@ -28,6 +30,22 @@ export const userReducer = createReducer(initialState, {
       (state.userError = action.error),
       (state.isUserAuthenticate = false);
   },
+
+  // update user
+  UpdateUserInfoRequest: (state, action) => {
+    state.isUserLoading = true;
+  },
+
+  UpdateUserInfoSuccess: (state, action) => {
+    state.isUserLoading = false;
+    state.user = action.payload;
+  },
+  UpdateUserInfoFailure: (state, action) => {
+    state.isUserLoading = false;
+    state.userError = action.payload;
+  },
+
+  // clear error
   ClearErrors: (state) => {
     state.userError = null;
   },
