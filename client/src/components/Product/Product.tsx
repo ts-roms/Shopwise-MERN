@@ -60,16 +60,21 @@ export default function Product({ product }: IProps) {
   return (
     <>
       <div className="border p-4 bg-white relative overflow-visible shadow-lg rounded-md">
-        <div className="h-40 overflow-hidden rounded-lg transition-all duration-300 hover:-translate-y-[18%] md:hover:-translate-y-1/4 hover:shadow-img">
-          <img
-            src={`${host}/${images[0].url}`}
-            loading="lazy"
-            className="object-contain h-full w-full"
-          />
-        </div>
-        <div className="pt-[10%] pb-3 space-y-3">
+        <Link
+          className="block font-bold text-sm capitalize hover:text-blue-500 transition-all"
+          to={`/products/${productSlug}`}
+        >
+          <div className="h-40 overflow-hidden rounded-lg">
+            <img
+              src={`${host}/${images[0].url}`}
+              loading="lazy"
+              className="object-cover h-full w-full hover:scale-110 transition-all duration-300"
+            />
+          </div>
+        </Link>
+        <div className="pt-[10%] pb-3 space-y-1">
           <Link
-            className="block font-bold text-sm capitalize hover:text-blue-500 transition-all"
+            className="block font-bold capitalize hover:text-blue-500 transition-all"
             to={`/products/${productSlug}`}
           >
             {name.length > 55 ? name.slice(0, 55) + "..." : name}

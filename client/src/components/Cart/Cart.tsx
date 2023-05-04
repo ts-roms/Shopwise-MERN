@@ -13,7 +13,7 @@ export default function Cart() {
   const { cart, isCartOpen } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
   const totalPrice = cart.reduce(
-    (acc: number, item: ICartItem) => acc + item.quantity * item.price,
+    (acc: number, item: ICartItem) => acc + item.quantity * item.discount_price,
     0
   );
 

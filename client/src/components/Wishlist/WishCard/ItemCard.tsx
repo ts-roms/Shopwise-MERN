@@ -16,7 +16,7 @@ const ItemCard = ({ item }: { item: IProduct }) => {
   const { name, price, images } = item;
   return (
     <div
-      className={`${style.flex_normal} w-full border-b px-6 py-4 justify-between`}
+      className={`${style.flex_normal} w-full border-b px-6 py-4 justify-between gap-4`}
     >
       <button onClick={() => removeFromWishlistHandler(item)}>
         <RxCross1 className="cursor-pointer" size={10} />
@@ -27,7 +27,7 @@ const ItemCard = ({ item }: { item: IProduct }) => {
         loading="lazy"
         alt=""
       />
-      <div>
+      <div className="flex-grow">
         <h4 className="text-lg font-medium">{name}</h4>
         <h4 className="text-sm text-gray-500">{formattedPrice(price)}</h4>
       </div>

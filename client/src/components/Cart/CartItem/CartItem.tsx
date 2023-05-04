@@ -6,17 +6,20 @@ import { formattedPrice } from "../../../helper/formatPrice";
 import { RxCross1 } from "react-icons/rx";
 import { ICartItem } from "../../../Interface";
 import { host } from "../../../server";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { useAppDispatch } from "../../../hooks";
 import { addToCart, removeFromCart } from "../../../redux/actions/cartActions";
+import { Link } from "react-router-dom";
 
 interface IProps {
   item: ICartItem;
 }
 
 export default function CartItem({ item }: IProps) {
-  const { name, price, quantity: qty, _id } = item;
+  const { name, price, quantity: qty, discount_price } = item;
   const [quantity, setQuantity] = useState(qty || 1);
   const dispatch = useAppDispatch();
+
+  const productSlug = item.name.replace(/\s+/g, "-");
 
   function increaseQuantity() {
     if (quantity < 4) {
@@ -63,19 +66,29 @@ export default function CartItem({ item }: IProps) {
           <HiMinus title="Decrement" color="#7d879c" />
         </button>
       </div>
-      <div className={`${style.flex_normal} gap-4`}>
-        <img
-          src={`${host}/${item.images[0].url}`}
-          className="w-16 rounded-md h-16 ml-2"
-          loading="lazy"
-        />
+      <div className={`${style.flex_normal} gap-4 flex-grow p-1`}>
+        <Link
+          className="block font-bold text-sm capitalize hover:text-blue-500 transition-all"
+          to={`/products/${productSlug}`}
+        >
+          <img
+            src={`${host}/${item.images[0].url}`}
+            className="w-16 rounded-md h-16 ml-2"
+            loading="lazy"
+          />
+        </Link>
         <div>
-          <h4>{name}</h4>
-          <h4 className="text-sm text-gray-500">
-            {formattedPrice(price)} × {quantity}
+          <Link
+            className="block font-bold capitalize hover:text-blue-500 transition-all"
+            to={`/products/${productSlug}`}
+          >
+            <h4>{name}</h4>
+          </Link>
+          <h4 className="text-xs text-gray-500">
+            {formattedPrice(discount_price)} × {quantity}
           </h4>
-          <h4 className="text-lg font-semibold">
-            {formattedPrice(price * quantity)}
+          <h4 className="font-semibold">
+            {formattedPrice(discount_price * quantity)}
           </h4>
         </div>
       </div>

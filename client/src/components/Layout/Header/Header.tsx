@@ -136,7 +136,7 @@ export default function Header() {
             </Link>
           </div>
         </div>
-        <div className="sticky top-0 shadow-sm z-10 transition-all hidden lg:flex items-center justify-between h-[70px] w-full bg-[#ff7d1a]">
+        <div className="sticky top-0 shadow-sm z-50 transition-all hidden lg:flex items-center justify-between h-[70px] w-full bg-[#ff7d1a]">
           <div className={` ${style.section}`}>
             <div className={`relative ${style.flex_normal} justify-between `}>
               <Dropdown />
