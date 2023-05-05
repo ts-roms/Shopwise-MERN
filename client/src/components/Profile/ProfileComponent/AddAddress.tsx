@@ -2,7 +2,14 @@ import { RxCross1 } from "react-icons/rx";
 import { FormEvent, useState } from "react";
 import { Country, State } from "country-state-city";
 import style from "../../../styles/style";
-import { HiOutlineOfficeBuilding, HiOutlineHome } from "react-icons/hi";
+import {
+  HiOutlineOfficeBuilding,
+  HiOutlineGlobeAlt,
+  HiOutlineHome,
+} from "react-icons/hi";
+import { toast } from "react-toastify";
+import { useAppDispatch } from "../../../hooks";
+import { updateUserAddress } from "../../../redux/actions/userActions";
 
 type Props = {
   handleModalOpen: () => void;
@@ -19,7 +26,13 @@ export default function AddAddress({ handleModalOpen }: Props) {
       name: "Office",
       icon: <HiOutlineOfficeBuilding className="mr-1" />,
     },
+    {
+      name: "Others",
+      icon: <HiOutlineGlobeAlt className="mr-1" />,
+    },
   ];
+
+  const dispatch = useAppDispatch();
 
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
@@ -29,8 +42,27 @@ export default function AddAddress({ handleModalOpen }: Props) {
   const [address3, setAddress3] = useState("");
   const [selectedAddressType, setSelectedAddressType] = useState("");
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLElement>) {
     event.preventDefault();
+
+    if (
+      selectedAddressType === "" ||
+      selectedCountry === "" ||
+      selectedState == ""
+    ) {
+      toast.error("Please fill all the required fields");
+    } else {
+      const obj = {
+        country: selectedCountry,
+        state: selectedState,
+        address1,
+        address2,
+        address3,
+        zipcode,
+        addressType: selectedAddressType,
+      };
+      dispatch(updateUserAddress(obj));
+    }
   }
 
   return (
@@ -47,7 +79,10 @@ export default function AddAddress({ handleModalOpen }: Props) {
         </div>
         <div className="mt-7">
           <form aria-required onSubmit={handleSubmit} className="space-y-6">
-            <div className="w-full flex flex-wrap gap-4 justify-between items-center">
+            <div
+              className="w-full flex flex-wrap gap-4 justify-between items-center"
+              onSubmit={handleSubmit}
+            >
               <div className="w-2/5">
                 <label htmlFor="country" className="block pb-1">
                   Choose your Country:
@@ -113,7 +148,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
               </div>
               <div className="w-2/5">
                 <label className="block pb-1">Select Address Type:</label>
-                <div className={`${style.flex_normal} gap-4`}>
+                <div className={`${style.flex_normal} gap-2`}>
                   {addressType?.map((addressType) => (
                     <button
                       type="button"
@@ -123,7 +158,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
                         selectedAddressType == addressType.name
                           ? "bg-orange-500 text-white"
                           : ""
-                      } flex items-center py-1 px-2 rounded border`}
+                      } flex items-center py-1 px-2 text-xs rounded border`}
                     >
                       {addressType.icon}
                       {addressType.name}

@@ -45,6 +45,20 @@ export const userReducer = createReducer(initialState, {
     state.userError = action.payload;
   },
 
+  // update user address
+  // UpdateUserAddressrequest: (state, action) => {
+  //   state.isUserLoading = true;
+  // },
+
+  UpdateUserAddressSuccess: (state, action) => {
+    // state.isUserLoading = false;
+    state.user = action.payload;
+  },
+
+  UpdateUserAddressFailure: (state, action) => {
+    state.isUserLoading = false;
+    state.userError = action.payload;
+  },
   // clear error
   ClearErrors: (state) => {
     state.userError = null;

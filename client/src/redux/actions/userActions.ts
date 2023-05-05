@@ -7,6 +7,16 @@ interface IFrom extends IUser {
   password: string;
 }
 
+type addressFrom = {
+  country: string;
+  state: string;
+  address1: string;
+  address2: string;
+  address3: string;
+  zipcode: string;
+  addressType: string;
+};
+
 export const loadUser = () => async (dispatch: Dispatch<Action>) => {
   try {
     dispatch({ type: "LoadUserRequest" });
@@ -36,6 +46,23 @@ export const updateUserInfo =
     } catch (error: AxiosError | any) {
       dispatch({
         type: "UpdateUserInfoFailure",
+        payload: error.response?.data?.message || error.message,
+      });
+    }
+  };
+
+// update user address
+
+export const updateUserAddress =
+  (form: addressFrom) => async (dispatch: Dispatch<Action>) => {
+    try {
+      const { data } = await axios.post(`${server}/users/address`, form, {
+        withCredentials: true,
+      });
+      dispatch({ type: "UpdateUserAddressSuccess", payload: data.message });
+    } catch (error: AxiosError | any) {
+      dispatch({
+        type: "UpdateUserAddressFailure",
         payload: error.response?.data?.message || error.message,
       });
     }
