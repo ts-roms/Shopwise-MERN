@@ -25,7 +25,7 @@ const ProtectedRoute = ({ children }: IProps): JSX.Element => {
     return <Navigate to="/login" replace />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;

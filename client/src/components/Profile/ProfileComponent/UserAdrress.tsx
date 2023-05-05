@@ -1,14 +1,27 @@
+import loadable from "@loadable/component";
+import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { MdOutlineAdd } from "react-icons/md";
 import style from "../../../styles/style";
+const AddAddress = loadable(() => import("./AddAddress"));
 
 export default function UserAdrress() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  function handleModalOpen() {
+    setIsModalOpen(!isModalOpen);
+  }
+
   return (
     <div className="w-full px-5">
+      {isModalOpen && <AddAddress handleModalOpen={handleModalOpen} />}
       <div className={`w-full ${style.flex_normal} justify-between`}>
-        <h1 className="text-[#000000ba] pb-2 text-2xl">Payment Methods</h1>
+        <h1 className="text-[#000000ba] pb-2 text-2xl">Saved Addresses</h1>
 
-        <button className={`${style.button} text-white`}>
+        <button
+          className={`${style.button} text-white`}
+          onClick={handleModalOpen}
+        >
           <span className="mr-1">
             <MdOutlineAdd size={25} />
           </span>

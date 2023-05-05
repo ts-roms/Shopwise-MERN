@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { getAllProducts } from "./redux/actions/allProductsActions";
 import { loadUser } from "./redux/actions/userActions";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { loadSeller } from "./redux/actions/sellerActions";
 import store from "./redux/store";
 import loadable from "@loadable/component";
@@ -20,7 +20,7 @@ const SignupPage = loadable(() => import("./pages/User/SignupPage"));
 const BestSelling = loadable(() => import("./pages/BestSelling"));
 const EventsPage = loadable(() => import("./pages/EventsPage"));
 const FAQ = loadable(() => import("./pages/FAQPage"));
-const ProfilePage = loadable(() => import("./pages/User/ProfilePage"));
+import ProfilePage from "./pages/User/ProfilePage";
 const CreateShop = loadable(
   () => import("./pages/Seller/SellerAuth/CreateShopPage")
 );
@@ -45,17 +45,31 @@ const SellerCreatEventPage = loadable(
 );
 const ShopCuponsPage = loadable(() => import("./pages/Seller/ShopCuponsPage"));
 const NotFound = loadable(() => import("./components/404/NotFound"));
-const LoginPage = loadable(() => import("./pages/User/LoginPage"));
+import LoginPage from "./pages/User/LoginPage";
 const ShopAllEventsPage = loadable(
   () => import("./pages/Seller/ShopAllEventsPage")
 );
+import { useState } from "react";
+import Loader from "./components/Loader/Loader";
 
 function App() {
-  useEffect(() => {
-    store.dispatch(loadUser());
-    store.dispatch(loadSeller());
-    store.dispatch(getAllProducts());
+  const [appState, setAppState] = useState(false);
+
+  useLayoutEffect(() => {
+    Promise.all([
+      store.dispatch(loadUser()),
+      store.dispatch(loadSeller()),
+      store.dispatch(getAllProducts()),
+    ]).then(() => setAppState(!appState));
   }, []);
+
+  if (!appState) {
+    return (
+      <section className="h-screen flex justify-center items-center">
+        <Loader />;
+      </section>
+    );
+  }
 
   return (
     <BrowserRouter>
