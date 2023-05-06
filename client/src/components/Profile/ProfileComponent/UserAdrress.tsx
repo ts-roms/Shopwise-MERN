@@ -1,16 +1,37 @@
 import loadable from "@loadable/component";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { MdOutlineAdd } from "react-icons/md";
+import { toast } from "react-toastify";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 import style from "../../../styles/style";
 const AddAddress = loadable(() => import("./AddAddress"));
 
 export default function UserAdrress() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const { user, userError, message } = useAppSelector((state) => state.user);
+
+  const { addresses } = user;
+
+  console.log(message);
+
+  const dispatch = useAppDispatch();
+
   function handleModalOpen() {
     setIsModalOpen(!isModalOpen);
   }
+
+  useEffect(() => {
+    if (userError) {
+      toast.error(userError);
+      dispatch({ type: "ClearErrors" });
+    }
+    if (message) {
+      toast.success(message);
+      dispatch({ type: "ClearMessage" });
+    }
+  }, [userError, message]);
 
   return (
     <div className="w-full px-5">
@@ -30,20 +51,22 @@ export default function UserAdrress() {
       </div>
 
       <div className="space-y-10 mt-6 py-3">
-        <div
-          className={`w-full rounded ${style.flex_normal} justify-between bg-gray-50 shadow py-4 px-8`}
-        >
-          <div className={`${style.flex_normal}`}>
-            <h4 className="font-semibold">Default</h4>
+        {addresses?.map((address) => (
+          <div
+            className={`w-full rounded ${style.flex_normal} justify-between bg-gray-50 shadow py-4 px-8`}
+          >
+            <div className={`${style.flex_normal}`}>
+              <h4 className="font-semibold">{address.addressType}</h4>
+            </div>
+            <div className={`${style.flex_normal} gap-4`}>
+              <h4>{`${address.address1} ${address.address2}`}</h4>
+            </div>
+            <div className={`${style.flex_normal} gap-4`}>
+              <h4>{user?.primaryPhoneNumber}</h4>
+            </div>
+            <AiOutlineDelete className="cursor-pointer" size={25} />
           </div>
-          <div className={`${style.flex_normal} gap-4`}>
-            <h4>433, Sarswati tower, New Delhi</h4>
-          </div>
-          <div className={`${style.flex_normal} gap-4`}>
-            <h4>+91 1234567890</h4>
-          </div>
-          <AiOutlineDelete className="cursor-pointer" size={25} />
-        </div>
+        ))}
       </div>
     </div>
   );

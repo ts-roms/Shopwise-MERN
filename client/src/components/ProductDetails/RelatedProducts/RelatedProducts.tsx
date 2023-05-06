@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { useAppSelector } from "../../../hooks";
 import { IProduct } from "../../../Interface";
-import Products from "../../../constant/product.json";
+// import Products from "../../../constant/product.json";
 import style from "../../../styles/style";
 import Product from "../../Product/Product";
 
@@ -10,10 +11,13 @@ interface IProps {
 
 export default function RelatedProducts({ product }: IProps) {
   const { category } = product;
+
+  const { allProducts } = useAppSelector((state) => state.allProducts);
+
   const [relatedProducts, setRelatedProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
-    const filteredProducts = Products?.filter(
+    const filteredProducts = allProducts?.filter(
       (product) => product.category === category
     );
 

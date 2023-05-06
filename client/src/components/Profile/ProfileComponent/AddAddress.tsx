@@ -8,7 +8,7 @@ import {
   HiOutlineHome,
 } from "react-icons/hi";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "../../../hooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { updateUserAddress } from "../../../redux/actions/userActions";
 
 type Props = {
@@ -62,12 +62,21 @@ export default function AddAddress({ handleModalOpen }: Props) {
         addressType: selectedAddressType,
       };
       dispatch(updateUserAddress(obj));
+
+      handleModalOpen();
+      setSelectedCountry("");
+      setAddress1("");
+      setAddress2("");
+      setAddress3("");
+      setSelectedState("");
+      setZipcode("");
+      setSelectedAddressType("");
     }
   }
 
   return (
     <div
-      className="fixed w-full h-screen bg-black top-0 left-0 flex items-center justify-center z-[99999]"
+      className="fixed w-full h-screen bg-black top-0 left-0 flex items-center justify-center z-[9999]"
       style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
     >
       <div className="w-full max-w-[600px] overflow-y-scroll bg-white shadow px-8 py-12 rounded">

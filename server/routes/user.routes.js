@@ -7,6 +7,7 @@ const {
   logOutUser,
   updateUserProfile,
   updateUserProfilePicture,
+  addUserAdress,
 } = require("../controllers/user.controller");
 const upload = require("../upload");
 const catchAsyncError = require("../middleware/catchAsyncError");
@@ -34,6 +35,9 @@ router.put(
   upload.single("file"),
   catchAsyncError(updateUserProfilePicture)
 );
+
+// add address of user
+router.post("/address", isVerify, catchAsyncError(addUserAdress));
 
 // logout user
 router.get("/logout", catchAsyncError(logOutUser));

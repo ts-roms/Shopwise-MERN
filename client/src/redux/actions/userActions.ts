@@ -59,7 +59,7 @@ export const updateUserAddress =
       const { data } = await axios.post(`${server}/users/address`, form, {
         withCredentials: true,
       });
-      dispatch({ type: "UpdateUserAddressSuccess", payload: data.message });
+      dispatch({ type: "UpdateUserAddressSuccess", payload: data });
     } catch (error: AxiosError | any) {
       dispatch({
         type: "UpdateUserAddressFailure",

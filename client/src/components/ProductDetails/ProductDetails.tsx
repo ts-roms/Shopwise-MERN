@@ -24,6 +24,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
     shop,
     discount_percentage,
   } = product;
+
   const { wishlists } = useAppSelector((state) => state.wishlists);
   const [isWish, setIsWish] = useState(false);
   const dispatch = useAppDispatch();

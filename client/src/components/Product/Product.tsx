@@ -67,7 +67,7 @@ export default function Product({ product }: IProps) {
         >
           <div className="h-40 overflow-hidden rounded-lg">
             <img
-              src={`${host}/${images[0].url}`}
+              src={`${host}/${images[0]?.url}`}
               loading="lazy"
               className="object-cover h-full w-full hover:scale-110 transition-all duration-300"
             />

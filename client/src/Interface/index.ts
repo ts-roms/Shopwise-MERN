@@ -98,8 +98,20 @@ export interface IUser {
   email: string;
   role: string;
   avatar: string;
+  addresses: IAddress[];
   primaryPhoneNumber: string;
   secondaryPhoneNumber: string;
+}
+
+export interface IAddress {
+  country: string;
+  state: string;
+  address1: string;
+  address2: string;
+  address3: string;
+  zipcode: number;
+  addressType: string;
+  _id: string;
 }
 
 export interface ISeller {
@@ -119,6 +131,7 @@ export interface IUserState {
   isUserLoading: boolean;
   userError: null | string;
   user: IUser;
+  message: string;
 }
 
 export interface ISellerState {

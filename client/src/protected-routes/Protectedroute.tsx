@@ -19,8 +19,6 @@ const ProtectedRoute = ({ children }: IProps): JSX.Element => {
     );
   }
 
-  console.log(isUserAuthenticate);
-
   if (!isUserAuthenticate) {
     return <Navigate to="/login" replace />;
   }

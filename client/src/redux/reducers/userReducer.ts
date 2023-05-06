@@ -11,9 +11,11 @@ const initialState: IUserState = {
     email: "",
     role: "",
     avatar: "",
+    addresses: [],
     primaryPhoneNumber: "",
     secondaryPhoneNumber: "",
   },
+  message: "",
 };
 
 export const userReducer = createReducer(initialState, {
@@ -52,12 +54,18 @@ export const userReducer = createReducer(initialState, {
 
   UpdateUserAddressSuccess: (state, action) => {
     // state.isUserLoading = false;
-    state.user = action.payload;
+    console.log(action.payload);
+    state.user = action.payload.user;
+    state.message = action.payload.message;
   },
 
   UpdateUserAddressFailure: (state, action) => {
     state.isUserLoading = false;
     state.userError = action.payload;
+  },
+
+  ClearMessage: (state) => {
+    state.message = "";
   },
   // clear error
   ClearErrors: (state) => {
