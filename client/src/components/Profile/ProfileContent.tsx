@@ -1,9 +1,14 @@
-import TrackUserOrder from "./ProfileComponent/TrackUserOrder";
-import UserAdrress from "./ProfileComponent/UserAdrress";
-import UserOrders from "./ProfileComponent/UserOrders";
-import UserPaymentMethod from "./ProfileComponent/UserPaymentMethod";
-import UserProfile from "./ProfileComponent/UserProfile";
-import UserRefunds from "./ProfileComponent/UserRefunds";
+import loadable from "@loadable/component";
+const TrackUserOrder = loadable(
+  () => import("./ProfileComponent/TrackUserOrder")
+);
+const UserAdrress = loadable(() => import("./ProfileComponent/UserAdrress"));
+const UserOrders = loadable(() => import("./ProfileComponent/UserOrders"));
+const UserPasswordChange = loadable(
+  () => import("./ProfileComponent/UserPasswordChange")
+);
+const UserProfile = loadable(() => import("./ProfileComponent/UserProfile"));
+const UserRefunds = loadable(() => import("./ProfileComponent/UserRefunds"));
 
 interface IProps {
   activeTab: number;
@@ -16,7 +21,7 @@ export default function ProfileContent({ activeTab }: IProps) {
       {activeTab === 1 && <UserOrders />}
       {activeTab === 2 && <UserRefunds />}
       {activeTab === 3 && <TrackUserOrder />}
-      {activeTab === 4 && <UserPaymentMethod />}
+      {activeTab === 4 && <UserPasswordChange />}
       {activeTab === 5 && <UserAdrress />}
     </div>
   );

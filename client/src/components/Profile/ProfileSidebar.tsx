@@ -1,18 +1,13 @@
 import style from "../../styles/style";
 import { RxPerson } from "react-icons/rx";
 import { HiOutlineShoppingBag, HiReceiptRefund } from "react-icons/hi";
-import {
-  AiOutlineCreditCard,
-  AiOutlineMessage,
-  AiOutlineLogout,
-} from "react-icons/ai";
+import { AiOutlineLogout } from "react-icons/ai";
 import { TbAddressBook } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { MdOutlineTrackChanges } from "react-icons/md";
+import { MdOutlinePassword, MdOutlineTrackChanges } from "react-icons/md";
 import axios from "axios";
 import { server } from "../../server";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
 
 interface IProps {
   setActiveTab: (prev: number) => void;
@@ -36,8 +31,8 @@ export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
       id: 4,
     },
     {
-      linkName: "payment methods",
-      icon: <AiOutlineCreditCard title="Payment Methods" />,
+      linkName: "Change Password",
+      icon: <MdOutlinePassword title="Change Password" />,
       id: 5,
     },
     { linkName: "address", icon: <TbAddressBook title="Address" />, id: 6 },
@@ -82,7 +77,6 @@ export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
       ))}
       <div
         className={`${style.flex_normal} gap-3 cursor-pointer transition-all px-5 py-4 lg:px-12 hover:bg-orange-200`}
-        // onClick={() => setActiveTab(userLinks.length + 1)}
         onClick={handleLogout}
       >
         <span

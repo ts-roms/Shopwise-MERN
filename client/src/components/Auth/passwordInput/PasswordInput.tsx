@@ -27,6 +27,7 @@ export default function PasswordInput({
         id={name}
         value={value}
         onChange={onChange}
+        minLength={6}
         className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
       />
       <div
