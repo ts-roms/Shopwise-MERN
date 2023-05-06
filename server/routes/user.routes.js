@@ -8,6 +8,7 @@ const {
   updateUserProfile,
   updateUserProfilePicture,
   addUserAdress,
+  deleteAddress,
 } = require("../controllers/user.controller");
 const upload = require("../upload");
 const catchAsyncError = require("../middleware/catchAsyncError");
@@ -38,6 +39,9 @@ router.put(
 
 // add address of user
 router.post("/address", isVerify, catchAsyncError(addUserAdress));
+
+// delete user address
+router.delete("/address/:addressId", isVerify, catchAsyncError(deleteAddress));
 
 // logout user
 router.get("/logout", catchAsyncError(logOutUser));

@@ -64,6 +64,18 @@ export const userReducer = createReducer(initialState, {
     state.userError = action.payload;
   },
 
+  // delete address
+  DeleteUserAddressRequest: (state) => {},
+
+  DeleteUserAddressSuccess: (state, action) => {
+    state.user = action.payload.user;
+    state.message = action.payload.message;
+  },
+
+  DeleteUserAddressFailure: (state, action) => {
+    state.message = action.payload;
+  },
+
   ClearMessage: (state) => {
     state.message = "";
   },

@@ -254,7 +254,34 @@ exports.addUserAdress = async (req, res, next) => {
   }
 };
 
-// exports.deleteAddress = async;
+exports.deleteAddress = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+
+    const addressId = req.params.addressId;
+
+    const address = user.addresses.find((address) => address._id == addressId);
+
+    if (!address) {
+      return next(new ErrorHandler("Address not found", 404));
+    }
+
+    user.addresses.pull(addressId);
+
+    await user.save();
+
+    res.status(201).json({ message: "Address deleted successfully", user });
+  } catch (error) {
+    console.error(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};
 
 // log out user
 exports.logOutUser = async (req, res, next) => {

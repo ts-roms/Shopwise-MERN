@@ -52,7 +52,6 @@ export const updateUserInfo =
   };
 
 // update user address
-
 export const updateUserAddress =
   (form: addressFrom) => async (dispatch: Dispatch<Action>) => {
     try {
@@ -63,6 +62,23 @@ export const updateUserAddress =
     } catch (error: AxiosError | any) {
       dispatch({
         type: "UpdateUserAddressFailure",
+        payload: error.response?.data?.message || error.message,
+      });
+    }
+  };
+
+// Delete user address
+export const deleteUserAddress =
+  (id: string) => async (dispatch: Dispatch<Action>) => {
+    try {
+      const { data } = await axios.delete(`${server}/users/address/${id}`, {
+        withCredentials: true,
+      });
+
+      dispatch({ type: "DeleteUserAddressSuccess", payload: data });
+    } catch (error: AxiosError | any) {
+      dispatch({
+        type: "DeleteUserAddressFailure",
         payload: error.response?.data?.message || error.message,
       });
     }

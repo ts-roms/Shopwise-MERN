@@ -4,6 +4,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { MdOutlineAdd } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { deleteUserAddress } from "../../../redux/actions/userActions";
 import style from "../../../styles/style";
 const AddAddress = loadable(() => import("./AddAddress"));
 
@@ -14,12 +15,14 @@ export default function UserAdrress() {
 
   const { addresses } = user;
 
-  console.log(message);
-
   const dispatch = useAppDispatch();
 
   function handleModalOpen() {
     setIsModalOpen(!isModalOpen);
+  }
+
+  function handleDeleteAddress(addressId: string) {
+    dispatch(deleteUserAddress(addressId));
   }
 
   useEffect(() => {
@@ -51,22 +54,34 @@ export default function UserAdrress() {
       </div>
 
       <div className="space-y-10 mt-6 py-3">
-        {addresses?.map((address) => (
-          <div
-            className={`w-full rounded ${style.flex_normal} justify-between bg-gray-50 shadow py-4 px-8`}
-          >
-            <div className={`${style.flex_normal}`}>
-              <h4 className="font-semibold">{address.addressType}</h4>
+        {addresses.length > 0 ? (
+          addresses?.map((address) => (
+            <div
+              className={`w-full rounded ${style.flex_normal} justify-between bg-gray-100 shadow py-4 px-8`}
+            >
+              <div className={`${style.flex_normal}`}>
+                <h4 className="font-semibold">{address.addressType}</h4>
+              </div>
+              <div className={`${style.flex_normal} gap-4`}>
+                <h4>{`${address.address1} ${address.address2}`}</h4>
+              </div>
+              <div className={`${style.flex_normal} gap-4`}>
+                <h4>{user?.primaryPhoneNumber}</h4>
+              </div>
+              <button onClick={() => handleDeleteAddress(address._id)}>
+                <AiOutlineDelete
+                  className="cursor-pointer"
+                  size={25}
+                  title="Delete Address"
+                />
+              </button>
             </div>
-            <div className={`${style.flex_normal} gap-4`}>
-              <h4>{`${address.address1} ${address.address2}`}</h4>
-            </div>
-            <div className={`${style.flex_normal} gap-4`}>
-              <h4>{user?.primaryPhoneNumber}</h4>
-            </div>
-            <AiOutlineDelete className="cursor-pointer" size={25} />
-          </div>
-        ))}
+          ))
+        ) : (
+          <h4 className="text-center text-xl pt-4 text-gray-800">
+            You do not have any saved addresses.
+          </h4>
+        )}
       </div>
     </div>
   );
