@@ -9,6 +9,7 @@ const {
   updateUserProfilePicture,
   addUserAdress,
   deleteAddress,
+  changePassword,
 } = require("../controllers/user.controller");
 const upload = require("../upload");
 const catchAsyncError = require("../middleware/catchAsyncError");
@@ -42,6 +43,9 @@ router.post("/address", isVerify, catchAsyncError(addUserAdress));
 
 // delete user address
 router.delete("/address/:addressId", isVerify, catchAsyncError(deleteAddress));
+
+// user password change
+router.post("/password-change", isVerify, catchAsyncError(changePassword));
 
 // logout user
 router.get("/logout", catchAsyncError(logOutUser));

@@ -162,7 +162,6 @@ exports.updateUserProfile = async (req, res, next) => {
       req.body;
 
     const user = await User.findById(userId).select("+password");
-    console.log(password, email);
 
     if (!user) {
       return next(new ErrorHandler("User not found", 404));
@@ -254,6 +253,7 @@ exports.addUserAdress = async (req, res, next) => {
   }
 };
 
+// user can delete address
 exports.deleteAddress = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -277,6 +277,39 @@ exports.deleteAddress = async (req, res, next) => {
     await user.save();
 
     res.status(201).json({ message: "Address deleted successfully", user });
+  } catch (error) {
+    console.error(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};
+
+// user change password
+exports.changePassword = async (req, res, next) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+
+    console.log(oldPassword, newPassword);
+
+    const userId = req.user.id;
+
+    const user = await User.findById(userId).select("+password");
+
+    if (!user) {
+      return next(new ErrorHandler("User not found", 400));
+    }
+
+    const isMatch = await user.comparePassword(oldPassword);
+
+    if (!isMatch) {
+      return next(new ErrorHandler("Invalid old password", 400));
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res
+      .status(200)
+      .json({ success: true, message: "Password updated successfully" });
   } catch (error) {
     console.error(error);
     next(new ErrorHandler(error.message, 500));

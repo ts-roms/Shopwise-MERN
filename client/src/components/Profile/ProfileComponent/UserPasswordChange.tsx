@@ -1,6 +1,7 @@
+import axios, { AxiosError } from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { MdOutlineAdd } from "react-icons/md";
-import style from "../../../styles/style";
+import { toast } from "react-toastify";
+import { server } from "../../../server";
 import PasswordInput from "../../Auth/passwordInput/PasswordInput";
 
 export default function UserPasswordChange() {
@@ -22,8 +23,25 @@ export default function UserPasswordChange() {
     }));
   }
 
-  function handleSubmit(e: FormEvent<HTMLElement>) {
+  async function handleSubmit(e: FormEvent<HTMLElement>) {
     e.preventDefault();
+
+    try {
+      const { data } = await axios.post(
+        `${server}/users/password-change`,
+        formData,
+        { withCredentials: true }
+      );
+
+      toast.success(data.message);
+      setFormData(initialState);
+    } catch (error: AxiosError | any) {
+      if (error.response) {
+        toast.error(error.response);
+      } else {
+        toast.error(error.message);
+      }
+    }
   }
 
   useEffect(() => {
