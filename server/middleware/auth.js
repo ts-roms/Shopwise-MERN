@@ -6,7 +6,6 @@ const Shop = require("../models/shop.model");
 
 exports.isVerify = catchAsyncError(async (req, res, next) => {
   const { token } = req.cookies;
-  // console.log(token);
 
   if (!token) {
     return next(new ErrorHandler("Please login to continue", 400));
@@ -20,7 +19,6 @@ exports.isVerify = catchAsyncError(async (req, res, next) => {
 
 exports.isSeller = catchAsyncError(async (req, res, next) => {
   const { seller_token } = req.cookies;
-  // console.log(token);
 
   if (!seller_token) {
     return next(new ErrorHandler("Please login to continue", 400));

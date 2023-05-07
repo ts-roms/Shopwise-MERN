@@ -103,7 +103,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
                   id="country"
                   onChange={(e) => setSelectedCountry(e.target.value)}
                 >
-                  <option disabled selected>
+                  <option disabled selected value="">
                     Select your country
                   </option>
                   {Country.getAllCountries()
@@ -143,7 +143,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
                   id="state"
                   onChange={(e) => setSelectedState(e.target.value)}
                 >
-                  <option selected disabled>
+                  <option selected disabled value="">
                     Select your State
                   </option>
                   {State.getStatesOfCountry(selectedCountry)

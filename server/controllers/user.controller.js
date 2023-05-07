@@ -286,9 +286,7 @@ exports.deleteAddress = async (req, res, next) => {
 // user change password
 exports.changePassword = async (req, res, next) => {
   try {
-    const { oldPassword, newPassword } = req.body;
-
-    console.log(oldPassword, newPassword);
+    const { oldPassword, newPassword, confirmNewPassword } = req.body;
 
     const userId = req.user.id;
 
@@ -298,6 +296,14 @@ exports.changePassword = async (req, res, next) => {
       return next(new ErrorHandler("User not found", 400));
     }
 
+    if (newPassword != confirmNewPassword) {
+      return next(
+        new ErrorHandler(
+          "New password is not match with confrimed password",
+          400
+        )
+      );
+    }
     const isMatch = await user.comparePassword(oldPassword);
 
     if (!isMatch) {

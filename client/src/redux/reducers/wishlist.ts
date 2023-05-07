@@ -26,7 +26,6 @@ export const wishListReducer = createReducer(initialState, {
   },
 
   removeFromWishlits: (state, action) => {
-    console.log("ss");
     return {
       ...state,
       wishlists: state.wishlists.filter(

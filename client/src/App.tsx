@@ -3,14 +3,17 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { getAllProducts } from "./redux/actions/allProductsActions";
 import { loadUser } from "./redux/actions/userActions";
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { loadSeller } from "./redux/actions/sellerActions";
+import { useState } from "react";
 import store from "./redux/store";
 import loadable from "@loadable/component";
 
 import SellerProtectedRoute from "./protected-routes/SellerProtectedRoute";
 import ProtectedRoute from "./protected-routes/Protectedroute";
 import Layout from "./components/Layout/Layout";
+import LoginPage from "./pages/User/LoginPage";
+import Loader from "./components/Loader/Loader";
 import HomePage from "./pages/HomePage";
 
 const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
@@ -45,12 +48,10 @@ const SellerCreatEventPage = loadable(
 );
 const ShopCuponsPage = loadable(() => import("./pages/Seller/ShopCuponsPage"));
 const NotFound = loadable(() => import("./components/404/NotFound"));
-import LoginPage from "./pages/User/LoginPage";
+const CheckoutPage = loadable(() => import("./pages/User/CheckoutPage"));
 const ShopAllEventsPage = loadable(
   () => import("./pages/Seller/ShopAllEventsPage")
 );
-import { useState } from "react";
-import Loader from "./components/Loader/Loader";
 
 function App() {
   const [appState, setAppState] = useState(false);
@@ -143,6 +144,18 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/checkout"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <CheckoutPage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* shop routes */}
         <Route path="/create-shop" element={<CreateShop />} />
         <Route path="/login-shop" element={<ShopLoginPage />} />
         <Route
