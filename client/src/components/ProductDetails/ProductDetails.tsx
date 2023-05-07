@@ -60,7 +60,9 @@ export default function ProductDetails({ product }: { product: IProduct }) {
             <h1 className={`${style.productTitle}`}>{name}</h1>
             <p className="text-sm lg:text-base">{description}</p>
             <div>
-              <h4>Deal of a Day</h4>
+              <h4 className="text-green-700 font-semibold text-lg">
+                Deal of a Day
+              </h4>
               <div className={`${style.flex_normal}`}>
                 <span className="text-2xl text-[#CC0C39] mr-3">
                   -{discount_percentage}%
