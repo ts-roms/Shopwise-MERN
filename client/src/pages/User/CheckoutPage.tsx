@@ -1,9 +1,8 @@
 import loadable from "@loadable/component";
 import { useState } from "react";
-import style from "../../styles/style";
 const Checkout = loadable(() => import("../../components/Checkout/Checkout"));
 const CheckoutTabs = loadable(
-  () => import("../../components/Checkout/Components/CheckoutTabs")
+  () => import("../../components/Checkout/CheckoutTabs")
 );
 
 export default function CheckoutPage() {
@@ -22,6 +21,7 @@ export default function CheckoutPage() {
             toggleActiveStep={toggleActiveStep}
           />
         </div>
+        <div className="mt-8"></div>
         <Checkout activeStep={activeStep} toggleActiveStep={toggleActiveStep} />
       </div>
     </section>
