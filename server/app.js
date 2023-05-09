@@ -28,8 +28,10 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 const userRoutes = require("./routes/user.routes");
 const shopRoutes = require("./routes/shop.routes");
 const productRoutes = require("./routes/product.routes");
+const couponRoutes = require("./routes/coupons.routes");
 
 // routes
+app.use("/api/v2/coupons", couponRoutes);
 app.use("/api/v2/users", userRoutes);
 app.use("/api/v2/shops", shopRoutes);
 app.use("/api/v2/products", productRoutes);

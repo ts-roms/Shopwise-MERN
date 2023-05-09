@@ -1,6 +1,6 @@
 import style from "../../../styles/style";
 import { Country, State } from "country-state-city";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks";
 
 type IProps = {
@@ -8,21 +8,59 @@ type IProps = {
 };
 
 export default function ShippingInfo({ toggleActiveStep }: IProps) {
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedState, setSelectedState] = useState("");
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [address3, setAddress3] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [primaryNumber, setPrimaryNumber] = useState("");
-  const [alternateNumber, setAlternateNumber] = useState("");
-  const [zipCode, setZipCode] = useState("");
-
   const [selectedAddress, setSelectedAddress] = useState<null | string>(null);
 
   const { user } = useAppSelector((state) => state.user);
   const { addresses } = user;
+
+  const initialFormState = {
+    fullName: "",
+    email: "",
+    primaryNumber: "",
+    alternateNumber: "",
+    zipCode: "",
+    selectedCountry: "",
+    selectedState: "",
+    address1: "",
+    address2: "",
+    address3: "",
+  };
+
+  const [formState, setFormState] = useState(initialFormState);
+
+  useEffect(() => {
+    if (selectedAddress) {
+      const address = addresses?.find(
+        (address) => address._id === selectedAddress
+      );
+
+      if (address) {
+        setFormState({
+          fullName: user?.name,
+          email: user?.email,
+          primaryNumber: user?.primaryPhoneNumber,
+          alternateNumber: user?.secondaryPhoneNumber,
+          zipCode: address?.zipcode.toString(),
+          selectedCountry: address?.country,
+          selectedState: address?.state,
+          address1: address?.address1,
+          address2: address?.address2,
+          address3: address?.address3,
+        });
+      }
+    } else {
+      setFormState(initialFormState);
+    }
+  }, [selectedAddress]);
+
+  console.log(formState);
+
+  function handleFormInputChange(
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    const { name, value } = e.target;
+    setFormState((prevState) => ({ ...prevState, [name]: value }));
+  }
 
   function handleAddressChange(e: ChangeEvent<HTMLInputElement>) {
     setSelectedAddress(
@@ -34,7 +72,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
     <div className="bg-white shadow rounded p-8">
       <h4 className="text-lg font-semibold text-gray-800">Shipping Address</h4>
       <div className="mt-8">
-        <form className="space-y-6">
+        <form className="space-y-6" aria-required>
           <div className={`${style.flex_normal} gap-8 flex-wrap`}>
             <div className="w-2/5">
               <label className="mb-1 text-sm hidden md:block" htmlFor="name">
@@ -45,9 +83,10 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
                 className={`${style.input} w-full text-sm py-1.5 px-2`}
                 placeholder="Enter full name"
                 id="name"
+                name="fullName"
                 required
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+                value={formState.fullName}
+                onChange={handleFormInputChange}
               />
             </div>
             <div className="w-2/5">
@@ -60,8 +99,9 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
                 id="email"
                 placeholder="Enter your email address"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                value={formState.email}
+                onChange={handleFormInputChange}
               />
             </div>
           </div>
@@ -80,8 +120,9 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
                 placeholder="Enter primary number"
                 id="primary-number"
                 required
-                value={primaryNumber}
-                onChange={(e) => setPrimaryNumber(e.target.value)}
+                name="primaryNumber"
+                value={formState.primaryNumber}
+                onChange={handleFormInputChange}
               />
             </div>
             <div className="w-2/5">
@@ -92,10 +133,11 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
                 type="number"
                 className={`${style.input} w-full text-sm py-1.5 px-2`}
                 id="email"
+                name="alternateNumber"
                 placeholder="Enter alternate number"
                 required
-                value={alternateNumber}
-                onChange={(e) => setAlternateNumber(e.target.value)}
+                value={formState.alternateNumber}
+                onChange={handleFormInputChange}
               />
             </div>
           </div>
@@ -111,8 +153,9 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
                 placeholder="Enter zip code"
                 id="zipCode"
                 required
-                value={zipCode}
-                onChange={(e) => setZipCode(e.target.value)}
+                name="zipCode"
+                value={formState.zipCode}
+                onChange={handleFormInputChange}
               />
             </div>
             <div className="w-2/5">
@@ -124,9 +167,10 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
               </label>
               <select
                 id="selectedCountry"
+                name="selectedCountry"
                 className="bg-gray-50 text-sm md:text-base px-3 py-1.5 border rounded"
-                value={selectedCountry}
-                onChange={(e) => setSelectedCountry(e.target.value)}
+                value={formState.selectedCountry}
+                onChange={handleFormInputChange}
               >
                 <option selected disabled value="">
                   Choose Country
@@ -152,14 +196,15 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
               </label>
               <select
                 id="selectedState"
-                value={selectedState}
-                onChange={(e) => setSelectedState(e.target.value)}
+                name="selectedState"
+                value={formState.selectedState}
+                onChange={handleFormInputChange}
                 className="bg-gray-50 text-sm md:text-base px-3 py-1.5 border rounded"
               >
                 <option selected disabled value="">
                   Choose State
                 </option>
-                {State.getStatesOfCountry(selectedCountry)
+                {State.getStatesOfCountry(formState.selectedCountry)
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((state) => (
                     <option key={state.isoCode} value={state.isoCode}>
@@ -177,12 +222,13 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
               </label>
               <input
                 type="text"
+                name="address1"
                 className={`${style.input} w-full text-sm py-1.5 px-2`}
                 id="address1"
                 placeholder="House No., Building Name (Required)*"
                 required
-                value={address1}
-                onChange={(e) => setAddress1(e.target.value)}
+                value={formState.address1}
+                onChange={handleFormInputChange}
               />
             </div>
           </div>
@@ -199,10 +245,11 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
                 type="text"
                 className={`${style.input} w-full text-sm py-1.5 px-2`}
                 id="address2"
+                name="address2"
                 placeholder="Road Name, Area, Colony (Required)*"
                 required
-                value={address2}
-                onChange={(e) => setAddress2(e.target.value)}
+                value={formState.address2}
+                onChange={handleFormInputChange}
               />
             </div>
             <div className="w-2/5">
@@ -216,10 +263,11 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
                 type="text"
                 className={`${style.input} w-full text-sm py-1.5 px-2`}
                 id="address3"
+                name="address3"
                 placeholder="Nearby Famous Shop/Mall/Landmark"
                 required
-                value={address3}
-                onChange={(e) => setAddress3(e.target.value)}
+                value={formState.address3}
+                onChange={handleFormInputChange}
               />
             </div>
           </div>
