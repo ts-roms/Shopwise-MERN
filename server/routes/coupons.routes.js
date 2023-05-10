@@ -6,7 +6,8 @@ const {
 const { isVerify } = require("../middleware/auth");
 const catchAsyncError = require("../middleware/catchAsyncError");
 
-router.get("/:couponCode", isVerify, catchAsyncError(verifyCoupons));
 router.get("/", catchAsyncError(getAllCouponsCode));
+
+router.post("/", isVerify, catchAsyncError(verifyCoupons));
 
 module.exports = router;

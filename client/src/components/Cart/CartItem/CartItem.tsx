@@ -61,7 +61,7 @@ export default function CartItem({ item }: IProps) {
         <span>{quantity}</span>
         <button
           className={`border-none bg-none bg-slate-300 rounded-full h-6 w-6 ${style.flex_normal} justify-center text-white cursor-pointer`}
-          onClick={() => decreaseQuantity}
+          onClick={decreaseQuantity}
         >
           <HiMinus title="Decrement" color="#7d879c" />
         </button>

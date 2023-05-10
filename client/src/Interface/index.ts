@@ -70,7 +70,7 @@ export interface ICoupon {
   name: string;
   value: number;
   minAmount: number;
-  selectedProduct: IProduct;
+  selectedProduct: IProduct | null;
   shop: ISeller;
 }
 
