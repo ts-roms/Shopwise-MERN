@@ -23,7 +23,7 @@ export default function CartItem({ item }: IProps) {
 
   function increaseQuantity() {
     if (quantity < 4) {
-      setQuantity(quantity + 1);
+      setQuantity((prev) => prev + 1);
       const updatedCart = { ...item, quantity: quantity + 1 };
       updateCartChange(updatedCart);
     } else {
@@ -31,7 +31,7 @@ export default function CartItem({ item }: IProps) {
     }
   }
 
-  function decreaseQuantity(): void {
+  function decreaseQuantity() {
     if (quantity > 1) {
       setQuantity(quantity - 1);
       const updatedCart = { ...item, quantity: quantity - 1 };

@@ -9,20 +9,33 @@ import { server } from "../../../server";
 import style from "../../../styles/style";
 
 export default function TotalBill() {
-  const { cart } = useAppSelector((state) => state.cart);
+  const { cart, cartPrice } = useAppSelector((state) => state.cart);
   const [shippingCharged, setShippingCharged] = useState(false);
   const [enterCouponCode, setEnterCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [coupon, setCoupon] = useState<null | ICoupon>(null);
 
-  const totalBill = cart?.reduce((acc, item) => {
-    const price = item.discount_price ? item.discount_price : item.price;
-    return acc + item.quantity * price;
-  }, 0);
+  // const totalBill = cart?.reduce((acc, item) => {
+  //   const price = item.discount_price ? item.discount_price : item.price;
+  //   return acc + item.quantity * price;
+  // }, 0);
 
   const mrpCartPrice = cart?.reduce((acc, item) => {
     return acc + item.quantity * item.price;
   }, 0);
+
+  let totalSaving = 0;
+  const shippingCharge = 15000;
+
+  if (couponDiscount > 0 && !shippingCharged) {
+    totalSaving = mrpCartPrice - cartPrice + couponDiscount + shippingCharge;
+  } else if (couponDiscount > 0 && shippingCharged) {
+    totalSaving = mrpCartPrice - cartPrice + couponDiscount;
+  } else {
+    totalSaving = mrpCartPrice - cartPrice;
+  }
+
+  const finalPrice = mrpCartPrice - totalSaving;
 
   async function handleCouponCheck(e: FormEvent<Element>) {
     e.preventDefault();
@@ -30,7 +43,7 @@ export default function TotalBill() {
     try {
       const res = await axios.post(
         `${server}/coupons/`,
-        { couponCode: enterCouponCode, totalBill },
+        { couponCode: enterCouponCode, cartPrice },
         { withCredentials: true }
       );
 
@@ -44,15 +57,14 @@ export default function TotalBill() {
   }
 
   useEffect(() => {
-    if (totalBill < 150000) {
+    if (cartPrice < 150000) {
       setShippingCharged(true);
     } else {
       setShippingCharged(false);
     }
-  }, [cart, totalBill]);
+  }, [cart, cartPrice]);
 
   useEffect(() => {
-    console.log("");
     if (coupon) {
       const eligibleItems = cart?.filter(
         (item) => item.shop?._id === coupon.shop?._id
@@ -76,18 +88,6 @@ export default function TotalBill() {
     }
   }, [cart, coupon]);
 
-  let totalSaving = 0;
-
-  if (couponDiscount > 0 && !shippingCharged) {
-    totalSaving = mrpCartPrice - totalBill + couponDiscount + 15000;
-  } else if (couponDiscount > 0 && shippingCharged) {
-    totalSaving = mrpCartPrice - totalBill + couponDiscount;
-  } else {
-    totalSaving = mrpCartPrice - totalBill;
-  }
-
-  const finalPrice = mrpCartPrice - totalSaving;
-
   return (
     <div className="w-full bg-white p-8 shadow rounded space-y-2">
       <div
@@ -104,7 +104,7 @@ export default function TotalBill() {
       `}
       >
         <p className="text-[#000000a4]">Cart Value:</p>
-        <p className="font-semibold text-lg">{formattedPrice(totalBill)}</p>
+        <p className="font-semibold text-lg">{formattedPrice(cartPrice)}</p>
       </div>
 
       <div
@@ -117,7 +117,7 @@ export default function TotalBill() {
             !shippingCharged ? "line-through" : "font-semibold"
           }`}
         >
-          {formattedPrice(15000)}
+          {formattedPrice(shippingCharge)}
         </p>
         {/* {!shippingCharged && <span className="text-xs">Free</span>} */}
       </div>

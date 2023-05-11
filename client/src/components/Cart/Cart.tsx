@@ -10,13 +10,14 @@ import { formattedPrice } from "../../helper/formatPrice";
 import { toggleCart } from "../../redux/actions/cartActions";
 
 export default function Cart() {
-  const { cart, isCartOpen } = useAppSelector((state) => state.cart);
+  const { cart, cartPrice, isCartOpen } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
-  const totalPrice = cart.reduce(
-    (acc: number, item: ICartItem) => acc + item.quantity * item.discount_price,
-    0
-  );
 
+  // console.log(cartPrice + " of cart component");
+  // const cartPrice = cart.reduce(
+  //   (acc, item) => acc + item.discount_price * item.quantity,
+  //   0
+  // );
   return (
     <div
       className={`fixed top-0 left-0 right-0 w-full h-screen z-50 duration-500 ease-in-out ${
@@ -57,7 +58,7 @@ export default function Cart() {
         <div className="mt-6 w-full self-end">
           <Link to="/checkout">
             <button className="rounded-lg px-10 bg-[#ff7d1a] text-white text-center w-full h-10">
-              Checkout for {formattedPrice(totalPrice)}
+              Checkout for {formattedPrice(cartPrice)}
             </button>
           </Link>
         </div>

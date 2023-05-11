@@ -8,8 +8,11 @@ export const addToCart =
   async (dispatch: Dispatch, getState: () => RootState) => {
     dispatch({ type: "addToCart", payload: data });
 
-    const { cart } = getState().cart;
-    localStorage.setItem("cartItems", JSON.stringify(cart));
+    localStorage.setItem("cartItems", JSON.stringify(getState().cart.cart));
+    localStorage.setItem(
+      "cartPrice",
+      JSON.stringify(getState().cart.cartPrice)
+    );
     return data;
   };
 
@@ -20,6 +23,10 @@ export const removeFromCart =
     dispatch({ type: "removeFromCart", payload: data._id });
 
     localStorage.setItem("cartItems", JSON.stringify(getState().cart.cart));
+    localStorage.setItem(
+      "cartPrice",
+      JSON.stringify(getState().cart.cartPrice)
+    );
     return data;
   };
 

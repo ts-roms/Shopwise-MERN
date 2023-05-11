@@ -178,6 +178,8 @@ export interface ICartItem extends IProduct {
 export interface ICartSate {
   cart: ICartItem[];
   isCartOpen: boolean;
+  cartPrice: number;
+  couponDisount: number;
 }
 
 export interface IWishlistState {
