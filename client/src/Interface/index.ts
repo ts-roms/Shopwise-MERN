@@ -179,7 +179,7 @@ export interface ICartSate {
   cart: ICartItem[];
   isCartOpen: boolean;
   cartPrice: number;
-  couponDisount: number;
+  totalSaving: number;
 }
 
 export interface IWishlistState {

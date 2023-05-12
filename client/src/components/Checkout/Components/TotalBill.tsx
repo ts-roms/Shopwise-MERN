@@ -3,36 +3,45 @@ import { FormEvent, useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import { formattedPrice } from "../../../helper/formatPrice";
-import { useAppSelector } from "../../../hooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { ICoupon } from "../../../Interface";
+import { totalSavingCalculate } from "../../../redux/actions/cartActions";
 import { server } from "../../../server";
 import style from "../../../styles/style";
 
 export default function TotalBill() {
-  const { cart, cartPrice } = useAppSelector((state) => state.cart);
+  const { cart, cartPrice, totalSaving } = useAppSelector(
+    (state) => state.cart
+  );
   const [shippingCharged, setShippingCharged] = useState(false);
   const [enterCouponCode, setEnterCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [coupon, setCoupon] = useState<null | ICoupon>(null);
-
-  // const totalBill = cart?.reduce((acc, item) => {
-  //   const price = item.discount_price ? item.discount_price : item.price;
-  //   return acc + item.quantity * price;
-  // }, 0);
+  const dispatch = useAppDispatch();
 
   const mrpCartPrice = cart?.reduce((acc, item) => {
     return acc + item.quantity * item.price;
   }, 0);
 
-  let totalSaving = 0;
   const shippingCharge = 15000;
 
-  if (couponDiscount > 0 && !shippingCharged) {
-    totalSaving = mrpCartPrice - cartPrice + couponDiscount + shippingCharge;
-  } else if (couponDiscount > 0 && shippingCharged) {
-    totalSaving = mrpCartPrice - cartPrice + couponDiscount;
-  } else {
-    totalSaving = mrpCartPrice - cartPrice;
+  function calculateTotalSaving(
+    mrpCartPrice: number,
+    cartPrice: number,
+    couponDiscount: number,
+    shippingCharged: boolean
+  ) {
+    let totalSaving = 0;
+
+    if (couponDiscount > 0 && !shippingCharged) {
+      totalSaving = mrpCartPrice - cartPrice + couponDiscount + shippingCharge;
+    } else if (couponDiscount > 0 && shippingCharged) {
+      totalSaving = mrpCartPrice - cartPrice + couponDiscount;
+    } else {
+      totalSaving = mrpCartPrice - cartPrice;
+    }
+
+    return totalSaving;
   }
 
   const finalPrice = mrpCartPrice - totalSaving;
@@ -86,7 +95,18 @@ export default function TotalBill() {
       setCouponDiscount(0);
       setEnterCouponCode("");
     }
-  }, [cart, coupon]);
+
+    dispatch(
+      totalSavingCalculate(
+        calculateTotalSaving(
+          mrpCartPrice,
+          cartPrice,
+          couponDiscount,
+          shippingCharged
+        )
+      )
+    );
+  }, [cart, coupon, couponDiscount]);
 
   return (
     <div className="w-full bg-white p-8 shadow rounded space-y-2">
@@ -103,7 +123,7 @@ export default function TotalBill() {
         className={`${style.flex_normal} justify-between  
       `}
       >
-        <p className="text-[#000000a4]">Cart Value:</p>
+        <p className="text-[#000000a4]">Cart Discount Value:</p>
         <p className="font-semibold text-lg">{formattedPrice(cartPrice)}</p>
       </div>
 
@@ -114,7 +134,9 @@ export default function TotalBill() {
         <p className="text-[#000000a4]">Shipping:</p>
         <p
           className={`text-lg ${
-            !shippingCharged ? "line-through" : "font-semibold"
+            !shippingCharged
+              ? "line-through decoration-2 font-extralight"
+              : "font-semibold"
           }`}
         >
           {formattedPrice(shippingCharge)}
@@ -125,9 +147,21 @@ export default function TotalBill() {
         className={`${style.flex_normal} justify-between
       `}
       >
-        <p className="text-[#5cb85c] font-bold">Discount:</p>
-        <p className="text-[#5cb85c] font-bold text-lg">
-          {formattedPrice(couponDiscount)}
+        <p
+          className={`${
+            couponDiscount > 0 ? "text-[#5cb85c] font-bold" : "text-[#000000a4]"
+          } `}
+        >
+          Coupon Discount:
+        </p>
+        <p
+          className={`${
+            couponDiscount > 0
+              ? "text-[#5cb85c] font-bold "
+              : "text-[#000000a4]"
+          } text-lg`}
+        >
+          {couponDiscount > 0 ? formattedPrice(couponDiscount) : "---"}
         </p>
       </div>
       <div
@@ -148,8 +182,13 @@ export default function TotalBill() {
         <input
           type="text"
           className={`${style.input} block w-full px-3 py-1.5`}
-          placeholder="Enter Coupon Code"
+          placeholder={
+            coupon
+              ? "You can only apply one coupon at a time"
+              : "Enter Coupon Code"
+          }
           value={enterCouponCode}
+          disabled={coupon ? true : false}
           required
           onChange={(e) => setEnterCouponCode(e.target.value)}
         />

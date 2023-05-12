@@ -3,20 +3,21 @@ import { ICartItem, ICartSate } from "../../Interface";
 
 const cartItems = localStorage.getItem("cartItems");
 const cartValue = localStorage.getItem("cartPrice");
+
 const initialState: ICartSate = {
   cart: cartItems ? JSON.parse(cartItems) : [],
   isCartOpen: false,
   cartPrice: cartValue ? JSON.parse(cartValue) : 0,
-  couponDisount: 0,
+  totalSaving: 0,
 };
 
 export const cartReducer = createReducer(initialState, {
   addToCart: (state, action) => {
     const item = action.payload;
-    const existItem = state.cart.find((i: ICartItem) => i._id === item._id);
+    const existItem = state.cart.find((i) => i._id === item._id);
 
     if (existItem) {
-      const updatedCart = state.cart.map((i: ICartItem) =>
+      const updatedCart = state.cart.map((i) =>
         i._id === existItem._id ? item : i
       );
       const cartPrice = updatedCart.reduce(
@@ -44,7 +45,7 @@ export const cartReducer = createReducer(initialState, {
   },
 
   removeFromCart: (state, action) => {
-    const item = state.cart.find((i: ICartItem) => i._id === action.payload);
+    const item = state.cart.find((i) => i._id === action.payload);
     if (item) {
       const updatedCart = state.cart.filter(
         (i: ICartItem) => i._id !== action.payload
@@ -69,6 +70,13 @@ export const cartReducer = createReducer(initialState, {
     return {
       ...state,
       isCartOpen: !state.isCartOpen,
+    };
+  },
+
+  totalSaving: (state, action) => {
+    return {
+      ...state,
+      totalSaving: action.payload,
     };
   },
 });

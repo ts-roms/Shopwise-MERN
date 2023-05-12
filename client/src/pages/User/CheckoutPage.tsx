@@ -1,5 +1,7 @@
 import loadable from "@loadable/component";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "../../hooks";
+import { toggleCart } from "../../redux/actions/cartActions";
 const Checkout = loadable(() => import("../../components/Checkout/Checkout"));
 const CheckoutTabs = loadable(
   () => import("../../components/Checkout/CheckoutTabs")
@@ -7,10 +9,15 @@ const CheckoutTabs = loadable(
 
 export default function CheckoutPage() {
   const [activeStep, setActiveStep] = useState(0);
+  const dispatch = useAppDispatch();
 
   function toggleActiveStep(index: number) {
     setActiveStep(index);
   }
+
+  useEffect(() => {
+    // dispatch(toggleCart());
+  }, []);
 
   return (
     <section className="my-10">

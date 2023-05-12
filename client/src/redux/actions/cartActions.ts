@@ -34,3 +34,9 @@ export const removeFromCart =
 export const toggleCart = () => async (dispatch: Dispatch) => {
   dispatch({ type: "toggleCart" });
 };
+
+// total saving
+export const totalSavingCalculate =
+  (totalSaving: number) => async (dispatch: Dispatch) => {
+    dispatch({ type: "totalSaving", payload: totalSaving });
+  };

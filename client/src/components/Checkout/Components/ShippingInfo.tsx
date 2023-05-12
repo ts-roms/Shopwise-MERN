@@ -53,8 +53,6 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
     }
   }, [selectedAddress]);
 
-  console.log(formState);
-
   function handleFormInputChange(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
