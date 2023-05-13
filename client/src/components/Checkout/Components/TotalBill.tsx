@@ -19,12 +19,14 @@ export default function TotalBill() {
   const [coupon, setCoupon] = useState<null | ICoupon>(null);
   const dispatch = useAppDispatch();
 
+  // to show difference between the mrp price and selling price
   const mrpCartPrice = cart?.reduce((acc, item) => {
     return acc + item.quantity * item.price;
   }, 0);
 
   const shippingCharge = 15000;
 
+  // calculate total saving
   function calculateTotalSaving(
     mrpCartPrice: number,
     cartPrice: number,
@@ -44,8 +46,10 @@ export default function TotalBill() {
     return totalSaving;
   }
 
+  // final price which user has to pay
   const finalPrice = mrpCartPrice - totalSaving;
 
+  // verfiy the enterd coupon code with server
   async function handleCouponCheck(e: FormEvent<Element>) {
     e.preventDefault();
 
@@ -65,6 +69,7 @@ export default function TotalBill() {
     }
   }
 
+  // wheather to charge for shipping or not
   useEffect(() => {
     if (cartPrice < 150000) {
       setShippingCharged(true);
@@ -73,6 +78,7 @@ export default function TotalBill() {
     }
   }, [cart, cartPrice]);
 
+  // if user enter coupon then apply coupon to only for those product which shop have generated coupon code
   useEffect(() => {
     if (coupon) {
       const eligibleItems = cart?.filter(
@@ -134,9 +140,7 @@ export default function TotalBill() {
         <p className="text-[#000000a4]">Shipping:</p>
         <p
           className={`text-lg ${
-            !shippingCharged
-              ? "line-through decoration-2 font-extralight"
-              : "font-semibold"
+            !shippingCharged ? "line-through font-extralight" : "font-semibold"
           }`}
         >
           {formattedPrice(shippingCharge)}

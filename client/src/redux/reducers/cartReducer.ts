@@ -17,11 +17,12 @@ export const cartReducer = createReducer(initialState, {
     const existItem = state.cart.find((i) => i._id === item._id);
 
     if (existItem) {
-      const updatedCart = state.cart.map((i) =>
+      const updatedCart: ICartItem[] = state.cart.map((i) =>
         i._id === existItem._id ? item : i
       );
       const cartPrice = updatedCart.reduce(
-        (total, i) => getCartItemPrice(i) * i.quantity + total,
+        (total: number, i: ICartItem) =>
+          getCartItemPrice(i) * i.quantity + total,
         0
       );
       return {

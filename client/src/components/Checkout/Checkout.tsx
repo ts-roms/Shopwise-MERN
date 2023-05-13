@@ -1,5 +1,4 @@
 import loadable from "@loadable/component";
-import style from "../../styles/style";
 const Payment = loadable(() => import("./Components/Payment"));
 const ShippingInfo = loadable(() => import("./Components/ShippingInfo"));
 const Success = loadable(() => import("./Components/Success"));

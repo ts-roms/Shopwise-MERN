@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { getAllProducts } from "./redux/actions/allProductsActions";
 import { loadUser } from "./redux/actions/userActions";
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { loadSeller } from "./redux/actions/sellerActions";
 import { useState } from "react";
 import store from "./redux/store";
@@ -24,6 +24,8 @@ const BestSelling = loadable(() => import("./pages/BestSelling"));
 const EventsPage = loadable(() => import("./pages/EventsPage"));
 const FAQ = loadable(() => import("./pages/FAQPage"));
 import ProfilePage from "./pages/User/ProfilePage";
+import axios from "axios";
+import { server } from "./server";
 const CreateShop = loadable(
   () => import("./pages/Seller/SellerAuth/CreateShopPage")
 );
@@ -53,8 +55,19 @@ const ShopAllEventsPage = loadable(
   () => import("./pages/Seller/ShopAllEventsPage")
 );
 
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
 function App() {
   const [appState, setAppState] = useState(false);
+  const [stripePromise, setStripePromise] = useState<string | null>(null);
+
+  async function getStripeSecretKey() {
+    const { data } = await axios.get(`${server}/payments/stripe-secret-key`);
+    setStripePromise(data);
+  }
+
+  console.log(stripePromise);
 
   useLayoutEffect(() => {
     Promise.all([
@@ -62,6 +75,10 @@ function App() {
       store.dispatch(loadSeller()),
       store.dispatch(getAllProducts()),
     ]).then(() => setAppState(!appState));
+  }, []);
+
+  useEffect(() => {
+    getStripeSecretKey();
   }, []);
 
   if (!appState) {
@@ -74,6 +91,22 @@ function App() {
 
   return (
     <BrowserRouter>
+      {stripePromise && (
+        <Elements stripe={loadStripe(stripePromise)}>
+          <Routes>
+            <Route
+              path="/checkout"
+              element={
+                <ProtectedRoute>
+                  <Layout>
+                    <CheckoutPage />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </Elements>
+      )}
       <Routes>
         <Route
           path="/"
@@ -144,16 +177,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/checkout"
-          element={
-            <ProtectedRoute>
-              <Layout>
-                <CheckoutPage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
 
         {/* shop routes */}
         <Route path="/create-shop" element={<CreateShop />} />
@@ -215,7 +238,7 @@ function App() {
           }
         />
 
-        <Route path="*" element={<NotFound />} />
+        {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
       <ToastContainer
         position="bottom-center"
