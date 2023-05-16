@@ -180,6 +180,7 @@ export interface ICartSate {
   isCartOpen: boolean;
   cartPrice: number;
   totalSaving: number;
+  couponID: string;
 }
 
 export interface IWishlistState {

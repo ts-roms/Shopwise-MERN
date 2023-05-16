@@ -5,7 +5,10 @@ import { toast } from "react-toastify";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { ICoupon } from "../../../Interface";
-import { totalSavingCalculate } from "../../../redux/actions/cartActions";
+import {
+  setCouponId,
+  totalSavingCalculate,
+} from "../../../redux/actions/cartActions";
 import { server } from "../../../server";
 import style from "../../../styles/style";
 
@@ -112,6 +115,8 @@ export default function TotalBill() {
         )
       )
     );
+
+    if (coupon) dispatch(setCouponId(coupon._id));
   }, [cart, coupon, couponDiscount]);
 
   return (

@@ -7,8 +7,9 @@ const cartValue = localStorage.getItem("cartPrice");
 const initialState: ICartSate = {
   cart: cartItems ? JSON.parse(cartItems) : [],
   isCartOpen: false,
-  cartPrice: cartValue ? JSON.parse(cartValue) : 0,
+  cartPrice: cartValue ? Number(JSON.parse(cartValue)) : 0,
   totalSaving: 0,
+  couponID: "",
 };
 
 export const cartReducer = createReducer(initialState, {
@@ -51,7 +52,7 @@ export const cartReducer = createReducer(initialState, {
       const updatedCart = state.cart.filter(
         (i: ICartItem) => i._id !== action.payload
       );
-      const cartPrice =
+      const cartPrice: number =
         state.cart.reduce(
           (total, i) => getCartItemPrice(i) * i.quantity + total,
           0
@@ -78,6 +79,13 @@ export const cartReducer = createReducer(initialState, {
     return {
       ...state,
       totalSaving: action.payload,
+    };
+  },
+
+  setCouponId: (state, action) => {
+    return {
+      ...state,
+      couponID: action.payload,
     };
   },
 });

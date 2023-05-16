@@ -40,3 +40,7 @@ export const totalSavingCalculate =
   (totalSaving: number) => async (dispatch: Dispatch) => {
     dispatch({ type: "totalSaving", payload: totalSaving });
   };
+
+export const setCouponId = (id: string) => async (dispatch: Dispatch) => {
+  dispatch({ type: "setCouponId", payload: id });
+};
