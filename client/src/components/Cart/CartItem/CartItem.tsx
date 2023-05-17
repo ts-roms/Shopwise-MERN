@@ -9,17 +9,16 @@ import { host } from "../../../server";
 import { useAppDispatch } from "../../../hooks";
 import { addToCart, removeFromCart } from "../../../redux/actions/cartActions";
 import { Link } from "react-router-dom";
+import { getCartItemPrice } from "../../../helper/getCartItemPrice";
 
 interface IProps {
   item: ICartItem;
 }
 
 export default function CartItem({ item }: IProps) {
-  const { name, price, quantity: qty, discount_price, _id } = item;
+  const { name, quantity: qty, _id } = item;
   const [quantity, setQuantity] = useState(qty || 1);
   const dispatch = useAppDispatch();
-
-  // const productSlug = item.name.replace(/\s+/g, "-");
 
   function increaseQuantity() {
     if (quantity < 4) {
@@ -85,10 +84,10 @@ export default function CartItem({ item }: IProps) {
             <h4>{name}</h4>
           </Link>
           <h4 className="text-xs text-gray-500">
-            {formattedPrice(discount_price)} × {quantity}
+            {formattedPrice(getCartItemPrice(item))} × {quantity}
           </h4>
           <h4 className="font-semibold">
-            {formattedPrice(discount_price * quantity)}
+            {formattedPrice(getCartItemPrice(item) * quantity)}
           </h4>
         </div>
       </div>

@@ -22,3 +22,7 @@ exports.decodeActivationToken = (encodedString) => {
   }
   return decodedUser;
 };
+
+exports.getCartItemPrice = (item) => {
+  return item.discount_percentage > 0 ? item.discount_price : item.price;
+};

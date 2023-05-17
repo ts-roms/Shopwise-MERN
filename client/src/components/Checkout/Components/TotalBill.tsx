@@ -11,6 +11,7 @@ import {
 } from "../../../redux/actions/cartActions";
 import { server } from "../../../server";
 import style from "../../../styles/style";
+import { getCartItemPrice } from "../../../helper/getCartItemPrice";
 
 export default function TotalBill() {
   const { cart, cartPrice, totalSaving } = useAppSelector(
@@ -20,6 +21,7 @@ export default function TotalBill() {
   const [enterCouponCode, setEnterCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [coupon, setCoupon] = useState<null | ICoupon>(null);
+  const [isCouponApplied, setIsCouponApplied] = useState(false);
   const dispatch = useAppDispatch();
 
   // to show difference between the mrp price and selling price
@@ -36,21 +38,23 @@ export default function TotalBill() {
     couponDiscount: number,
     shippingCharged: boolean
   ) {
-    let totalSaving = 0;
+    let totalSavings = mrpCartPrice - cartPrice;
 
-    if (couponDiscount > 0 && !shippingCharged) {
-      totalSaving = mrpCartPrice - cartPrice + couponDiscount + shippingCharge;
-    } else if (couponDiscount > 0 && shippingCharged) {
-      totalSaving = mrpCartPrice - cartPrice + couponDiscount;
-    } else {
-      totalSaving = mrpCartPrice - cartPrice;
+    if (shippingCharged) {
+      cartPrice += shippingCharge;
     }
 
-    return totalSaving;
+    if (couponDiscount > 0) {
+      cartPrice -= couponDiscount;
+    }
+
+    totalSavings = mrpCartPrice - cartPrice;
+
+    return totalSavings;
   }
 
   // final price which user has to pay
-  const finalPrice = mrpCartPrice - totalSaving;
+  let finalPrice = mrpCartPrice - totalSaving;
 
   // verfiy the enterd coupon code with server
   async function handleCouponCheck(e: FormEvent<Element>) {
@@ -79,7 +83,7 @@ export default function TotalBill() {
     } else {
       setShippingCharged(false);
     }
-  }, [cart, cartPrice]);
+  }, [cart, cartPrice, isCouponApplied]);
 
   // if user enter coupon then apply coupon to only for those product which shop have generated coupon code
   useEffect(() => {
@@ -89,16 +93,20 @@ export default function TotalBill() {
       );
 
       if (eligibleItems.length === 0) {
+        setIsCouponApplied(false);
         toast.error("Coupon code is not valid for this shop");
+      } else if (cartPrice < coupon.minAmount) {
+        setIsCouponApplied(false);
+        toast.error(`Cart price is greater than ${coupon.minAmount}`);
       } else {
         const eligibleItemsPrice = eligibleItems.reduce((acc, item) => {
-          const price = item.discount_price || item.price;
+          const price = getCartItemPrice(item);
           return acc + price * item.quantity;
         }, 0);
-
         const discountPrice = (eligibleItemsPrice * coupon.value) / 100;
         setCouponDiscount(discountPrice);
         setEnterCouponCode("");
+        setIsCouponApplied(true);
       }
     } else {
       setCouponDiscount(0);
@@ -117,6 +125,7 @@ export default function TotalBill() {
     );
 
     if (coupon) dispatch(setCouponId(coupon._id));
+    else dispatch(setCouponId(""));
   }, [cart, coupon, couponDiscount]);
 
   return (
@@ -150,7 +159,6 @@ export default function TotalBill() {
         >
           {formattedPrice(shippingCharge)}
         </p>
-        {/* {!shippingCharged && <span className="text-xs">Free</span>} */}
       </div>
       <div
         className={`${style.flex_normal} justify-between
@@ -201,13 +209,18 @@ export default function TotalBill() {
           required
           onChange={(e) => setEnterCouponCode(e.target.value)}
         />
-        {coupon && (
+        {isCouponApplied && (
           <div className="flex px-2 items-center justify-between text-gray-800 bg-green-50 border border-green-500 rounded text-sm mt-2 italic">
             <p>
               coupon code <span className="font-bold ">"{coupon?.name}"</span>
               applied
             </p>
-            <RxCross2 cursor="pointer" onClick={() => setCoupon(null)} />
+            <RxCross2
+              cursor="pointer"
+              onClick={() => {
+                setCoupon(null), setIsCouponApplied(false);
+              }}
+            />
           </div>
         )}
 

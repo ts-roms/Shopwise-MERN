@@ -1,5 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { ICartItem, ICartSate } from "../../Interface";
+import { getCartItemPrice } from "../../helper/getCartItemPrice";
 
 const cartItems = localStorage.getItem("cartItems");
 const cartValue = localStorage.getItem("cartPrice");
@@ -89,7 +90,3 @@ export const cartReducer = createReducer(initialState, {
     };
   },
 });
-
-function getCartItemPrice(item: ICartItem) {
-  return item.discount_price > 0 ? item.discount_price : item.price;
-}
