@@ -74,9 +74,8 @@ exports.createPaymentIntent = async (req, res, next) => {
       },
     });
 
-    res
-      .status(201)
-      .json({ success: true, clientSecret: paymentIntent.client_secret });
+    res.status(201).json(totalAmount);
+    // .json({ success: true, clientSecret: paymentIntent.client_secret });
   } catch (error) {
     console.log(error);
     next(new ErrorHandler("Internal Server Error", 500));

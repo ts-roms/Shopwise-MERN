@@ -57,17 +57,17 @@ const ShopAllEventsPage = loadable(
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { useAppSelector } from "./hooks";
 
 function App() {
   const [appState, setAppState] = useState(false);
   const [stripePromise, setStripePromise] = useState<string | null>(null);
+  const { cart } = useAppSelector((state) => state.cart);
 
   async function getStripeSecretKey() {
     const { data } = await axios.get(`${server}/payments/stripe-secret-key`);
     setStripePromise(data);
   }
-
-  console.log(stripePromise);
 
   useLayoutEffect(() => {
     Promise.all([
@@ -91,7 +91,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {stripePromise && (
+      {stripePromise && cart.length > 0 && (
         <Elements stripe={loadStripe(stripePromise)}>
           <Routes>
             <Route

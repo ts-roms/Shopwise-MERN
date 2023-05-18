@@ -50,13 +50,15 @@ export default function Cart() {
             ))
           )}
         </div>
-        <div className="mt-6 w-full self-end">
-          <Link to="/checkout">
-            <button className="rounded-lg px-10 bg-[#ff7d1a] text-white text-center w-full h-10">
-              Checkout for {formattedPrice(cartPrice)}
-            </button>
-          </Link>
-        </div>
+        {cart.length > 0 && (
+          <div className="mt-6 w-full self-end">
+            <Link to="/checkout">
+              <button className="rounded-lg px-10 bg-[#ff7d1a] text-white text-center w-full h-10">
+                Checkout for {formattedPrice(cartPrice)}
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

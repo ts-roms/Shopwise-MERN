@@ -5,56 +5,42 @@ import { toast } from "react-toastify";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { ICoupon } from "../../../Interface";
-import {
-  setCouponId,
-  totalSavingCalculate,
-} from "../../../redux/actions/cartActions";
+import { setCouponId } from "../../../redux/actions/cartActions";
 import { server } from "../../../server";
 import style from "../../../styles/style";
 import { getCartItemPrice } from "../../../helper/getCartItemPrice";
 
 export default function TotalBill() {
-  const { cart, cartPrice, totalSaving } = useAppSelector(
-    (state) => state.cart
-  );
+  const { cart, cartPrice } = useAppSelector((state) => state.cart);
   const [shippingCharged, setShippingCharged] = useState(false);
   const [enterCouponCode, setEnterCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [coupon, setCoupon] = useState<null | ICoupon>(null);
   const [isCouponApplied, setIsCouponApplied] = useState(false);
   const dispatch = useAppDispatch();
+  const [finalPrice, setFinalPrice] = useState(0);
+  const [totalSaving, setTotalSaving] = useState(0);
+  const shippingCharge = 15000;
 
   // to show difference between the mrp price and selling price
   const mrpCartPrice = cart?.reduce((acc, item) => {
     return acc + item.quantity * item.price;
   }, 0);
 
-  const shippingCharge = 15000;
+  useEffect(() => {
+    let calculatedFinalPrice = cartPrice - couponDiscount;
 
-  // calculate total saving
-  function calculateTotalSaving(
-    mrpCartPrice: number,
-    cartPrice: number,
-    couponDiscount: number,
-    shippingCharged: boolean
-  ) {
-    let totalSavings = mrpCartPrice - cartPrice;
-
-    if (shippingCharged) {
-      cartPrice += shippingCharge;
+    if (calculatedFinalPrice < 150000) {
+      calculatedFinalPrice += shippingCharge;
+      setShippingCharged(true);
+    } else {
+      setShippingCharged(false);
     }
+    let calculatedTotalSaving = mrpCartPrice - calculatedFinalPrice;
 
-    if (couponDiscount > 0) {
-      cartPrice -= couponDiscount;
-    }
-
-    totalSavings = mrpCartPrice - cartPrice;
-
-    return totalSavings;
-  }
-
-  // final price which user has to pay
-  let finalPrice = mrpCartPrice - totalSaving;
+    setFinalPrice(calculatedFinalPrice);
+    setTotalSaving(calculatedTotalSaving);
+  }, [cartPrice, couponDiscount, shippingCharge, mrpCartPrice]);
 
   // verfiy the enterd coupon code with server
   async function handleCouponCheck(e: FormEvent<Element>) {
@@ -75,15 +61,6 @@ export default function TotalBill() {
       toast.error(message);
     }
   }
-
-  // wheather to charge for shipping or not
-  useEffect(() => {
-    if (cartPrice < 150000) {
-      setShippingCharged(true);
-    } else {
-      setShippingCharged(false);
-    }
-  }, [cart, cartPrice, isCouponApplied]);
 
   // if user enter coupon then apply coupon to only for those product which shop have generated coupon code
   useEffect(() => {
@@ -113,20 +90,9 @@ export default function TotalBill() {
       setEnterCouponCode("");
     }
 
-    dispatch(
-      totalSavingCalculate(
-        calculateTotalSaving(
-          mrpCartPrice,
-          cartPrice,
-          couponDiscount,
-          shippingCharged
-        )
-      )
-    );
-
     if (coupon) dispatch(setCouponId(coupon._id));
     else dispatch(setCouponId(""));
-  }, [cart, coupon, couponDiscount]);
+  }, [cart, coupon, couponDiscount, isCouponApplied]);
 
   return (
     <div className="w-full bg-white p-8 shadow rounded space-y-2">
@@ -185,8 +151,18 @@ export default function TotalBill() {
         className={`${style.flex_normal} justify-between  
       `}
       >
-        <p className="text-[#5cb85c] font-bold">Total Saving:</p>
-        <p className="text-[#5cb85c] font-bold text-lg">
+        <p
+          className={`font-bold ${
+            totalSaving > 0 ? "text-[#5cb85c]" : "text-red-500"
+          }`}
+        >
+          Total Saving:
+        </p>
+        <p
+          className={`${
+            totalSaving > 0 ? "text-[#5cb85c]" : "text-red-500"
+          }  font-bold text-lg`}
+        >
           {formattedPrice(totalSaving)}
         </p>
       </div>

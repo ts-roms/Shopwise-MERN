@@ -41,8 +41,8 @@ export default function Payment() {
           withCredentials: true,
         }
       );
-
       console.log(data);
+      toast.info(data);
     } catch (error: AxiosError | any) {
       if (error.response) toast.error(error.response.data.message);
       else toast.error(error.message);
