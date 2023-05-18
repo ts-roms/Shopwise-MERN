@@ -63,19 +63,18 @@ exports.createPaymentIntent = async (req, res, next) => {
         totalAmount -= discount;
       }
     }
-    console.log(totalAmount);
-    console.log(couponID);
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(totalAmount),
+      amount: Math.round(totalAmount / 100),
       currency: "INR",
       metadata: {
         company: "Shopwise",
       },
     });
 
-    res.status(201).json(totalAmount);
-    // .json({ success: true, clientSecret: paymentIntent.client_secret });
+    res
+      .status(201)
+      .json({ success: true, clientSecret: paymentIntent.client_secret });
   } catch (error) {
     console.log(error);
     next(new ErrorHandler("Internal Server Error", 500));
@@ -90,3 +89,37 @@ exports.getStripeSecretKey = async (req, res, next) => {
     next(new ErrorHandler(error.message, 500));
   }
 };
+
+// ----------------------------------------------------------------
+// {
+//   "paymentIntent": {
+//     "id": "pi_3N93q3SEyKqpV3Gt1yaDFmlp",
+//     "object": "payment_intent",
+//     "amount": 1605,
+//     "amount_details": {
+//       "tip": {}
+//     },
+//     "automatic_payment_methods": null,
+//     "canceled_at": null,
+//     "cancellation_reason": null,
+//     "capture_method": "automatic",
+//     "client_secret": "pi_3N93q3SEyKqpV3Gt1yaDFmlp_secret_ay3iBZbzUxFnV5hxZodNHojSJ",
+//     "confirmation_method": "automatic",
+//     "created": 1684404819,
+//     "currency": "inr",
+//     "description": null,
+//     "last_payment_error": null,
+//     "livemode": false,
+//     "next_action": null,
+//     "payment_method": "pm_1N93q4SEyKqpV3GtStX9BRph",
+//     "payment_method_types": [
+//       "card"
+//     ],
+//     "processing": null,
+//     "receipt_email": null,
+//     "setup_future_usage": null,
+//     "shipping": null,
+//     "source": null,
+//     "status": "succeeded"
+//   }
+// }

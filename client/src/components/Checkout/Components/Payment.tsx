@@ -15,7 +15,7 @@ import style from "../../../styles/style";
 export default function Payment() {
   const [select, setSelect] = useState<null | number>(null);
   const stripe = useStripe();
-  const element = useElements();
+  const elements = useElements();
   const { cart, couponID } = useAppSelector((state) => state.cart);
 
   const cartWithIDandQty = cart?.map((item) => ({
@@ -31,21 +31,44 @@ export default function Payment() {
   async function handleCardPayment(e: FormEvent) {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        `${server}/payments/create-payment-intent`,
-        cartData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
+      if (!elements || !stripe) {
+        return;
+      }
+
+      const cardNumberElement = elements.getElement(CardNumberElement);
+
+      if (cardNumberElement) {
+        // creating payment intent
+        const { data } = await axios.post(
+          `${server}/payments/create-payment-intent`,
+          cartData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
+
+        const client_secret = data.clientSecret;
+
+        const result = await stripe?.confirmCardPayment(client_secret, {
+          payment_method: { card: cardNumberElement },
+        });
+
+        if (result.error) {
+          toast.error(result.error.message);
+        } else {
+          if (result.paymentIntent.status === "succeeded") {
+          }
         }
-      );
-      console.log(data);
-      toast.info(data);
-    } catch (error: AxiosError | any) {
-      if (error.response) toast.error(error.response.data.message);
-      else toast.error(error.message);
+      }
+    } catch (err: AxiosError | any) {
+      if (err.response) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error(err.message);
+      }
     }
   }
 
@@ -86,7 +109,7 @@ export default function Payment() {
                 </p>
                 <CardNumberElement
                   options={{
-                    placeholder: "XXXX XXXXX XXXXX XXXXX",
+                    placeholder: "XXXX XXXX XXXX XXXX",
                     style: {
                       base: { fontSize: "17px", color: "#444" },
                       empty: {

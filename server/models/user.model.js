@@ -7,12 +7,15 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, "Please enter your name!"],
+      trim: true,
     },
 
     email: {
       type: String,
       unique: true,
       required: [true, "Please enter your email!"],
+      trim: true,
+      lowercase: true,
     },
 
     password: {
@@ -24,10 +27,12 @@ const userSchema = new mongoose.Schema(
 
     primaryPhoneNumber: {
       type: Number,
+      trim: true,
     },
 
     secondaryPhoneNumber: {
       type: Number,
+      trim: true,
     },
 
     addresses: [
@@ -35,29 +40,36 @@ const userSchema = new mongoose.Schema(
         country: {
           type: String,
           required: true,
+          trim: true,
         },
         state: {
           type: String,
           required: true,
+          trim: true,
         },
         address1: {
           type: String,
           required: true,
+          trim: true,
         },
         address2: {
           type: String,
           required: true,
+          trim: true,
         },
         address3: {
           type: String,
+          trim: true,
         },
         zipcode: {
           type: Number,
           required: true,
+          trim: true,
         },
         addressType: {
           type: String,
           required: true,
+          trim: true,
         },
       },
     ],
