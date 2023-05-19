@@ -1,6 +1,6 @@
 import style from "../../../styles/style";
 import { Country, State } from "country-state-city";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks";
 
 type IProps = {
@@ -66,11 +66,18 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
     );
   }
 
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+
+    localStorage.setItem("shipping_address", JSON.stringify(formState));
+    toggleActiveStep(1);
+  }
+
   return (
     <div className="bg-white shadow rounded p-8">
       <h4 className="text-lg font-semibold text-gray-800">Shipping Address</h4>
       <div className="mt-8">
-        <form className="space-y-6" aria-required>
+        <form className="space-y-6" aria-required onSubmit={handleSubmit}>
           <div className={`${style.flex_normal} gap-8 flex-wrap`}>
             <div className="w-2/5">
               <label className="mb-1 text-sm hidden md:block" htmlFor="name">
@@ -168,6 +175,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
                 name="selectedCountry"
                 className="bg-gray-50 text-sm md:text-base px-3 py-1.5 border rounded"
                 value={formState.selectedCountry}
+                required
                 onChange={handleFormInputChange}
               >
                 <option selected disabled value="">
@@ -196,6 +204,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
                 id="selectedState"
                 name="selectedState"
                 value={formState.selectedState}
+                required
                 onChange={handleFormInputChange}
                 className="bg-gray-50 text-sm md:text-base px-3 py-1.5 border rounded"
               >
@@ -263,7 +272,6 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
                 id="address3"
                 name="address3"
                 placeholder="Nearby Famous Shop/Mall/Landmark"
-                required
                 value={formState.address3}
                 onChange={handleFormInputChange}
               />
@@ -297,7 +305,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
 
           <div>
             <button
-              onClick={() => toggleActiveStep(1)}
+              type="submit"
               value="Pay Now"
               className="bg-[#28a745] text-white rounded py-1.5 px-4 hover:shadow transition-all hover:bg-green-600"
             >

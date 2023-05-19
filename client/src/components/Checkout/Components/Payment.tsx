@@ -12,6 +12,19 @@ import { useAppSelector } from "../../../hooks";
 import { server } from "../../../server";
 import style from "../../../styles/style";
 
+type SavedAddress = {
+  fullName: string;
+  email: string;
+  primaryNumber: number;
+  alternateNumber: number;
+  zipCode: string;
+  selectedCountry: string;
+  selectedState: string;
+  address1: string;
+  address2: string;
+  address3: string;
+};
+
 export default function Payment() {
   const [select, setSelect] = useState<null | number>(null);
   const stripe = useStripe();
@@ -52,14 +65,61 @@ export default function Payment() {
 
         const client_secret = data.clientSecret;
 
-        const result = await stripe?.confirmCardPayment(client_secret, {
-          payment_method: { card: cardNumberElement },
-        });
+        const { error, paymentIntent } = await stripe?.confirmCardPayment(
+          client_secret,
+          {
+            payment_method: { card: cardNumberElement },
+          }
+        );
 
-        if (result.error) {
-          toast.error(result.error.message);
+        if (error) {
+          toast.error(error.message);
         } else {
-          if (result.paymentIntent.status === "succeeded") {
+          if (paymentIntent.status === "succeeded") {
+            const shipping_address = localStorage.getItem("shipping_address");
+
+            let savedAddress: SavedAddress;
+
+            if (shipping_address) {
+              savedAddress = JSON.parse(shipping_address);
+            } else {
+              return toast.error("No address found");
+            }
+
+            const shippingAddress = {
+              country: savedAddress.selectedCountry,
+              zipcode: savedAddress.zipCode,
+              state: savedAddress.selectedState,
+              address3: savedAddress.address3,
+              address2: savedAddress.address2,
+              address1: savedAddress.address1,
+              fullname: savedAddress.fullName,
+              primaryNumber: savedAddress.primaryNumber,
+              alternateNumber: savedAddress.alternateNumber,
+            };
+
+            const paymentInfo = {
+              id: paymentIntent.id,
+              status: paymentIntent.status,
+              paymentMehod: paymentIntent.payment_method,
+            };
+
+            const order = {
+              paymentInfo,
+              shippingAddress,
+              cartWithIDandQty,
+              paidPrice: paymentIntent.amount,
+            };
+
+            const { data } = await axios.post(`${server}/orders`, order, {
+              headers: {
+                "Content-Type": "application/json",
+              },
+              withCredentials: true,
+            });
+
+            toast.success("Order created successfully");
+            console.log(data.orders);
           }
         }
       }

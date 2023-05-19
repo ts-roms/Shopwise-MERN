@@ -31,9 +31,19 @@ exports.createOrder = async (req, res, next) => {
       if (!shopItemsMap.has(shopId)) {
         shopItemsMap.set(shopId, []);
       }
-      shopItemsMap.get(shopId).push(product);
-    }
 
+      console.log(product);
+
+      const transformed = {
+        product: product._id.toString(),
+        quantity:
+          cartWithIDandQty?.find(
+            (item) => item.productId === product._id.toString()
+          )?.productQuantity || 0,
+      };
+      shopItemsMap.get(shopId).push(transformed);
+      console.log(transformed);
+    }
     const orders = [];
 
     for (const [shopId, products] of shopItemsMap) {
@@ -48,6 +58,17 @@ exports.createOrder = async (req, res, next) => {
     }
 
     res.status(201).json({ success: true, orders });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler("Internal Server Error", 500));
+  }
+};
+
+exports.getOrders = async (req, res, next) => {
+  try {
+    const orders = await Order.find().populate("cart.product").populate("user");
+
+    res.json(orders);
   } catch (error) {
     console.log(error);
     next(new ErrorHandler("Internal Server Error", 500));

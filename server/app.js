@@ -30,6 +30,7 @@ const shopRoutes = require("./routes/shop.routes");
 const productRoutes = require("./routes/product.routes");
 const couponRoutes = require("./routes/coupons.routes");
 const paymentRoutes = require("./routes/payment.routes");
+const orderRoutes = require("./routes/order.routes");
 
 // routes
 app.use("/api/v2/coupons", couponRoutes);
@@ -37,6 +38,7 @@ app.use("/api/v2/users", userRoutes);
 app.use("/api/v2/shops", shopRoutes);
 app.use("/api/v2/products", productRoutes);
 app.use("/api/v2/payments", paymentRoutes);
+app.use("/api/v2/orders", orderRoutes);
 
 // if error
 app.use(ErrorHandler);

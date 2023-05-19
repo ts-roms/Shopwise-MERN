@@ -17,22 +17,31 @@ const orderSchema = new mongoose.Schema(
       },
     ],
     shippingAddress: {
-      fullName: {
+      fullname: {
         type: String,
         required: true,
         trim: true,
       },
-      address: {
+      address1: {
         type: String,
         required: true,
         trim: true,
       },
-      city: {
+      address2: {
         type: String,
         required: true,
         trim: true,
       },
-      zipCode: {
+      address3: {
+        type: String,
+        trim: true,
+      },
+      state: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      zipcode: {
         type: String,
         required: true,
         trim: true,
@@ -41,6 +50,14 @@ const orderSchema = new mongoose.Schema(
         type: String,
         required: true,
         trim: true,
+      },
+      primaryNumber: {
+        type: Number,
+        required: true,
+      },
+      alternateNumber: {
+        type: Number,
+        required: true,
       },
     },
     user: {
