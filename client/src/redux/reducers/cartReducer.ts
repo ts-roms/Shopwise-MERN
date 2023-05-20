@@ -89,4 +89,11 @@ export const cartReducer = createReducer(initialState, {
       couponID: action.payload,
     };
   },
+  clearCart: (state) => {
+    return {
+      ...state,
+      cart: [],
+      cartPrice: 0,
+    };
+  },
 });

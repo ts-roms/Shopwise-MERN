@@ -9,6 +9,7 @@ import { setCouponId } from "../../../redux/actions/cartActions";
 import { server } from "../../../server";
 import style from "../../../styles/style";
 import { getCartItemPrice } from "../../../helper/getCartItemPrice";
+import { totalSavingCalculate } from "../../../redux/actions/cartActions";
 
 export default function TotalBill() {
   const { cart, cartPrice } = useAppSelector((state) => state.cart);
@@ -93,6 +94,10 @@ export default function TotalBill() {
     if (coupon) dispatch(setCouponId(coupon._id));
     else dispatch(setCouponId(""));
   }, [cart, coupon, couponDiscount, isCouponApplied]);
+
+  useEffect(() => {
+    dispatch(totalSavingCalculate(totalSaving));
+  }, [totalSaving]);
 
   return (
     <div className="w-full bg-white p-8 shadow rounded space-y-2">

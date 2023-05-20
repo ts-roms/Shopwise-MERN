@@ -2,6 +2,7 @@ const Order = require("../models/order.model");
 const ErrorHandler = require("../utils/errorHandler");
 const Product = require("../models/product.model");
 const User = require("../models/user.model");
+const calculateCartPrice = require("../utils/calculateCartPrice");
 
 exports.createOrder = async (req, res, next) => {
   try {
@@ -13,8 +14,15 @@ exports.createOrder = async (req, res, next) => {
       return next(new ErrorHandler("User is not logged in", 400));
     }
 
-    const { cartWithIDandQty, shippingAddress, paidPrice, paymentInfo } =
+    const { cartWithIDandQty, shippingAddress, paymentInfo, couponID } =
       req.body;
+
+    let { paidPrice } = req.body;
+
+    if (!paidPrice) {
+      const totalPrice = await calculateCartPrice(cartWithIDandQty, couponID);
+      paidPrice = totalPrice;
+    }
 
     if (!cartWithIDandQty || !shippingAddress || !paidPrice || !paymentInfo) {
       return next(new ErrorHandler("Bad request", 400));
@@ -32,8 +40,6 @@ exports.createOrder = async (req, res, next) => {
         shopItemsMap.set(shopId, []);
       }
 
-      console.log(product);
-
       const transformed = {
         product: product._id.toString(),
         quantity:
@@ -42,7 +48,6 @@ exports.createOrder = async (req, res, next) => {
           )?.productQuantity || 0,
       };
       shopItemsMap.get(shopId).push(transformed);
-      console.log(transformed);
     }
     const orders = [];
 
@@ -60,7 +65,7 @@ exports.createOrder = async (req, res, next) => {
     res.status(201).json({ success: true, orders });
   } catch (error) {
     console.log(error);
-    next(new ErrorHandler("Internal Server Error", 500));
+    next(new ErrorHandler(error.message, 500));
   }
 };
 
@@ -71,6 +76,20 @@ exports.getOrders = async (req, res, next) => {
     res.json(orders);
   } catch (error) {
     console.log(error);
-    next(new ErrorHandler("Internal Server Error", 500));
+    next(new ErrorHandler(error.message, 500));
+  }
+};
+
+// get all order of user
+exports.getAllOrdersOfUser = async (req, res, next) => {
+  try {
+    const userID = req.user.id;
+
+    const userOrders = await Order.find({ user: userID });
+
+    res.status(200).json({ success: true, orders: userOrders });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler(error.message, 500));
   }
 };

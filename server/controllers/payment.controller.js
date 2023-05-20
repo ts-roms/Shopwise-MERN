@@ -2,6 +2,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const Product = require("../models/product.model");
 const Coupon = require("../models/cuponcode.model");
 const { getCartItemPrice } = require("../helper/helper");
+const calculateCartPrice = require("../utils/calculateCartPrice");
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -13,59 +14,10 @@ exports.createPaymentIntent = async (req, res, next) => {
       return next(new ErrorHandler("Bad cart request", 400));
     }
 
-    const productsIds = cartWithIDandQty.map((item) => item.productId);
-
-    // Retrieve cart products from the database
-    const cartProducts = await Product.find({ _id: { $in: productsIds } });
-
-    let cartPrice = 0;
-
-    // Calculate the cart price
-    for (const item of cartProducts) {
-      const cartItem = cartWithIDandQty.find(
-        (cartItem) => cartItem.productId === item._id.toString()
-      );
-      const itemPrice = getCartItemPrice(item) * cartItem.productQuantity;
-      cartPrice += itemPrice;
-    }
-
-    let totalAmount = cartPrice;
-    const shippingCharge = 15000;
-
-    if (cartPrice < 150000) {
-      totalAmount += shippingCharge;
-    }
-
-    if (couponID) {
-      const coupon = await Coupon.findById(couponID);
-
-      if (!coupon) {
-        return next(new ErrorHandler("Coupon not found", 404));
-      }
-
-      if (cartPrice >= coupon.minAmount) {
-        const eligibleItems = cartProducts.filter(
-          (item) => item.shop.toString() === coupon.shop.toString()
-        );
-
-        let eligibleItemsPrice = 0;
-
-        // Calculate the eligible items price
-        for (const item of eligibleItems) {
-          const cartItem = cartWithIDandQty.find(
-            (cartItem) => cartItem.productId === item._id.toString()
-          );
-          const itemPrice = getCartItemPrice(item) * cartItem.productQuantity;
-          eligibleItemsPrice += itemPrice;
-        }
-
-        const discount = (coupon.value * eligibleItemsPrice) / 100;
-        totalAmount -= discount;
-      }
-    }
+    const totalAmount = await calculateCartPrice(cartWithIDandQty, couponID);
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(totalAmount / 100),
+      amount: Math.round(totalAmount),
       currency: "INR",
       metadata: {
         company: "Shopwise",

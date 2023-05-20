@@ -91,7 +91,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {stripePromise && cart.length > 0 && (
+      {stripePromise && (
         <Elements stripe={loadStripe(stripePromise)}>
           <Routes>
             <Route

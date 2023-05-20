@@ -16,7 +16,7 @@ export default function Checkout({ activeStep, toggleActiveStep }: IProps) {
         {activeStep == 0 && (
           <ShippingInfo toggleActiveStep={toggleActiveStep} />
         )}
-        {activeStep == 1 && <Payment />}
+        {activeStep == 1 && <Payment toggleActiveStep={toggleActiveStep} />}
         {activeStep == 2 && <Success />}
       </div>
       <div className="w-1/3">
