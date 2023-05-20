@@ -10,6 +10,7 @@ const {
   addUserAdress,
   deleteAddress,
   changePassword,
+  getAllOrdersOfUser,
 } = require("../controllers/user.controller");
 const upload = require("../upload");
 const catchAsyncError = require("../middleware/catchAsyncError");
@@ -46,6 +47,9 @@ router.delete("/address/:addressId", isVerify, catchAsyncError(deleteAddress));
 
 // user password change
 router.post("/password-change", isVerify, catchAsyncError(changePassword));
+
+// get all user order
+router.get("/:userId/orders", isVerify, catchAsyncError(getAllOrdersOfUser));
 
 // logout user
 router.get("/logout", catchAsyncError(logOutUser));

@@ -10,6 +10,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { GrPowerReset } from "react-icons/gr";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { IShippingAddress } from "../../../Interface";
 import { server } from "../../../server";
 import style from "../../../styles/style";
 
@@ -57,7 +58,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
     toast.error("No address found");
   }
 
-  const shippingAddress = {
+  let shippingAddress = {
     country: savedAddress?.selectedCountry,
     zipcode: savedAddress?.zipCode,
     state: savedAddress?.selectedState,

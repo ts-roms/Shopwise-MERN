@@ -81,15 +81,3 @@ exports.getOrders = async (req, res, next) => {
 };
 
 // get all order of user
-exports.getAllOrdersOfUser = async (req, res, next) => {
-  try {
-    const userID = req.user.id;
-
-    const userOrders = await Order.find({ user: userID });
-
-    res.status(200).json({ success: true, orders: userOrders });
-  } catch (error) {
-    console.log(error);
-    next(new ErrorHandler(error.message, 500));
-  }
-};

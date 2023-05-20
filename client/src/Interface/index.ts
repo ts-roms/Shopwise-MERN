@@ -213,3 +213,32 @@ export interface IAddProduct {
   productDiscountPercentage: number;
   productStock: number;
 }
+
+export interface IPaymentInfo {
+  id: string;
+  status: string;
+  paymentMethod: string;
+}
+
+export interface IShippingAddress extends IAddress {
+  primaryNumber: number;
+  alternateNumber: number;
+}
+
+export interface IOrder {
+  shippingAddress: IShippingAddress;
+  paymentInfo: IPaymentInfo;
+  _id: string;
+  cart: {
+    product: string;
+    quantity: number;
+    _id: string;
+  }[];
+  user: string;
+  totalPrice: number;
+  orderStatus: string;
+  paidAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}

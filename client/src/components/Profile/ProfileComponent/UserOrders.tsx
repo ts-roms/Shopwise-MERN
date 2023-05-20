@@ -1,21 +1,40 @@
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import axios, { AxiosError } from "axios";
+import { useEffect, useState } from "react";
+import { useAppSelector } from "../../../hooks";
+import { server } from "../../../server";
+import { toast } from "react-toastify";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { formattedPrice } from "../../../helper/formatPrice";
+import { IOrder } from "../../../Interface";
+import Loader from "../../Loader/Loader";
 
 export default function UserOrders() {
-  const orders = [
-    {
-      _id: "7463hvbfbhfbrtr28820221",
-      orderItems: [
-        {
-          name: "Iphone 14 pro max",
-        },
-      ],
-      totalPrice: 12000000,
-      orderStatus: "Processing",
-    },
-  ];
+  const [userOrders, setUserOrders] = useState<IOrder[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAppSelector((state) => state.user);
+
+  const loadUserOrders = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios.get(`${server}/users/${user._id}/orders`, {
+        withCredentials: true,
+      });
+
+      setUserOrders(data.orders);
+
+      setIsLoading(false);
+    } catch (e: AxiosError | any) {
+      setIsLoading(false);
+      const error = e.response ? e.response : e.message;
+      toast.error(error);
+    }
+  };
+
+  useEffect(() => {
+    loadUserOrders();
+  }, []);
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
@@ -73,15 +92,19 @@ export default function UserOrders() {
     status: string;
   }[] = [];
 
-  orders &&
-    orders.forEach((item) => {
+  userOrders &&
+    userOrders.forEach((item) => {
       rows.push({
-        id: item._id,
-        itemsQty: item.orderItems.length,
+        id: item?._id,
+        itemsQty: item?.cart?.length,
         total: formattedPrice(item.totalPrice),
         status: item.orderStatus,
       });
     });
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div>

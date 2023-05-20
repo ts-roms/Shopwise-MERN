@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const User = require("../models/user.model");
+const Order = require("../models/order.model");
 const ErrorHandler = require("../utils/errorHandler");
 const {
   createActivationToken,
@@ -331,6 +332,20 @@ exports.logOutUser = async (req, res, next) => {
     });
 
     res.status(201).json({ success: true, message: "Log out Successful!" });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};
+
+// get all user orders
+exports.getAllOrdersOfUser = async (req, res, next) => {
+  try {
+    const userID = req.user.id;
+
+    const userOrders = await Order.find({ user: userID });
+
+    res.status(200).json({ success: true, orders: userOrders });
   } catch (error) {
     console.log(error);
     next(new ErrorHandler(error.message, 500));
