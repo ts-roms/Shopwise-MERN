@@ -58,6 +58,7 @@ exports.createOrder = async (req, res, next) => {
         user: userId,
         totalPrice: paidPrice,
         paymentInfo,
+        shop: shopId,
       });
       orders.push(order);
     }

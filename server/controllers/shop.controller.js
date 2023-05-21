@@ -2,6 +2,7 @@ const Shop = require("../models/shop.model");
 const Event = require("../models/event.model");
 const Cupon = require("../models/cuponcode.model");
 const Product = require("../models/product.model");
+const Order = require("../models/order.model");
 const path = require("path");
 const fs = require("fs");
 const { sendMail } = require("../utils/sendMail");
@@ -343,6 +344,20 @@ exports.deleteSingleCoupon = async (req, res, next) => {
     res
       .status(200)
       .json({ success: true, message: "Coupon code deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorHandler(error.message, 500));
+  }
+};
+
+// get shop all orders
+exports.getShopAllOrders = async (req, res, next) => {
+  try {
+    const shopId = req.shop.id;
+
+    const orders = await Order.find({ shop: shopId });
+
+    res.status(200).json({ success: true, orders });
   } catch (error) {
     console.log(error);
     next(new ErrorHandler(error.message, 500));
