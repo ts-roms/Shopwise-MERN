@@ -26,7 +26,9 @@ type row = {
 export default function ShopAllEvents() {
   const dispatch = useAppDispatch();
   const { seller } = useAppSelector((state) => state.seller);
-  const { events, isEventsLoading } = useAppSelector((state) => state.events);
+  const { shopEvents, isEventsLoading } = useAppSelector(
+    (state) => state.events
+  );
 
   function deleteEventHandler(eventId: string, sellerId: string) {
     dispatch(deleteEvent(eventId, sellerId));
@@ -146,7 +148,7 @@ export default function ShopAllEvents() {
 
   const row: row[] = [];
 
-  events?.forEach((item) => {
+  shopEvents?.forEach((item) => {
     row.push({
       id: item._id,
       name: item.name,

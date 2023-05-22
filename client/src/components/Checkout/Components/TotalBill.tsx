@@ -93,7 +93,7 @@ export default function TotalBill() {
 
     if (coupon) dispatch(setCouponId(coupon._id));
     else dispatch(setCouponId(""));
-  }, [cart, coupon, couponDiscount, isCouponApplied]);
+  }, [coupon, couponDiscount, isCouponApplied]);
 
   useEffect(() => {
     dispatch(totalSavingCalculate(totalSaving));

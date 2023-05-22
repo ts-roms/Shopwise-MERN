@@ -159,6 +159,7 @@ export interface IServerProductsState {
 export interface IEventsState {
   isEventsLoading: boolean;
   events: IEvent[];
+  shopEvents: IEvent[];
   error: null | AxiosError;
   isSuccess: boolean;
   message: string;

@@ -58,6 +58,7 @@ const ShopAllEventsPage = loadable(
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useAppSelector } from "./hooks";
+import SellerAllOrdersPage from "./pages/Seller/SellerAllOrdersPage";
 
 function App() {
   const [appState, setAppState] = useState(false);
@@ -194,6 +195,14 @@ function App() {
           element={
             <SellerProtectedRoute>
               <SellerAddProductPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/shop-orders"
+          element={
+            <SellerProtectedRoute>
+              <SellerAllOrdersPage />
             </SellerProtectedRoute>
           }
         />

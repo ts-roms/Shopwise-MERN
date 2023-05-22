@@ -54,8 +54,6 @@ export default function Payment({ toggleActiveStep }: IProps) {
 
   if (shipping_address) {
     savedAddress = JSON.parse(shipping_address);
-  } else {
-    toast.error("No address found");
   }
 
   let shippingAddress = {
@@ -71,7 +69,6 @@ export default function Payment({ toggleActiveStep }: IProps) {
   };
 
   // card payment
-
   async function handleCardPayment(e: FormEvent) {
     e.preventDefault();
     try {
@@ -131,7 +128,8 @@ export default function Payment({ toggleActiveStep }: IProps) {
             localStorage.setItem("cartItems", JSON.stringify([]));
             localStorage.removeItem("shipping_address");
             localStorage.setItem("cartPrice", JSON.stringify(0));
-            toggleActiveStep(3);
+            dispatch({ type: "clearCart" });
+            toggleActiveStep(2);
           }
         }
       }
@@ -187,7 +185,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
       localStorage.setItem("cartPrice", JSON.stringify(0));
       dispatch({ type: "clearCart" });
 
-      toggleActiveStep(3);
+      toggleActiveStep(2);
     } catch (err: AxiosError | any) {
       if (err.response) {
         toast.error(err.response.data.message);

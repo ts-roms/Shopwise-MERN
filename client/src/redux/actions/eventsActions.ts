@@ -1,35 +1,15 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import { IAddProduct } from "../../Interface";
 import { server } from "../../server";
-
-axios.defaults.withCredentials = true;
-
-// export const addEvent =
-//   (newForm: IAddProduct) => async (dispatch: Dispatch) => {
-//     try {
-//       dispatch({ type: "productAddRequest" });
-
-//       const config = { headers: { "Content-Type": "multipart/form-data" } };
-
-//       const { data } = await axios.post(`${server}/products`, newForm, config);
-
-//       dispatch({ type: "productAddSuccess", payload: data.product });
-//     } catch (error: AxiosError | any) {
-//       console.log(error);
-//       dispatch({
-//         type: "ProductAddFail",
-//         payload: error.response?.data?.message || error.message,
-//       });
-//     }
-//   };
 
 export const getShopAllEvents =
   (sellerId: string) => async (dispatch: Dispatch) => {
     try {
       dispatch({ type: "getShopAllEvents" });
 
-      const { data } = await axios.get(`${server}/shops/${sellerId}/events`);
+      const { data } = await axios.get(`${server}/shops/${sellerId}/events`, {
+        withCredentials: true,
+      });
 
       dispatch({ type: "getShopAllEventsSuccess", payload: data.events });
     } catch (error: AxiosError | any) {
@@ -45,11 +25,12 @@ export const deleteEvent =
     try {
       dispatch({ type: "deleteEventRequest" });
 
-      const config = { headers: { "Content-Type": "multipart/form-data" } };
-
       const { data } = await axios.delete(
         `${server}/shops/${shopId}/events/${eventId}`,
-        config
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true,
+        }
       );
 
       dispatch({
@@ -64,3 +45,18 @@ export const deleteEvent =
       });
     }
   };
+
+export const getAllEvent = () => async (dispatch: Dispatch) => {
+  try {
+    dispatch({ type: "getALLEvents" });
+
+    const { data } = await axios.get(`${server}`);
+    dispatch({ type: "getAllEventsSuccess", payload: data.events });
+  } catch (error: AxiosError | any) {
+    console.log(error);
+    dispatch({
+      type: "getAllEventsError",
+      payload: error.response?.data?.message || error.message,
+    });
+  }
+};
