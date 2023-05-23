@@ -46,12 +46,12 @@ export const deleteEvent =
     }
   };
 
-export const getAllEvent = () => async (dispatch: Dispatch) => {
+export const getAllEvents = () => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: "getALLEvents" });
 
-    const { data } = await axios.get(`${server}`);
-    dispatch({ type: "getAllEventsSuccess", payload: data.events });
+    const { data } = await axios.get(`${server}/events`);
+    dispatch({ type: "getAllEventsSuccess", payload: data });
   } catch (error: AxiosError | any) {
     console.log(error);
     dispatch({

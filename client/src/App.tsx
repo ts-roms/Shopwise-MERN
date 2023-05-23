@@ -59,6 +59,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useAppSelector } from "./hooks";
 import SellerAllOrdersPage from "./pages/Seller/SellerAllOrdersPage";
+import { getAllEvents } from "./redux/actions/eventsActions";
 
 function App() {
   const [appState, setAppState] = useState(false);
@@ -75,6 +76,7 @@ function App() {
       store.dispatch(loadUser()),
       store.dispatch(loadSeller()),
       store.dispatch(getAllProducts()),
+      store.dispatch(getAllEvents()),
     ]).then(() => setAppState(!appState));
   }, []);
 

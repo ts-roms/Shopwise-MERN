@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
 
-export default function Countdown() {
-  const [timeLeft, setTimeleft] = useState(calculateTimeLeft());
+type Props = {
+  endDate: Date;
+  startDate: Date;
+};
+
+export default function Countdown({ endDate, startDate }: Props) {
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [showStartCountdown, setShowStartCountdown] = useState(false);
+  const [startTimer, setStartTimer] = useState<any>(null);
+  const [timeUp, setTimeUp] = useState(false);
 
   function calculateTimeLeft(): Record<string, number> {
-    const endTime: Date = new Date("2023-05-10");
-
-    const difference: number =
-      Date.parse(endTime.toString()) - Date.parse(new Date().toString());
+    const endTime: Date = new Date(endDate);
+    const difference: number = Date.parse(endTime.toString()) - Date.now();
 
     let seconds: string = Math.floor((difference / 1000) % 60).toString();
     let minutes: string = Math.floor((difference / 1000 / 60) % 60).toString();
@@ -28,6 +34,7 @@ export default function Countdown() {
       timeLeft = { days, hours, minutes, seconds };
     } else {
       timeLeft = { hours: "00", minutes: "00", seconds: "00" };
+      setTimeUp(true);
     }
 
     return timeLeft;
@@ -35,16 +42,59 @@ export default function Countdown() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setTimeleft(calculateTimeLeft());
+      setTimeLeft(calculateTimeLeft());
     }, 1000);
     return () => clearTimeout(timer);
   }, [timeLeft]);
 
+  useEffect(() => {
+    const today = new Date().setHours(0, 0, 0, 0);
+    const startDateTime = new Date(startDate).setHours(0, 0, 0, 0);
+
+    if (startDateTime === today) {
+      setShowStartCountdown(true);
+    } else {
+      setShowStartCountdown(false);
+
+      const timer = setInterval(() => {
+        const timeUntilStart = calculateTimeLeft();
+        setTimeLeft(timeUntilStart);
+
+        const startDateTime = new Date(startDate).setHours(0, 0, 0, 0);
+        const currentTime = new Date().setHours(0, 0, 0, 0);
+
+        if (currentTime >= startDateTime) {
+          setShowStartCountdown(true);
+          clearInterval(timer);
+        }
+      }, 1000);
+
+      setStartTimer(timer);
+    }
+
+    return () => {
+      if (startTimer) {
+        clearInterval(startTimer);
+      }
+    };
+  }, []);
+
   return (
     <span className="text-xl text-[#ff7d1a] font-semibold">
-      {`${timeLeft.days == 0 ? "" : `${timeLeft.days} Days`} ${
-        timeLeft.hours
-      } hours ${timeLeft.minutes} minutes ${timeLeft.seconds} seconds`}
+      {showStartCountdown ? (
+        timeUp ? (
+          "Time's Up"
+        ) : (
+          `Ending in ${timeLeft.days == 0 ? "" : `${timeLeft.days} Days`} ${
+            timeLeft.hours
+          } hours ${timeLeft.minutes} minutes ${timeLeft.seconds} seconds`
+        )
+      ) : (
+        <>
+          Time until start: {timeLeft.hours} hours {timeLeft.minutes} minutes{" "}
+          {timeLeft.seconds} seconds
+        </>
+      )}
     </span>
   );
 }
